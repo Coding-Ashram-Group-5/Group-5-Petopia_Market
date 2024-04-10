@@ -1,13 +1,14 @@
 
 // import api from "../utils/api";
 
+import Landingpage from "./LandingPage/Landingpage";
+
 function Home() {
 
 
     return (
         <div>
-            <h1>Home</h1>
-            <p>This is the home page.</p>
+           <Landingpage/>
         </div>
     );
 }
