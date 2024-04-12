@@ -1,11 +1,13 @@
+
 import Hero from "./Hero"
+import Products  from "@/components/pages/LandingPage/Products"
 
 export default function Landingpage() {
     return (
         <>
           <div>
-            <h1 className="text-white">Landing Page</h1>
             <Hero />
+            <Products/>
           </div>
         </>
       )
