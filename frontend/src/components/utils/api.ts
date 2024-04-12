@@ -4,7 +4,7 @@ import { ACCESS_TOKEN } from "./constants";
 const apiUrl = ""; //Backend Url needed or we can use environment variables
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_URL : apiUrl,
+  baseURL: import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : apiUrl,
 });
 
 api.interceptors.request.use(
