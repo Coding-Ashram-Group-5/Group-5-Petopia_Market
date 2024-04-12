@@ -1,6 +1,6 @@
 import 'dotenv/config.js';
 import request from 'supertest';
-import app from '../src/index';
+import app from '../src/index.js';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import { Server } from 'http';
@@ -9,9 +9,9 @@ let server: Server;
 let agent: any;
 let token: string;
 
-describe('Evently test suite ', () => {
+describe('Petopia test suite ', () => {
   beforeAll(async () => {
-    await mongoose.connect(`mongodb://localhost:27017/Evently_Test`);
+    await mongoose.connect(`mongodb://localhost:27017/Patopia_Test`);
 
     server = app.listen(3005, () => {});
     agent = request.agent(server);
