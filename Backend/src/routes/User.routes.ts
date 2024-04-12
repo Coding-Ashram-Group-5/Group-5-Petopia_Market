@@ -1,7 +1,13 @@
 import { Router } from 'express';
-import { isAuthenticate } from '../middlewares/isAuth.middleware';
-import { refreshAccessToken, registerUser, loginUser, logoutUser, deleteAccount } from '../controllers/User.controller';
-import { upload } from '../middlewares/multer.middleware';
+import { isAuthenticate } from '../middlewares/isAuth.middleware.js';
+import {
+  refreshAccessToken,
+  registerUser,
+  loginUser,
+  logoutUser,
+  deleteAccount,
+} from '../controllers/User.controller.js';
+import { upload } from '../middlewares/multer.middleware.js';
 
 const router: Router = Router();
 

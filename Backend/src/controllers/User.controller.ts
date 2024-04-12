@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import UserModel from '../models/User.model';
-import { APIError } from '../utils/APIError.util';
-import { APIResponse } from '../utils/APIResponse.util';
-import AsyncHandler from '../utils/AsyncHandler.util';
+import UserModel from '../models/User.model.js';
+import { APIError } from '../utils/APIError.util.js';
+import { APIResponse } from '../utils/APIResponse.util.js';
+import AsyncHandler from '../utils/AsyncHandler.util.js';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import randomString from '../utils/randomSecret.util';
-import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type';
+import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   try {
@@ -125,6 +124,8 @@ const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const _id = (req as unknown as IGetUserAuthInfoRequest)?.user?.id;
 
+    console.log(_id);
+
     await UserModel.findByIdAndUpdate(
       { _id },
       {
@@ -149,6 +150,8 @@ const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
 const deleteAccount = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+    console.log(id);
 
     if (!id) {
       return res.status(402).json(new APIError('Provide Necessary Parameters', 402));
