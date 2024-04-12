@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { User } from '../types/model/user.type';
+import { User } from '../types/model/user.type.js';
 
 const SALT_ROUND = 10;
 

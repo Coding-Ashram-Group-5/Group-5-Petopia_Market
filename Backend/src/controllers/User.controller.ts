@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import UserModel from '../models/User.model';
-import { APIError } from '../utils/APIError.util';
-import { APIResponse } from '../utils/APIResponse.util';
-import AsyncHandler from '../utils/AsyncHandler.util';
+import UserModel from '../models/User.model.js';
+import { APIError } from '../utils/APIError.util.js';
+import { APIResponse } from '../utils/APIResponse.util.js';
+import AsyncHandler from '../utils/AsyncHandler.util.js';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import randomString from '../utils/randomSecret.util';
-import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type';
+import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   try {

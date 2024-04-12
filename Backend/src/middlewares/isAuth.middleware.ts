@@ -1,12 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import UserModel from '../models/User.model';
-import { User } from '../types/model/user.type';
-import { APIError } from '../utils/APIError.util';
+import UserModel from '../models/User.model.js';
+import { User } from '../types/model/user.type.js';
+import { APIError } from '../utils/APIError.util.js';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import AsyncHandler from '../utils/AsyncHandler.util';
-import randomString from '../utils/randomSecret.util';
-
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+import AsyncHandler from '../utils/AsyncHandler.util.js';
 
 interface AuthRequest extends Request {
   user?: User; // Define the user property
