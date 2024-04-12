@@ -27,6 +27,7 @@ function App() {
             </SecuredRoute>
           }
         />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterAndLogout />} />
