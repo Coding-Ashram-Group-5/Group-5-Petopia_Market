@@ -31,6 +31,8 @@ describe('Petopia test suite ', () => {
       password: '12345678',
     });
 
+    console.log(res?.headers);
+
     // Extract the token from the set-cookie header
     token = res.headers['set-cookie'][0].split(';')[0].split('=')[1];
 
