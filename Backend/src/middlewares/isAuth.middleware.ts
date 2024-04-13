@@ -35,6 +35,8 @@ export const isAuthenticate = AsyncHandler(async (req: AuthRequest, res: Respons
 
       req.user = userData;
 
+      console.log(req.user);
+
       next();
     }
   } catch (error: any) {

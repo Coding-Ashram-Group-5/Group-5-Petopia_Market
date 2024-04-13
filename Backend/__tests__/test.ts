@@ -39,6 +39,7 @@ describe('Petopia test suite ', () => {
 
   test('Users Can Signout', async () => {
     // Set the Authorization header with the extracted token
+    console.log(token);
     const res = await agent.get('/api/v1/users/logout').send({ token });
 
     expect(res.statusCode).toBe(200);
