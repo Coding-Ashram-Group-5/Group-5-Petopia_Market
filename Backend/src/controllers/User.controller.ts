@@ -21,9 +21,6 @@ const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
 
     await user.save({ validateBeforeSave: false });
 
-    console.log(refreshToken, accessToken);
-    console.log(user);
-
     return { accessToken, refreshToken };
   } catch (error) {
     console.log(error);
@@ -127,8 +124,6 @@ const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const _id = (req as unknown as IGetUserAuthInfoRequest)?.user?.id;
 
-    console.log(_id);
-
     await UserModel.findByIdAndUpdate(
       { _id },
       {
@@ -153,8 +148,6 @@ const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
 const deleteAccount = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
-    console.log(id);
 
     if (!id) {
       return res.status(402).json(new APIError('Provide Necessary Parameters', 402));

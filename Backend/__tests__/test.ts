@@ -31,8 +31,6 @@ describe('Petopia test suite ', () => {
       password: '12345678',
     });
 
-    console.log(res?.headers);
-
     // Extract the token from the set-cookie header
     token = res.headers['set-cookie'][0].split(';')[0].split('=')[1];
 
@@ -41,7 +39,6 @@ describe('Petopia test suite ', () => {
 
   test('Users Can Signout', async () => {
     // Set the Authorization header with the extracted token
-    console.log(token);
     const res = await agent.get('/api/v1/users/logout').send({ token });
 
     expect(res.statusCode).toBe(200);
@@ -57,8 +54,6 @@ describe('Petopia test suite ', () => {
     let res = await agent.post('/api/v1/users/signin').send({ email: 'test_db@gmail.com', password: '12345678' });
 
     const id = JSON.parse(res.text)?.data?._id;
-
-    console.log(id);
 
     res = await agent.delete(`/api/v1/users/delete/${id}`).send({ token });
 
