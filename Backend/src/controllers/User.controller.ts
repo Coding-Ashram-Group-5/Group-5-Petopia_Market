@@ -21,6 +21,9 @@ const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
 
     await user.save({ validateBeforeSave: false });
 
+    console.log(refreshToken, accessToken);
+    console.log(user);
+
     return { accessToken, refreshToken };
   } catch (error) {
     console.log(error);
