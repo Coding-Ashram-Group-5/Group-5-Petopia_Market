@@ -21,14 +21,15 @@ import {
   
   const Card: React.FC<ICardProps> = ({ product }) => {
     return (
-      <div className="flex flex-col border bg-background justify-center items-center  mx-2">
-        <div className="h-40 w-40" >
-          <img src={product.image} className=" w-fit " alt={product.name} />
+      <div className="flex flex-col border bg-background rounded-lg justify-center items-center  mx-2">
+       
+        <div className="" >
+          <img src={product.image} loading="lazy" className="h-full w-full rounded-lg object-fill object-center" alt={product.name} />
+        <div className=" absolute -top-1  h-fit p-2 w-fit rounded-full bg-red-500 font-mad text-white">Sale</div>
         </div>
-        <div>
-          <h1>{product.name}</h1>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
+        <div className="my-4">
+          <h1 className=" font-bold  text-[1.5rem] " >{product.name}</h1>
+          <p className=" font-leag text-red-500"> Price : {product.price}</p>
         </div>
       </div>
     );
@@ -52,22 +53,39 @@ import {
       },
       {
         id: 3,
-        name: "Bull dog",
+        name: "Cat ",
         description: "Bull Dog Puppies for sale in japan.",
         price: "500rs",
-        image: "https://plus.unsplash.com/premium_photo-1677542200557-3c6856cc98b1?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        image: "https://images.pexels.com/photos/179237/pexels-photo-179237.jpeg?auto=compress&cs=tinysrgb&w=400"
       },
       {
         id: 4,
         name: "Product name",
         description: "Product description",
         price: "Product price",
-        image: "https://plus.unsplash.com/premium_photo-1677542200557-3c6856cc98b1?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        image: "https://images.pexels.com/photos/179222/pexels-photo-179222.jpeg?auto=compress&cs=tinysrgb&w=400"
+      },
+      {
+        id: 5,
+        name: "Product name",
+        description: "Product description",
+        price: "Product price",
+        image: "https://images.pexels.com/photos/532992/pexels-photo-532992.jpeg?auto=compress&cs=tinysrgb&w=400"
+      },
+      {
+        id: 6,
+        name: "Product name",
+        description: "Product description",
+        price: "Product price",
+        image: "https://images.pexels.com/photos/105810/pexels-photo-105810.jpeg?auto=compress&cs=tinysrgb&w=400"
       }
+
     ];
   
-    return (
+    return (<>
+      <h1 className="font-bold text-[2rem] font-leag pt-2 text-center ">Products <span className="font-bold text-red-500 text-[2rem] text-center ">Here </span> </h1>
       <div className="p-10 flex justify-center gap-4">
+        
         <Carousel className="w-full max-w-full">
           <CarouselContent className="-ml-1 px-2 gap-2">
             {products.map(product => (
@@ -80,6 +98,7 @@ import {
           <CarouselNext />
         </Carousel>
       </div>
+      </>
     );
   };
   
