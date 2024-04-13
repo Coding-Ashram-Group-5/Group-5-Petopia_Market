@@ -1,4 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle'
+import React from 'react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,16 +8,19 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import logo from '@/assets/fulllogo.png'
 
-export default function Navbar() {
+
+
+const Navbar: React.FC = () => {
 
     return (
         <>
             <div className="flex justify-between p-4 border-b">
-                <div className="left">Logo</div>
+                <div className="h-fit w-24"> <img src={logo} alt="Petopia" /></div>
                 <div >
                     <nav className="hidden gap-12 lg:flex">
-                        <a href="#" className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-red-500 active:text-red-700">Home</a>
+                        <a  className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-red-500 active:text-red-700">Home</a>
                         <a href="#" className="inline-flex items-center gap-1 text-lg font-semibold text-red-500">
                             <DropdownMenu>
                                 <DropdownMenuTrigger>Product</DropdownMenuTrigger>
@@ -45,3 +49,5 @@ export default function Navbar() {
 
     )
 }
+
+export default Navbar;
