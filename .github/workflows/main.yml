@@ -1,0 +1,49 @@
+name: Petopia Market
+
+on:
+  push: # Trigger the workflow on push events to the specified branches
+    branches:
+      - main
+      - dev
+  pull_request: # Trigger the workflow on pull requests targeting the specified branches
+    branches:
+      - dev
+
+jobs:
+  run-unit-tests:
+    runs-on: ubuntu-latest # Define the operating system for the job
+    strategy:
+      matrix: # Define a matrix for running tests with different configurations
+        node-version: [20.x]
+        mongodb-version: ["6.0"]
+
+    steps:
+      - name: Checkout code # Step to checkout the repository code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }} # Step to set up Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Start MongoDB # Step to start MongoDB service
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-replica-set: test-rs
+          mongodb-port: 27017
+
+      - name: Install backend dependencies
+        run: |
+          cd Backend
+          npm i
+
+      - name: Run backend tests
+        env:
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+          ACCESS_TOKEN_EXPIRY: 2d
+          REFRESH_TOKEN_EXPIRY: 15d
+        run: |
+          cd Backend
+          npm run test
