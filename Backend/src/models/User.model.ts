@@ -53,6 +53,7 @@ userSchema.methods.ComparePassword = async function (password: string) {
 };
 
 userSchema.methods.generateAccessToken = function () {
+  console.log(process.env);
   if (process.env.ACCESS_TOKEN_SECRET) {
     return jwt.sign(
       {
