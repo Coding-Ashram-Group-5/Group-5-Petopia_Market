@@ -56,6 +56,8 @@ describe('Petopia test suite ', () => {
 
     const id = JSON.parse(res.text)?.data?._id;
 
+    console.log(id);
+
     res = await agent.delete(`/api/v1/users/delete/${id}`).send({ token });
 
     expect(res.statusCode).toBe(200);
