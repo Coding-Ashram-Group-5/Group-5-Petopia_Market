@@ -11,6 +11,7 @@ connectDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log(` ⚡Server is Running on ${HOST} \n⚛️  PORT : ${PORT}\n`);
+      console.log(` ⚡ Server is running at http://${HOST}:${PORT}/`);
     });
   })
   .catch((err) => {
