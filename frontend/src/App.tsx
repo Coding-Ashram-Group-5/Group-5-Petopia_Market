@@ -18,7 +18,7 @@ function RegisterAndLogout() {
 
 function App() {
   return (<>
-  
+
     <Navbar/>
     <BrowserRouter>
       <Routes>
