@@ -4,7 +4,7 @@ const mobile = "https://pawsindia.com/cdn/shop/files/Tags-Banner-Mobile.jpg?v=17
 const desktop = "https://pawsindia.com/cdn/shop/files/Tags-Banner-Web_1920x.jpg?v=1711991996"
 export default function Banner() {
 
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(true);
 
     useEffect(() => {
       const handleResize = () => {
