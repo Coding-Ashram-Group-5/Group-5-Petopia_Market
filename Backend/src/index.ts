@@ -1,6 +1,6 @@
 // Deps Import
 import cookieParser from 'cookie-parser';
-import express, { Express } from 'express';
+import express, { type Express } from 'express';
 import cors from 'cors';
 
 // Routes Import
@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ['http://localhost:5173'],
-    credentials: true,
-  }),
+    credentials: true
+  })
 );
 
 app.use('/api/v1/users', userRoutes);

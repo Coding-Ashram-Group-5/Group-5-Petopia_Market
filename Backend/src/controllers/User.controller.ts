@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import UserModel from '../models/User.model.js';
 import { APIError } from '../utils/APIError.util.js';
 import { APIResponse } from '../utils/APIResponse.util.js';
 import AsyncHandler from '../utils/AsyncHandler.util.js';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
+import jwt, { type JwtPayload } from 'jsonwebtoken';
+import { type IGetUserAuthInfoRequest, type TokenResponse } from '../types/model/user.type.js';
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   try {
@@ -49,7 +49,7 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
     }
 
     const loggedInUser = await UserModel.findById(isUserExist?._id).select(
-      '-password -refreshToken -created_at -updated_at -__v',
+      '-password -refreshToken -created_at -updated_at -__v'
     );
 
     const { accessToken, refreshToken } = (await generateToken(isUserExist?._id)) as TokenResponse;
@@ -57,10 +57,10 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
     res
       .status(200)
       .cookie('authToken', accessToken, {
-        maxAge: 86400000, // 1 Days
+        maxAge: 86400000 // 1 Days
       })
       .cookie('refreshToken', refreshToken, {
-        maxAge: 1296000000, //15 Days
+        maxAge: 1296000000 // 15 Days
       })
       .json(new APIResponse('User Logged In Successfully', 200, loggedInUser));
   } catch (error) {
@@ -77,7 +77,7 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
     }
 
     const isUserExist = await UserModel.findOne({
-      email,
+      email
     });
 
     if (isUserExist) {
@@ -92,11 +92,11 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
       firstName,
       lastName,
       email,
-      password,
+      password
     });
 
     const isUserCreated = await UserModel.findById({ _id: createUser._id }).select(
-      '-password -refreshToken -created_at -updated_at -__v',
+      '-password -refreshToken -created_at -updated_at -__v'
     );
 
     if (isUserCreated) {
@@ -105,10 +105,10 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
       res
         .status(200)
         .cookie('authToken', accessToken, {
-          maxAge: 604800000,
+          maxAge: 604800000
         })
         .cookie('refreshToken', refreshToken, {
-          maxAge: 2592000000,
+          maxAge: 2592000000
         })
         .json(new APIResponse('User Created Successfully', 200, isUserCreated));
     } else {
@@ -130,12 +130,12 @@ const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
       { _id },
       {
         $unset: {
-          refreshToken: '',
-        },
+          refreshToken: ''
+        }
       },
       {
-        new: true,
-      },
+        new: true
+      }
     );
 
     res
@@ -199,7 +199,7 @@ const refreshAccessToken = AsyncHandler(async (req: Request, res: Response) => {
       }
 
       const loggedInUser = await UserModel.findById(isUserExist?._id).select(
-        '-password -refreshToken -created_at -updated_at -__v',
+        '-password -refreshToken -created_at -updated_at -__v'
       );
 
       const { accessToken, refreshToken } = (await generateToken(isUserExist?._id)) as TokenResponse;
@@ -207,10 +207,10 @@ const refreshAccessToken = AsyncHandler(async (req: Request, res: Response) => {
       res
         .status(200)
         .cookie('authToken', accessToken, {
-          maxAge: 604800000, // 7 Days
+          maxAge: 604800000 // 7 Days
         })
         .cookie('refreshToken', refreshToken, {
-          maxAge: 2592000000, //30 Days
+          maxAge: 2592000000 // 30 Days
         })
         .json(new APIResponse('User Logged In Successfully', 200, loggedInUser));
     } else {

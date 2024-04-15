@@ -5,9 +5,9 @@ export class APIError extends Error {
   errors: never[];
   success: boolean;
 
-  constructor(message = 'This is Default Error Message', statusCode = 502, errors = [], stack = '') {
+  constructor (message = 'This is Default Error Message', statusCode = 502, errors = [], stack = '') {
     super(message);
-    this.data = null; //There is No Data Sent to User on Error
+    this.data = null; // There is No Data Sent to User on Error
     this.errorMessage = message;
     this.statusCode = statusCode;
     this.errors = errors;

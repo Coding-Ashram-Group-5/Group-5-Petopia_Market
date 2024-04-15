@@ -1,19 +1,50 @@
-// Loading Env Variable's Using in-built Method of Node | Required Node Version > 20
-process.loadEnvFile();
-
+import dotenv from 'dotenv';
 import app from './src/index';
 import connectDB from './src/DB/connectDB';
 
-const PORT: number = 3008 || process.env.PORT;
-const HOST: string = 'localhost' || process.env.HOST;
+// Load environment variables
+dotenv.config();
 
+// Define the shape of environment configuration
+interface EnvConfig {
+    port: number;
+    host: string;
+}
+
+// Retrieves configuration for the application
+function getConfig(): EnvConfig {
+    return {
+        port: parseEnvPort(process.env.PORT),
+        host: process.env.HOST ?? 'localhost'
+    };
+}
+
+// Parses the PORT environment variable ensuring it returns a valid number
+function parseEnvPort(port: string | undefined): number {
+    if (!port) {
+        console.log("No PORT environment variable set, using default port 3008.");
+        return 3008; // Return default port if input is null or an empty string
+    }
+    const parsedPort = parseInt(port, 10);
+    if (isNaN(parsedPort)) {
+        console.log("Invalid PORT environment variable, using default port 3008.");
+        return 3008; // Return default port if parsing fails
+    }
+    return parsedPort;
+}
+
+// Retrieve configuration settings
+const config: EnvConfig = getConfig();
+
+// Connect to the database and start the server
 connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(` ⚡Server is Running on ${HOST} \n⚛️  PORT : ${PORT}\n`);
-      console.log(` ⚡ Server is running at http://${HOST}:${PORT}/`);
+    .then(() => {
+        app.listen(config.port, config.host, () => {
+            console.log(`⚡ Server is running on ${config.host}`);
+            console.log(`⚛️ PORT: ${config.port}`);
+            console.log(`⚡ Server is running at http://${config.host}:${config.port}/`);
+        });
+    })
+    .catch((err) => {
+        console.error('😵 Error while trying to connect to the database:', err.message);
     });
-  })
-  .catch((err) => {
-    console.log(`😵 Error While Calling Connect DB Method`);
-  });

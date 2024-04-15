@@ -5,7 +5,7 @@ import {
   registerUser,
   loginUser,
   logoutUser,
-  deleteAccount,
+  deleteAccount
 } from '../controllers/User.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 

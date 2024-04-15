@@ -4,7 +4,7 @@ export class APIResponse {
   data: any;
   success: boolean;
 
-  constructor(message = 'This is Default Message', statusCode = 200, data: any) {
+  constructor (message = 'This is Default Message', statusCode = 200, data: any) {
     this.message = message;
     this.statusCode = statusCode;
     this.data = data ?? null;
