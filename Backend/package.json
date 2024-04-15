@@ -5,11 +5,10 @@
   "main": "server.js",
   "type": "commonjs",
   "engines": {
-    "node": "14.x"
+    "node": "20.x"
   },
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "build": "netlify deploy --prod",
     "start": "nodemon --watch \"*.ts\" --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"tsx server.ts\""
   },
   "lint-staged": {
@@ -28,10 +27,7 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.1",
-    "multer": "^1.4.5-lts.1",
-    "netlify-cli": "^17.22.1",
-    "netlify-lambda": "^2.0.16",
-    "serverless-http": "^3.2.0"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
