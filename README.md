@@ -8,7 +8,6 @@ Petopia Market is an online platform dedicated to providing a one-stop destinati
 ---
 
 **Key Features:**
-
 1. **Pet and Product Listings:** Browse through a diverse selection of pets from reputable sellers and adoption centers. Explore a wide array of high-quality pet products, including food, toys, accessories, and more.
 
 2. **Product Reviews:** Make informed decisions with product reviews and ratings provided by other users. Leave your own feedback and contribute to the community's knowledge base.
