@@ -3,10 +3,12 @@ import Navbar from "./components/Navbar";
 
 function App() {
     return (
-        <>
-            <Navbar />
+        <div className="no-scrollbar overflow-hidden mx-auto max-w-screen-xl " >
+           
+             <Navbar />
             <Outlet />
-        </>
+           
+        </div>
     );
 }
 

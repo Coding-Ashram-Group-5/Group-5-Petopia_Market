@@ -13,6 +13,7 @@ import Register from "./components/pages/Register";
 import Home from "./components/pages/Home";
 import NotFound from "./components/pages/NotFound";
 import SecuredRoute from "./components/pages/securepage/SecuredRoute";
+import Products from "./components/pages/ProductPage/Products.tsx";
 
 function Logout() {
     localStorage.clear();
@@ -36,6 +37,7 @@ const routes = createBrowserRouter([
             { path: "/login", element: <Login /> },
             { path: "/register", element: <RegisterAndLogout /> },
             { path: "/logout", element: <Logout /> },
+            { path: "/products", element: <Products /> },
             { path: "/*", element: <NotFound /> },
         ],
     },
