@@ -1,5 +1,4 @@
 import { Moon, Sun } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -8,11 +7,33 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/components/theme-provider"
+import { toast } from "sonner"
 
 export function ModeToggle() {
-  const { setTheme, theme } = useTheme()
-  console.log(theme)
- 
+  const { setTheme} = useTheme()
+
+  function handleLight() {
+    setTheme("light")
+    toast.success("Light ☀️", {
+      description: "Light mode enabled",
+      duration: 2000,
+    })
+  }
+  function handleDark() {
+    setTheme("dark")
+    toast.success("Dark 🌙",{
+      description: "Dark mode enabled",
+      duration: 2000,
+    })
+  }
+  function handleSystem() {
+    setTheme("system")
+    toast.success("System 💻" ,{
+      description: "System theme enabled",
+      duration: 2000,
+    })
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,13 +44,13 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={handleLight}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={handleDark}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={handleSystem}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

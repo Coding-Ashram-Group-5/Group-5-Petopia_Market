@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../utils/constants";
 import LoadingIndicator from "./LoadingIndicator";
 import { AxiosError } from 'axios';
+import { toast } from "sonner";
 
 interface Props {
     route: string;
@@ -41,6 +42,7 @@ function Form({ route, method }: Props) {
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                toast.success("Logged in successfully.");
                 navigate("/home", { replace: true });
             } else {
                 navigate("/login");
@@ -53,6 +55,7 @@ function Form({ route, method }: Props) {
                 errorMessage = error.response.data.errorMessage || error.response.statusText;
             }
             setErrorMessage(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
