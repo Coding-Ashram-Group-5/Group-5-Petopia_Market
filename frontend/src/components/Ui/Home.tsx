@@ -1,6 +1,3 @@
-
-// import api from "../utils/api";
-
 import Landingpage from "./LandingPage/Landingpage";
 
 function Home() {
@@ -8,7 +5,7 @@ function Home() {
 
     return (
         <div>
-           <Landingpage/>
+        <Landingpage/>
         </div>
     );
 }
