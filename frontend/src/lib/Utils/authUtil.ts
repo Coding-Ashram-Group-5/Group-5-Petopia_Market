@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const refreshToken = async (refreshToken: string) => {
+const reloginWithRefreshToken = async (refreshToken: string) => {
   const API_URL = import.meta.env.VITE_API_BASE_URL; // Your API URL
 
   try {
@@ -19,4 +19,4 @@ const refreshToken = async (refreshToken: string) => {
   }
 };
 
-export default refreshToken;
+export default reloginWithRefreshToken;

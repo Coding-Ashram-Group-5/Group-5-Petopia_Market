@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../../lib/api';
 import Navbar from '@/components/Ui/LandingPage/Nav/Navbar';
-import reloginWithRefreshToken from '../../../lib/Utils/authUtils';
+import reloginWithRefreshToken from '../../../lib/Utils/authUtil';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,12 +25,17 @@ const Login = () => {
   useEffect(() => {
     const autoRelogin = async () => {
       try {
-        const newAccessToken = await reloginWithRefreshToken(); // dont fix this error waring right now, otherwise auto login will fail ----->
-        if (newAccessToken) {
-          console.log('Auto relogin successful');
-          navigate('/'); // Navigate to home page after successful relogin
+        const existingRefreshToken = Cookies.get('refreshToken'); // Get refreshToken from cookie
+        if (existingRefreshToken) {
+          const newAccessToken = await reloginWithRefreshToken(existingRefreshToken);
+          if (newAccessToken) {
+            console.log('Auto relogin successful');
+            navigate('/'); // Navigate to home page after successful relogin
+          } else {
+            console.log('Auto relogin failed');
+          }
         } else {
-          console.log('Auto relogin failed');
+          console.log('No existing refresh token found');
         }
       } catch (error) {
         console.error('Auto relogin error:', error);
