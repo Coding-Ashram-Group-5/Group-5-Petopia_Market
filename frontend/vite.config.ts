@@ -16,4 +16,7 @@ export default defineConfig({
     assetsDir: './', // Set assetsDir to make asset paths relative
 
   },
+  preview: {
+    port: 5137,
+  }
 })
