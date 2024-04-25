@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/Ui/Buttons/button";
 
 export default function Sales() {
   return (
@@ -6,7 +6,7 @@ export default function Sales() {
     <div className="bg-background py-6 sm:py-8 lg:py-12">
   <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
     <div className="flex flex-col overflow-hidden rounded-lg bg-yellow-500 sm:flex-row md:h-80">
-    
+
       <div className="flex w-full flex-col p-4 sm:w-1/2 sm:p-8 lg:w-2/5">
         <h2 className="mb-4 text-xl font-bold font-leag text-white md:text-2xl lg:text-4xl">IPL Sale<br />Up to 70% off.</h2>
 
@@ -22,9 +22,9 @@ export default function Sales() {
     </div>
   </div>
 </div>
-    
-    
-    
+
+
+
     </>
   )
 }
