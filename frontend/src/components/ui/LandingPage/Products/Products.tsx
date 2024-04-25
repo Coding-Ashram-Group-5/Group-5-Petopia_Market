@@ -4,7 +4,7 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
-  } from "@/components/ui/carousel"
+  } from "@/components/Ui/Buttons/carousel"
   import React from 'react';
 
   interface IProduct {
@@ -14,15 +14,19 @@ import {
     price: string;
     image: string;
   }
-  
+
   interface ICardProps {
     product: IProduct;
   }
-  
+
   const Card: React.FC<ICardProps> = ({ product }) => {
     return (
       <div className="flex flex-col border bg-background rounded-lg justify-center items-center  mx-2">
+<<<<<<< HEAD:frontend/src/components/pages/LandingPage/Products.tsx
        
+=======
+
+>>>>>>> origin/main:frontend/src/components/Ui/LandingPage/Products/Products.tsx
         <div className="" >
           <img src={product.image} loading="lazy" className="h-full w-full rounded-lg object-fill object-center" alt={product.name} />
         <div className=" absolute -top-1  h-fit p-2 w-fit rounded-full bg-red-500 font-mad text-white">Sale</div>
@@ -34,7 +38,7 @@ import {
       </div>
     );
   };
-  
+
   const Products: React.FC = () => {
     const products: IProduct[] = [
       {
@@ -81,11 +85,20 @@ import {
       }
 
     ];
+<<<<<<< HEAD:frontend/src/components/pages/LandingPage/Products.tsx
   
     return (<>
       <h1 className="font-bold text-[2rem] font-leag pt-2 text-center ">Products <span className="font-bold text-red-500 text-[2rem] text-center ">Here </span> </h1>
       <div className="p-10 flex justify-center gap-4">
         
+=======
+
+    return (
+    <>
+      <h1 className="font-bold text-[2rem] font-leag pt-2 text-center ">Products <span className="font-bold text-red-500 text-[2rem] text-center ">Here </span> </h1>
+      <div className="p-10 flex justify-center gap-4">
+
+>>>>>>> origin/main:frontend/src/components/Ui/LandingPage/Products/Products.tsx
         <Carousel className="w-full max-w-full">
           <CarouselContent className="-ml-1 px-2 gap-2">
             {products.map(product => (
@@ -101,6 +114,5 @@ import {
       </>
     );
   };
-  
+
   export default Products;
-  

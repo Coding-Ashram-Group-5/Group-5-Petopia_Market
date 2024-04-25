@@ -1,4 +1,4 @@
-**Project Title: Petopia Market**
+**Project Title: Petopia Market **
 
 ---
 
@@ -6,7 +6,6 @@
 Petopia Market is an online platform dedicated to providing a one-stop destination for all your pet-related needs. From adopting a new furry friend to purchasing high-quality products and accessing valuable resources on pet care, our marketplace offers a comprehensive solution for pet enthusiasts. With a focus on reputable sellers and adoption centers, along with informative blogs and a wide range of pet products, Petopia Market ensures that your pets receive the love, care, and attention they deserve.
 
 ---
-
 **Key Features:**
 
 1. **Pet and Product Listings:** Browse through a diverse selection of pets from reputable sellers and adoption centers. Explore a wide array of high-quality pet products, including food, toys, accessories, and more.
