@@ -13,7 +13,23 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
+        'mobile': '640px',
+        // => @media (min-width: 640px) { ... }
+
+        'tablet': '640px',
+        // => @media (min-width: 640px) { ... }
+
+        'laptop': '1024px',
+        // => @media (min-width: 1024px) { ... }
+
+        'desktop': '1280px',
+        // => @media (min-width: 1280px) { ... }
+
         "2xl": "1400px",
+        // => @media (min-width: 1400px) { ... }
+
+        '3xl': '1536px',
+        // => @media (min-width: 1536px) { ... }
       },
     },
     extend: {
@@ -72,12 +88,18 @@ module.exports = {
           to: { height: "0" },
         },
       },
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> origin/main
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate")
+  ],
 }

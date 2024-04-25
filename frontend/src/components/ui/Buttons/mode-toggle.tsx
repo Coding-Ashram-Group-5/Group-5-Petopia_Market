@@ -1,15 +1,21 @@
 import { Moon, Sun } from "lucide-react"
+<<<<<<< HEAD:frontend/src/components/mode-toggle.tsx
 import { Button } from "@/components/ui/button"
+=======
+
+import { Button } from "@/components/Ui/Buttons/button"
+>>>>>>> origin/main:frontend/src/components/Ui/Buttons/mode-toggle.tsx
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/Ui/Menu/dropdown-menu"
 import { useTheme } from "@/components/theme-provider"
 import { toast } from "sonner"
 
 export function ModeToggle() {
+<<<<<<< HEAD:frontend/src/components/mode-toggle.tsx
   const { setTheme} = useTheme()
 
   function handleLight() {
@@ -33,6 +39,10 @@ export function ModeToggle() {
       duration: 2000,
     })
   }
+=======
+  const { setTheme } = useTheme() // ,theme
+   // console.log(theme)
+>>>>>>> origin/main:frontend/src/components/Ui/Buttons/mode-toggle.tsx
 
   return (
     <DropdownMenu>
@@ -44,6 +54,7 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+<<<<<<< HEAD:frontend/src/components/mode-toggle.tsx
         <DropdownMenuItem onClick={handleLight}>
           Light
         </DropdownMenuItem>
@@ -51,6 +62,15 @@ export function ModeToggle() {
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleSystem}>
+=======
+        <DropdownMenuItem onClick={() => setTheme("light")} className=" cursor-pointer">
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")} className=" cursor-pointer">
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")} className=" cursor-pointer">
+>>>>>>> origin/main:frontend/src/components/Ui/Buttons/mode-toggle.tsx
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
