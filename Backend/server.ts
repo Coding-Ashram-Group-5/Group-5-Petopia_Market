@@ -1,5 +1,5 @@
-// Loading Env Variable's Using in-built Method of Node | Required Node Version > 20
-process.loadEnvFile();
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 
 import app from './src/index';
 import connectDB from './src/DB/connectDB';
