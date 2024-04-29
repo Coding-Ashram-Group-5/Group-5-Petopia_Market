@@ -23,4 +23,8 @@ app.use(
 
 app.use('/api/v1/users', userRoutes);
 
+app.get('/health', (_, res) => {
+  res.send('Server is Runnning');
+});
+
 export default app;

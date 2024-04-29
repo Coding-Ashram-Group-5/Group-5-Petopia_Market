@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface User extends mongoose.Document {
+export interface IUser extends mongoose.Document {
   _id: string;
   firstName: string;
   lastName?: string;
@@ -16,7 +16,7 @@ export interface User extends mongoose.Document {
 // Type Definition for Request While Utilizing req.user for Auth in Logout Route
 export interface IGetUserAuthInfoRequest extends Request {
   user: {
-    id: Pick<User, '_id'>;
+    id: Pick<IUser, '_id'>;
   };
 }
 

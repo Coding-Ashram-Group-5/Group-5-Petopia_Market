@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { User } from '../types/model/user.type.js';
+import { IUser } from '../types/model/user.type.js';
 
 const SALT_ROUND = 10;
 
-const userSchema: mongoose.Schema<User> = new mongoose.Schema(
+const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -81,6 +81,6 @@ userSchema.methods.generateRefreshToken = function () {
     );
 };
 
-const userModel: mongoose.Model<User> = mongoose.models.User || mongoose.model('User', userSchema);
+const userModel: mongoose.Model<IUser> = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default userModel;
