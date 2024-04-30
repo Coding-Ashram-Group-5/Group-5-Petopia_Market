@@ -2,25 +2,33 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../../lib/api';
 
-const Logout: React.FC = () => {
-  const Navigate = useNavigate();
+interface LogoutProps {
+  buttonLabel: string;
+}
+
+const Logout: React.FC<LogoutProps> = ({ buttonLabel }) => {
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      await logout();
-      localStorage.clear(); // Clear local storage
-      document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Clear refreshToken cookie
-      Navigate('/login'); // Redirect to login page
-    } catch (error) {
-      console.error(error); // Handle error
+    const confirmed = window.confirm('Are you sure you want to logout?');
+    if (confirmed) {
+      try {
+        await logout();
+        localStorage.clear(); // Clear local storage
+        document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Clear refreshToken cookie
+        navigate('/login'); // Redirect to login page
+        // Auto-refresh after logout
+        setTimeout(() => {
+          window.location.reload();
+        }, 100); // Refresh after 0.1 second
+      } catch (error) {
+        console.error(error); // Handle error
+      }
     }
   };
 
   return (
-    <div>
-      <h2>Logout</h2>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <button type="button" onClick={handleLogout}>{buttonLabel}</button>
   );
 };
 

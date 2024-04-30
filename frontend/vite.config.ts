@@ -13,8 +13,6 @@ export default defineConfig({
   base: './', // Set the base path to make paths relative
   build: {
     outDir: 'dist', // Specify the output directory for the build
-    assetsDir: './', // Set assetsDir to make asset paths relative
-
   },
   preview: {
     port: 5137,

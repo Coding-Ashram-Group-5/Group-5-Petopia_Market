@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { register } from '../../../lib/api';
-import Navbar from '@/components/Ui/LandingPage/Nav/Navbar';
 import { useNavigate } from 'react-router-dom';
 
 interface RegisterForm {
@@ -39,8 +38,6 @@ const Register = () => {
 
       const newUser = await register(formData);
       console.log('User registered:', newUser);
-
-      localStorage.clear();
       document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
       navigate('/login');
@@ -51,7 +48,6 @@ const Register = () => {
 
   return (
     <div>
-      <Navbar />
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
