@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Request } from 'express';
 
 export interface IUser extends mongoose.Document {
   _id: string;
@@ -13,10 +14,10 @@ export interface IUser extends mongoose.Document {
   generateRefreshToken(): string;
 }
 
-// Type Definition for Request While Utilizing req.user for Auth in Logout Route
+// Type Definition for Request While Utilizing req.user
 export interface IGetUserAuthInfoRequest extends Request {
-  user: {
-    id: Pick<IUser, '_id'>;
+  user?: {
+    _id?: string | undefined;
   };
 }
 

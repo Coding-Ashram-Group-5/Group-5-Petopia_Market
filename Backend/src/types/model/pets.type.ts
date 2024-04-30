@@ -7,7 +7,7 @@ export interface IPet extends Document {
   petDescription: string;
   price: number;
   isFree: boolean;
-  diseases?: string[];
+  diseases?: string;
   petImages: string[];
   owner: Schema.Types.ObjectId;
   created_at: Date;

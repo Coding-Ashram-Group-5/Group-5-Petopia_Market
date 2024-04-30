@@ -29,11 +29,10 @@ const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    diseases: [
-      {
-        type: String,
-      },
-    ],
+    diseases: {
+      type: String,
+      default: '',
+    },
     petImages: [
       {
         type: String,
@@ -52,6 +51,11 @@ const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
     },
   },
 );
+
+// Adding minimum length validation for petImages
+petSchema.path('petImages').validate(function (value: string[]) {
+  return value.length >= 1;
+}, 'At least one pet image is required.');
 
 const PetsModel: IPetModel = mongoose.models.Pets || mongoose.model('Pets', petSchema);
 

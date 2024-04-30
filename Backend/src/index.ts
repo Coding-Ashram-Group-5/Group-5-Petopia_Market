@@ -5,6 +5,7 @@ import cors from 'cors';
 
 // Routes Import
 import userRoutes from './routes/User.routes.js';
+import petRoutes from './routes/Pets.routes.js';
 
 const app: Express = express();
 
@@ -22,6 +23,8 @@ app.use(
 );
 
 app.use('/api/v1/users', userRoutes);
+
+app.use('/api/v1/pets', petRoutes);
 
 app.get('/health', (_, res) => {
   res.send('Server is Runnning');

@@ -5,6 +5,7 @@ import { APIResponse } from '../utils/APIResponse.util.js';
 import AsyncHandler from '../utils/AsyncHandler.util.js';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
+import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   try {
@@ -69,6 +70,8 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
 });
 
 const registerUser = AsyncHandler(async (req: Request, res: Response) => {
+  let avatarUrl: string = ''; //to store image url
+
   try {
     const { firstName, lastName, email, password } = req.body;
 
@@ -88,11 +91,19 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
       return res.status(402).json(new APIError('Password Must be 8 Character Long', 402));
     }
 
+    const imagelocalPath = req.file?.path;
+
+    if (imagelocalPath) {
+      const res = await uploadOnCloudinary(imagelocalPath);
+      avatarUrl = res ? res?.url : '';
+    }
+
     const createUser = await UserModel.create({
       firstName,
       lastName,
       email,
       password,
+      avatar: avatarUrl,
     });
 
     const isUserCreated = await UserModel.findById({ _id: createUser._id }).select(
@@ -120,11 +131,13 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
+const logoutUser = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
-    const _id = (req as unknown as IGetUserAuthInfoRequest)?.user?.id;
+    const _id = req.user?._id;
 
-    console.log(_id);
+    if (!_id) {
+      throw new Error('User ID is missing');
+    }
 
     await UserModel.findByIdAndUpdate(
       { _id },

@@ -1,11 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: './.env' });
+import 'dotenv/config';
 
 import app from './src/index';
 import connectDB from './src/DB/connectDB';
 
-const PORT: number = 3008 || process.env.PORT;
-const HOST: string = 'localhost' || process.env.HOST;
+const PORT: string = process.env.PORT || '3008';
+const HOST: string = process.env.HOST || 'localhost';
 
 connectDB()
   .then(() => {
