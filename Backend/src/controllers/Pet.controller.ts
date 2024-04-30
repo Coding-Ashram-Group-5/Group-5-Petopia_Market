@@ -3,11 +3,12 @@ import { APIError } from '../utils/APIError.util.js';
 import { APIResponse } from '../utils/APIResponse.util.js';
 import AsyncHandler from '../utils/AsyncHandler.util.js';
 import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
-import { IGetUserAuthInfoRequest } from '../types/model/user.type.js';
+import { CloudinaryImage, IGetUserAuthInfoRequest } from '../types/model/user.type.js';
 import { RequestHandler, Response, Request } from 'express';
 
+// This Controller add's Detail of Pet in Pet Controller
 const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
-  const petImageURL: string[] = [];
+  const petImage: CloudinaryImage[] = [];
   try {
     const { petName, petDescription, price, isFree, petType, petBread, diseases } = req.body;
 
@@ -18,6 +19,7 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
 
     const petImages = req.files;
 
+    // Checking Condition for Minimum one Image is Required
     if (!petImages || !Array.isArray(petImages) || petImages.length < 1) {
       return res.status(402).json(new APIError('At Least one Image of Pet is Required', 402));
     }
@@ -27,7 +29,7 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
       const localPath: string = file?.path;
       const response = await uploadOnCloudinary(localPath);
       if (response?.url) {
-        petImageURL.push(response.url);
+        petImage.push({ url: response.url, publicId: response.public_id });
       }
     }
 
@@ -38,7 +40,7 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
       isFree,
       petType,
       petBread,
-      petImages: petImageURL,
+      petImages: petImage,
       diseases,
       owner: req.user?._id,
     });
@@ -54,9 +56,12 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
   }
 });
 
+// This Controller Retrieve all Pets Details
 const getAllPets = AsyncHandler(async (_, res: Response) => {
   try {
+    // Retrieve all Available Pets
     const pets = await Pets.find();
+
     res.status(200).json(new APIResponse('All Pets Retrieved Successfully', 200, pets));
   } catch (error: any) {
     console.log('Error while retrieving pets:', error.message);
@@ -64,10 +69,12 @@ const getAllPets = AsyncHandler(async (_, res: Response) => {
   }
 });
 
+// This Controller helps to get Pet Details by Id
 const getPetById: RequestHandler = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
+    // Checking Availability of id in params
     if (!id) {
       return res.status(402).json(new APIError('Parameter id is Missing', 402));
     }
@@ -85,6 +92,7 @@ const getPetById: RequestHandler = AsyncHandler(async (req: Request, res: Respon
   }
 });
 
+// This Controller Delete Pet Details by id
 const deletePetById = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -92,6 +100,13 @@ const deletePetById = AsyncHandler(async (req: Request, res: Response) => {
     if (!id) {
       return res.status(402).json(new APIError('Parameter id is Missing', 402));
     }
+    const petDetails = await Pets.findById(id);
+
+    if (!petDetails) {
+      return res.status(402).json(new APIError('No Pet Found with Given Credentials', 402));
+    }
+
+    await petDetails.deleteImages();
 
     const deletedPet = await Pets.findByIdAndDelete(id);
 
@@ -106,8 +121,9 @@ const deletePetById = AsyncHandler(async (req: Request, res: Response) => {
   }
 });
 
+// This controller Help's to Edit Details of Pet
 const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
-  let petsImageUrl: string[] = [];
+  let petsImageUrl: CloudinaryImage[] = [];
   try {
     const { petName, petDescription, price, isFree, petType, petBreed, diseases } = req.body;
     const { id } = req.params;
@@ -118,6 +134,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
       return res.status(402).json(new APIError('Pet Not Exist with given Id', 402));
     }
 
+    // Checking for condition of Only Owner Can Edit Details of Pet
     if (petDetails && req.user && String(petDetails.owner) != req.user._id) {
       return res.status(402).json(new APIError('You are Not owner of this Pet', 402));
     }
@@ -133,13 +150,14 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
 
     const petImages = req.files;
 
+    // if Images are altered then and then only updating image
     if (petImages && Array.isArray(petImages)) {
       // Iterating over each uploaded file and uploading them to Cloudinary
       for (const file of petImages) {
         const localPath: string = file?.path;
         const response = await uploadOnCloudinary(localPath);
         if (response?.url) {
-          petsImageUrl.push(response.url);
+          petsImageUrl.push({ url: response.url, publicId: response.public_id });
         }
       }
     }
@@ -174,4 +192,35 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
   }
 });
 
-export { addPet, getAllPets, getPetById, deletePetById, updatePetDetails };
+// Following Controller change Status of Pet is Adopted or not?
+const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const PetDetails = await Pets.findById(id);
+
+    // Checking Existence of Pet Details
+    if (!PetDetails) {
+      return res.status(402).json(new APIError("Pet with Provided Details Doesn't Exist", 402));
+    }
+
+    // Checking Condition of Pet Owner can't Adopt his own Pet
+    if (PetDetails && req.user && String(PetDetails.owner) != req.user._id) {
+      return res.status(402).json(new APIError("You Can't Adopt Your own Pet", 402));
+    }
+
+    const updatePetAdoptStatus = await Pets.findByIdAndUpdate(id, { isAdopted: true });
+
+    // Checking if any server side issue in update status
+    if (!updatePetAdoptStatus) {
+      return res.status(502).json(new APIError('Failed to Update the Status of Pet Adoption Sorry', 502));
+    }
+
+    res.status(200).json(new APIResponse('Pet is Adopted Successfully', 200, updatePetAdoptStatus));
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json(new APIError('Failed to update pet details', 500, error));
+  }
+});
+
+export { addPet, getAllPets, getPetById, deletePetById, updatePetDetails, buyPet };

@@ -8,10 +8,16 @@ export interface IUser extends mongoose.Document {
   email: string;
   password: string;
   refreshToken?: string;
-  avatar?: string;
+  avatar?: CloudinaryImage;
   ComparePassword(password: string): Promise<boolean>;
   generateAccessToken(): string;
   generateRefreshToken(): string;
+  deleteAvatar(): void;
+}
+
+export interface CloudinaryImage {
+  publicId: string;
+  url: string;
 }
 
 // Type Definition for Request While Utilizing req.user

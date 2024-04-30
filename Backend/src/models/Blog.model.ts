@@ -12,8 +12,14 @@ const blogSchema: mongoose.Schema<IBlog> = new mongoose.Schema(
       required: [true, 'Blog Content is Required Field'],
     },
     coverImage: {
-      type: String,
-      required: [true, 'Blog CoverImage is Required Field'],
+      publicId: {
+        type: String,
+        default: '',
+      },
+      url: {
+        type: String,
+        default: '',
+      },
     },
     category: [
       {

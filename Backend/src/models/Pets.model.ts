@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
 import { IPet, IPetModel } from '../types/model/pets.type.js';
+import { DeleteAssets } from '../utils/Cloudinary.util.js';
+import { CloudinaryImage } from '../types/model/user.type.js';
 
 const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
   {
@@ -29,14 +31,24 @@ const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isAdopted: {
+      type: Boolean,
+      default: false,
+    },
     diseases: {
       type: String,
       default: '',
     },
     petImages: [
       {
-        type: String,
-        required: [true, 'Pet Images is Required Field'],
+        publicId: {
+          type: String,
+          default: '',
+        },
+        url: {
+          type: String,
+          default: '',
+        },
       },
     ],
     owner: {
@@ -57,6 +69,14 @@ petSchema.path('petImages').validate(function (value: string[]) {
   return value.length >= 1;
 }, 'At least one pet image is required.');
 
+petSchema.methods.deleteImages = async function (): Promise<boolean | null> {
+  if (this.petImages.length > 1) {
+    return this.petImages.map(async (image: CloudinaryImage) => {
+      await DeleteAssets(image?.publicId);
+    });
+  }
+  return true;
+};
 const PetsModel: IPetModel = mongoose.models.Pets || mongoose.model('Pets', petSchema);
 
 export default PetsModel;

@@ -1,9 +1,10 @@
 import mongoose, { Document, Types } from 'mongoose';
+import { CloudinaryImage } from './user.type.js';
 
 export interface IBlog extends Document {
   title: string;
   content: string;
-  coverImage: string;
+  coverImage: CloudinaryImage;
   category: string[];
   likes?: number;
   commentType: Types.ObjectId;

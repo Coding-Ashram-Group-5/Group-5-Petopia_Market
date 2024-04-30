@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { IUser } from '../types/model/user.type.js';
+import { DeleteAssets } from '../utils/Cloudinary.util.js';
+import e from 'express';
 
 const SALT_ROUND = 10;
 
@@ -17,8 +19,14 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
       default: '',
     },
     avatar: {
-      type: String,
-      default: '', //Url from Cloudinary
+      publicId: {
+        type: String,
+        default: '',
+      },
+      url: {
+        type: String,
+        default: '',
+      },
     },
     email: {
       type: String,
@@ -43,10 +51,14 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-
   this.password = await bcrypt.hash(this.password, SALT_ROUND);
   next();
 });
+
+userSchema.methods.deleteAvatar = async function (): Promise<boolean | null> {
+  if (this.avatar.publicId) return await DeleteAssets(this.avatar.publicId);
+  return true;
+};
 
 userSchema.methods.ComparePassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);

@@ -39,6 +39,6 @@ export const isAuthenticate = AsyncHandler(async (req: AuthRequest, res: Respons
     }
   } catch (error: any) {
     console.log(error);
-    throw new APIError(error?.message || 'Internal Server Error', 502);
+    res.status(402).json(new APIError(error?.message || 'Internal Server Error', 502));
   }
 });

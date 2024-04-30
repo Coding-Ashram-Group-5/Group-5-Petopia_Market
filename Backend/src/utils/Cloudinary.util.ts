@@ -38,4 +38,20 @@ const uploadOnCloudinary: UploadOnCloudinary = async (localFilePath) => {
   }
 };
 
+// Delete Assets from Cloudinary
+export const DeleteAssets = async (publicId: string): Promise<boolean | null> => {
+  try {
+    if (!publicId) {
+      throw new Error('Public Id is Required to Delete an Asset');
+    }
+
+    const deleteAsset = await cloudinary.uploader.destroy(publicId);
+
+    return deleteAsset?.result ? true : false;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export { uploadOnCloudinary };
