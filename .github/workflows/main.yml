@@ -66,6 +66,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: ${{ if(needs.run-unit-tests.result == 'success', 'info', 'error') }} # Set severity based on test result
+          severity: ${{ if(needs.run-unit-tests.result == 'success' && 'info' || 'error') }} # Set severity based on test result
           details: |
-            ${{ if(needs.run-unit-tests.result == 'success', 'New Deployment Successfully Done!', 'Deployment Failed!') }}
+            details: |
+                 ${{ needs.run-unit-tests.result == 'success' && 'New Deployment Successfully Done!' || 'Deployment Failed!' }}
