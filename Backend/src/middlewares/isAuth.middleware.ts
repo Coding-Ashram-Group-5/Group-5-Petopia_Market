@@ -12,7 +12,6 @@ interface AuthRequest extends Request {
 export const isAuthenticate = AsyncHandler(async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     let token: string | undefined;
-
     if (req.cookies && req.cookies.authToken) {
       token = req.cookies.authToken;
     } else if (req.headers && req.headers.authorization && typeof req.headers.authorization === 'string') {

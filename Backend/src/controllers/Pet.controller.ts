@@ -51,7 +51,7 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
 
     res.status(200).json(new APIResponse('Pet Details Added Successfully', 200, addNewPet));
   } catch (error: any) {
-    console.log('Errro while Adding Pet');
+    console.log(error?.message || 'Errro while Adding Pet');
     res.status(502).json(new APIError(error?.message, 502, error));
   }
 });
