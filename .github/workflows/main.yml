@@ -5,10 +5,6 @@ on: # Define when the workflow should be triggered
     branches:
       - main
       - dev
-  pull_request_target: # Trigger the workflow on pull request targeting events for the specified branches
-    types: [opened, reopened, assigned] # Trigger on pull request opened or reopened events
-    branches:
-      - dev
 
 jobs:
   run-unit-tests:
