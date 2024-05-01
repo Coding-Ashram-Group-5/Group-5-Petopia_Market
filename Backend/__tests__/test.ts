@@ -2,7 +2,7 @@
 // ! 1. Owner Can't Buy a Pet
 // ! 2. one user can't update the pet details if he is not owner
 
-import 'dotenv/config.js';
+import 'dotenv/config';
 import request from 'supertest';
 import app from '../src/index.js';
 import mongoose from 'mongoose';
