@@ -5,7 +5,6 @@ import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import Login from "./components/Auth/pages/Login";
-import Logout from "./components/Auth/pages/Logout";
 import Register from "./components/Auth/pages/Register";
 import Home from "./components/Ui/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
@@ -13,7 +12,6 @@ import Products from "./components/Ui/LandingPage/Products/Products.tsx";
 
 
 function RegisterAndLogout() {
-  localStorage.clear();
   return <Register />;
 }
 
@@ -34,7 +32,6 @@ root.render(
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterAndLogout />} />
-            <Route path="/logout" element={<Logout />} />
             <Route path="/products" element={<Products />} />
             <Route path="*" element={<NotFound />} />
           </Route>

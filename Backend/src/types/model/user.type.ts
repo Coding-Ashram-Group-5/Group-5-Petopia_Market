@@ -1,22 +1,29 @@
 import mongoose from 'mongoose';
+import { Request } from 'express';
 
-export interface User extends mongoose.Document {
+export interface IUser extends mongoose.Document {
   _id: string;
   firstName: string;
   lastName?: string;
   email: string;
   password: string;
   refreshToken?: string;
-  avatar?: string;
+  avatar?: CloudinaryImage;
   ComparePassword(password: string): Promise<boolean>;
   generateAccessToken(): string;
   generateRefreshToken(): string;
+  deleteAvatar(): void;
 }
 
-// Type Definition for Request While Utilizing req.user for Auth in Logout Route
+export interface CloudinaryImage {
+  publicId: string;
+  url: string;
+}
+
+// Type Definition for Request While Utilizing req.user
 export interface IGetUserAuthInfoRequest extends Request {
-  user: {
-    id: Pick<User, '_id'>;
+  user?: {
+    _id?: string | undefined;
   };
 }
 
