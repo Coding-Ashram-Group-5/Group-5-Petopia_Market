@@ -4,7 +4,8 @@ import { APIError } from '../utils/APIError.util.js';
 import { APIResponse } from '../utils/APIResponse.util.js';
 import AsyncHandler from '../utils/AsyncHandler.util.js';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
+import { CloudinaryImage, IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
+import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   try {
@@ -69,6 +70,11 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
 });
 
 const registerUser = AsyncHandler(async (req: Request, res: Response) => {
+  let avatar: CloudinaryImage = {
+    publicId: '',
+    url: '',
+  };
+
   try {
     const { firstName, lastName, email, password } = req.body;
 
@@ -88,11 +94,20 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
       return res.status(402).json(new APIError('Password Must be 8 Character Long', 402));
     }
 
+    const imagelocalPath = req.file?.path;
+
+    if (imagelocalPath) {
+      const res = await uploadOnCloudinary(imagelocalPath);
+      avatar.url = res ? res?.url : '';
+      avatar.publicId = res ? res?.public_id : '';
+    }
+
     const createUser = await UserModel.create({
       firstName,
       lastName,
       email,
       password,
+      avatar: avatar,
     });
 
     const isUserCreated = await UserModel.findById({ _id: createUser._id }).select(
@@ -120,11 +135,13 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const logoutUser = AsyncHandler(async (req: Request, res: Response) => {
+const logoutUser = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
-    const _id = (req as unknown as IGetUserAuthInfoRequest)?.user?.id;
+    const _id = req.user?._id;
 
-    console.log(_id);
+    if (!_id) {
+      throw new Error('User ID is missing');
+    }
 
     await UserModel.findByIdAndUpdate(
       { _id },
@@ -151,8 +168,6 @@ const deleteAccount = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    console.log(id);
-
     if (!id) {
       return res.status(402).json(new APIError('Provide Necessary Parameters', 402));
     }
@@ -163,7 +178,9 @@ const deleteAccount = AsyncHandler(async (req: Request, res: Response) => {
       return res.status(402).json(new APIError(`User Not Exist With ID : ${id}`, 402));
     }
 
-    const isDeleted = await UserModel.findByIdAndDelete(id);
+    await isUserExistWithId.deleteAvatar();
+
+    const isDeleted = await UserModel.findOneAndDelete({ _id: id });
 
     if (!isDeleted) {
       return res.status(502).json(new APIError('Failed to Delete Account', 502));
