@@ -8,7 +8,7 @@ import Login from "./components/Auth/pages/Login";
 import Register from "./components/Auth/pages/Register";
 import Home from "./components/Ui/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
-import Products from "./components/Ui/LandingPage/Products/Products.tsx";
+import Products from "./components/Ui/Pages/ProductPage/Products.tsx";
 
 
 function RegisterAndLogout() {
