@@ -58,7 +58,7 @@ jobs:
 
   send-notification-to-discord:
     runs-on: ubuntu-latest
-    needs: [deploy-to-render,run-unit-tests]
+    needs: [deploy-to-render, run-unit-tests]
     if: ${{ always() }} # Always run this job
     steps:
       - name: Notify Discord
@@ -66,6 +66,6 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: ${{ needs.run-unit-tests.result == 'success' ? info : error }} # Set severity based on test result
+          severity: !e '${{ needs.run-unit-tests.result == "success" ? "info" : "error" }}' # Set severity based on test result
           details: |
             ${{ if(needs.run-unit-tests.result == 'success', 'New Deployment Successfully Done!', 'Deployment Failed!') }}
