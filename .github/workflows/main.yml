@@ -40,8 +40,8 @@ jobs:
 
       - name: Run backend tests # Step to run backend tests
         env:
-          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }} # Secret for access token
-          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }} # Secret for refresh token
+          ACCESS_TOKEN_SECRET: 29883be9b570d00fedb353ba53f7f239ebd0215ce9b1dd99ec540d63f861c152920f0fa526f42d894108375ba61154188709d29ea508d2087cb0c00040921432
+          REFRESH_TOKEN_SECRET: 7c03530c201384fccfd27066298655a3fbcc5538ca674c81e1ec1ea2320a243f53b6629a2e3013b09ac694e5f650e76fa6bb92f93a18e2855011400dc0861bd5
           ACCESS_TOKEN_EXPIRY: 2d # Expiry time for access token
           REFRESH_TOKEN_EXPIRY: 15d # Expiry time for refresh token
         run: |
