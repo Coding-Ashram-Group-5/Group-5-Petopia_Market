@@ -5,9 +5,6 @@ on: # Define when the workflow should be triggered
     branches:
       - main
       - dev
-  pull_request: # Trigger the workflow on pull requests targeting the specified branches
-    branches:
-      - dev
   pull_request_target: # Trigger the workflow on pull request targeting events for the specified branches
     branches:
       - dev
