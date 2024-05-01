@@ -58,7 +58,7 @@ jobs:
 
   send-notification-to-discord:
     runs-on: ubuntu-latest
-    needs: [run-unit-tests]
+    needs: [deploy-to-render,run-unit-tests]
     if: ${{ always() }} # Always run this job
     steps:
       - name: Notify Discord
