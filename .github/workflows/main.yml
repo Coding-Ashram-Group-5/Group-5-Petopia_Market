@@ -45,8 +45,8 @@ jobs:
           ACCESS_TOKEN_EXPIRY: 2d # Expiry time for access token
           REFRESH_TOKEN_EXPIRY: 15d # Expiry time for refresh token
           CLOUDINARY_API_KEY: 878585448853842
-          CLOUDINARY_API_SECRET:_U6_Z0NgSVZUXuiGTLsxhqb-sGY
-          CLOUDINARY_CLOUD_NAME: dt9ayjybp
+          CLOUDINARY_API_SECRET: "_U6_Z0NgSVZUXuiGTLsxhqb-sGY"
+          CLOUDINARY_CLOUD_NAME: "dt9ayjybp"
         run: |
           cd Backend
           npm run test
