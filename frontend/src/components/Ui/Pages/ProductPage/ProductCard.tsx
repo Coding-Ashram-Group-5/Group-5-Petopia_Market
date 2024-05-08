@@ -10,7 +10,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, price, salePrice }) => {
   return (
     <div className="bg-background dark:bg-card border border-border rounded-lg">
-      <a href="#" className="group relative mb-2 block h-40 overflow-hidden rounded-lg bg-gray-100 lg:mb-3">
+      <a href="#" className="group relative mb-2 block h-40 overflow-hidden rounded-lg  lg:mb-3">
         <img
           src={imageUrl}
           loading="lazy"

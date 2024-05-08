@@ -9,6 +9,8 @@ import Register from "./components/Auth/pages/Register";
 import Home from "./components/Ui/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
 import Products from "./components/Ui/Pages/ProductPage/Products.tsx";
+import Pets from "./components/Ui/Pets/Pets.tsx";
+import PetDetails from "./components/Ui/Pets/PetDetails.tsx";
 
 
 function RegisterAndLogout() {
@@ -33,6 +35,8 @@ root.render(
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterAndLogout />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/pets" element={<Pets />} />
+            <Route path="/pets/getDetails/:id" element={<PetDetails />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
