@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../lib/api";
-import reloginWithRefreshToken from "../../../lib/Utils/authUtil";
-import Cookies from "js-cookie";
 import { Users } from "lucide-react";
 import { Input } from "@/components/Ui/input";
+import usePersonStore from "@/lib/Utils/zustandStore";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("one@one.com");
+    const [password, setPassword] = useState("11111111");
+    const updatePerson = usePersonStore((state) => state.updatePerson);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const { accessToken } = await login(email, password);
-            if (accessToken) {
+            const userData = await login(email, password);
+            updatePerson(userData?.data);
+            if (userData?.success) {
                 navigate("/");
             }
         } catch (error) {
@@ -23,34 +24,34 @@ const Login = () => {
         }
     };
 
-    useEffect(() => {
-        const autoRelogin = async () => {
-            try {
-                const existingRefreshToken = Cookies.get("refreshToken"); // Get refreshToken from cookie
-                if (existingRefreshToken) {
-                    const newAccessToken = await reloginWithRefreshToken(
-                        existingRefreshToken,
-                    );
-                    if (newAccessToken) {
-                        console.log("Auto relogin successful");
-                        navigate("/"); // Navigate to home page after successful relogin
-                    } else {
-                        console.log("Auto relogin failed");
-                    }
-                } else {
-                    console.log("No existing refresh token found");
-                }
-            } catch (error) {
-                console.error("Auto relogin error:", error);
-            }
-        };
+    // useEffect(() => {
+    //     const autoRelogin = async () => {
+    //         try {
+    //             const existingRefreshToken = Cookies.get("refreshToken"); // Get refreshToken from cookie
+    //             if (existingRefreshToken) {
+    //                 const newAccessToken = await reloginWithRefreshToken(
+    //                     existingRefreshToken,
+    //                 );
+    //                 if (newAccessToken) {
+    //                     console.log("Auto relogin successful");
+    //                     navigate("/"); // Navigate to home page after successful relogin
+    //                 } else {
+    //                     console.log("Auto relogin failed");
+    //                 }
+    //             } else {
+    //                 console.log("No existing refresh token found");
+    //             }
+    //         } catch (error) {
+    //             console.error("Auto relogin error:", error);
+    //         }
+    //     };
 
-        autoRelogin();
+    //     autoRelogin();
 
-        return () => {
-            // Clean-up function if needed
-        };
-    }, [navigate]); // Include 'navigate' in the dependency array
+    //     return () => {
+    //         // Clean-up function if needed
+    //     };
+    // }, [navigate]); // Include 'navigate' in the dependency array
 
     return (
         <div className="flex justify-center p-6 md:p-2 mb-16">
@@ -130,7 +131,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-                <div className="relative  hidden  md:block w-[30vw]  overflow-hidden py-8  h-fit md:h-auto lg:py-4 ">
+                <div className="relative  hidden  md:block w-[30vw]  overflow-hidden py-8  h-full md:h-auto lg:py-4 ">
                     <img
                         src="https://res.cloudinary.com/dzxynskmo/image/upload/v1715160614/Petopia/jsjnyg0lmn5aqt1mxjd3.jpg"
                         loading="lazy"

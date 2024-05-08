@@ -3,6 +3,7 @@ import { register } from "../../../lib/api";
 import { useNavigate } from "react-router-dom";
 import { UserPlus } from "lucide-react";
 import { Input } from "@/components/Ui/input";
+import usePersonStore from "@/lib/Utils/zustandStore";
 
 interface RegisterForm {
     firstName: string;
@@ -24,6 +25,8 @@ const Register = () => {
 
     const { firstName, lastName, email, password, confirmPassword } = formData;
 
+    const updatePerson = usePersonStore((Store) => Store.updatePerson);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -38,7 +41,9 @@ const Register = () => {
                 return;
             }
 
-            await register(formData);
+            const user = await register(formData);
+
+            updatePerson(user?.data);
             document.cookie =
                 "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
