@@ -29,3 +29,26 @@ export interface TokenResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface Pet {
+  _id: string;
+  petName: string;
+  petType: string;
+  petBread: string;
+  petDescription: string;
+  price: number;
+  isFree: boolean;
+  isAdopted: boolean;
+  diseases: string;
+  petImages: PetImage[];
+  owner: string;
+  created_at: string;
+  updated_at: string;
+  __v: number;
+}
+
+interface PetImage {
+  publicId: string;
+  url: string;
+  _id: string;
+}
