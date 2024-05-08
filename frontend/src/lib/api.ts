@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, TokenResponse } from "../components/Auth/types/models"; // Import User and TokenResponse types
+import { User, TokenResponse, Pet } from "../components/Auth/types/models"; // Import User and TokenResponse types
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
 
@@ -35,6 +35,25 @@ export const logout = async (): Promise<void> => {
 
 export const relogin = async (): Promise<TokenResponse> => {
     const { data } = await authApi.get("/api/v1/users/refresh/token");
+    return data;
+};
+
+export const getAllPets = async (): Promise<Pet> => {
+    const { data } = await authApi.get("api/v1/pets/getDetails/all");
+    return data;
+};
+
+export const getSinglePet = async (id: string): Promise<Pet> => {
+    const { data } = await authApi.get(`api/v1/pets/getDetails/${id}`);
+    return data;
+};
+
+export const addPet = async (petData: Pet): Promise<Pet> => {
+    const { data } = await authApi.post("/api/v1/pets/add", petData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
     return data;
 };
 

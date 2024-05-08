@@ -2,6 +2,8 @@ import { useState } from "react";
 import ProductCard from "./ProductCard";
 import { Label } from "@/components/Ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/Ui/radio-group"
+import { Slider } from "@/components/Ui/slider"
+
 import { Checkbox } from "@/components/Ui/checkbox"
 
 
@@ -12,29 +14,16 @@ const products = [
     title: "Timely Watch",
     price: 15.00,
     salePrice: 30.00
-  },
-  {
-    id: 2,
-    imageUrl: "https://images.pexels.com/photos/2955820/pexels-photo-2955820.jpeg?auto=compress&cs=tinysrgb&w=400",
-    title: "Timely Watch",
-    price: 15.00,
-    salePrice: 30.00
-  },
-  {
-    id: 3,
-    imageUrl: "https://images.pexels.com/photos/2955820/pexels-photo-2955820.jpeg?auto=compress&cs=tinysrgb&w=400",
-    title: "Timely Watch",
-    price: 15.00,
-    salePrice: 30.00
-  },
+  }
+  
 
 ];
 export default function Products() {
 
+
   const [isfilterOpen, setIsFilterOpen] = useState(true);
 
   function onHandleclick() {
-    console.log("open")
     setIsFilterOpen(!isfilterOpen)
   }
 
@@ -43,7 +32,7 @@ export default function Products() {
       <div className="main flex flex-col md:flex-row">
         {isfilterOpen && <>
           <div className="sidebar w-full  md:w-[20vw] md:h-screen border-r-2  ">
-            <div className="p-2 font-leag ">
+            <div className="p-2 font-leag sticky ">
               <h1 className="text-xl" >Filter</h1>
               <div className="w-fit p-2" >
                 <RadioGroup defaultValue="option-one">
@@ -78,6 +67,10 @@ export default function Products() {
                   Summer
                 </label>
               </div>
+              <h1 className="text-lg" >Price</h1>
+              <div className="p-2">
+                <Slider />
+                </div>
 
             </div>
           </div>
