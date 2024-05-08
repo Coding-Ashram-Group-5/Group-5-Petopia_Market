@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
@@ -12,35 +12,40 @@ import Products from "./components/Ui/Pages/ProductPage/Products.tsx";
 import Pets from "./components/Ui/Pets/Pets.tsx";
 import PetDetails from "./components/Ui/Pets/PetDetails.tsx";
 
-
 function RegisterAndLogout() {
-  return <Register />;
+    return <Register />;
 }
 
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
-  throw new Error("Root element with id 'root' not found.");
+    throw new Error("Root element with id 'root' not found.");
 }
 
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<RegisterAndLogout />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/pets" element={<Pets />} />
-            <Route path="/pets/getDetails/:id" element={<PetDetails />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<App />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route
+                            path="/register"
+                            element={<RegisterAndLogout />}
+                        />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/pets" element={<Pets />} />
+                        <Route
+                            path="/pets/getDetails/:id"
+                            element={<PetDetails />}
+                        />
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </ThemeProvider>
+    </React.StrictMode>,
 );
