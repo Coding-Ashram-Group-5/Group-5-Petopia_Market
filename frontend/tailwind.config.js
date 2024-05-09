@@ -13,23 +13,23 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        'mobile': '640px',
-        // => @media (min-width: 640px) { ... }
+        'xs': { 'max': '640px' },
+        // => @media (max-width: 640px) { ... }
 
-        'tablet': '640px',
-        // => @media (min-width: 640px) { ... }
+        'sm': {'max': '768px' },
+        // => @media (max-width: 768px) { ... }
 
-        'laptop': '1024px',
-        // => @media (min-width: 1024px) { ... }
+        'lg': {'max': '1024px' },
+        // => @media (max-width: 1024px) { ... }
 
-        'desktop': '1280px',
-        // => @media (min-width: 1280px) { ... }
+        'xl': {'max': '1280px' },
+        // => @media (max-width: 1280px) { ... }
 
-        "2xl": "1400px",
-        // => @media (min-width: 1400px) { ... }
+        "2xl": {'max': "1400px" },
+        // => @media (max-width: 1400px) { ... }
 
-        '3xl': '1536px',
-        // => @media (min-width: 1536px) { ... }
+        '3xl': {'max': '1536px' },
+        // => @media (max-width: 1536px) { ... }
       },
     },
     extend: {
