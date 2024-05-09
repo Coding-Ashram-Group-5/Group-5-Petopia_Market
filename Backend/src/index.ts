@@ -6,6 +6,9 @@ import cors from 'cors';
 // Routes Import
 import userRoutes from './routes/User.routes.js';
 import petRoutes from './routes/Pets.routes.js';
+import productRoutes from './routes/Product.routes.js';
+import cartRoutes from './routes/Cart.routes.js';
+import blogRoutes from './routes/Blog.routes.js';
 
 const app: Express = express();
 
@@ -15,18 +18,23 @@ app.use(express.json({ limit: '18kb' }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+const CORS_ORIGIN: string | undefined = process.env.CORS_ORIGIN;
+
 app.use(
   cors({
-    origin: ['http://localhost:5173'],
+    origin: CORS_ORIGIN,
     credentials: true,
   }),
 );
 
 app.use('/api/v1/users', userRoutes);
-
 app.use('/api/v1/pets', petRoutes);
+app.use('/api/v1/product', productRoutes);
+app.use('/api/v1/cart', cartRoutes);
+app.use('/api/v1/blogs', blogRoutes);
 
-app.get('/health', (_, res) => {
+// Health Verifying Route
+app.get('/api/v1/health', (_, res) => {
   res.send('Server is Runnning');
 });
 

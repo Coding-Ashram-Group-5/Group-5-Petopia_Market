@@ -3,6 +3,7 @@ import {
   addPet,
   buyPet,
   deletePetById,
+  getAdoptedPet,
   getAllPets,
   getPetById,
   updatePetDetails,
@@ -16,7 +17,10 @@ const router: Router = Router();
 router.route('/add').post(isAuthenticate, uploadMiddleware, addPet);
 router.route('/delete/:id').delete(isAuthenticate, deletePetById);
 router.route('/update/:id').put(isAuthenticate, uploadMiddleware, updatePetDetails);
-router.route('/purchase/:id').patch(isAuthenticate, buyPet);
+router.route('/adopt/:id').patch(isAuthenticate, buyPet);
+
+// Route to get User Specific Adopted Pets
+router.route('/getAdoptedPet/:id').get(isAuthenticate, getAdoptedPet);
 
 // Public Route
 router.route('/getDetails/all').get(getAllPets);
