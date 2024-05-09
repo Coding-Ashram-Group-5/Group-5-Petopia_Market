@@ -4,6 +4,7 @@ import Products  from "./Products/Products"
 import Sales from "./Sales"
 import Banner from "./Banner"
 import FAQ from "./FAQ"
+import Footer from "./Footer"
 
 export default function Landingpage() {
     return (
@@ -14,6 +15,7 @@ export default function Landingpage() {
             <Banner/>
             <Sales/>
             <FAQ/>
+            <Footer/>
 
           </div>
         </>
