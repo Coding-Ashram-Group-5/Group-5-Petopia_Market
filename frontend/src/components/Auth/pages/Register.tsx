@@ -41,13 +41,13 @@ const Register = () => {
                 return;
             }
 
-            const user = await register(formData);
+            const userData = await register(formData);
+            const { firstName, lastName, email, avatar } = userData?.data;
+            updatePerson(firstName, lastName, email, avatar);
 
-            updatePerson(user?.data);
-            document.cookie =
-                "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-            navigate("/");
+            // document.cookie =
+            //     "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            if (userData?.success) navigate("/");
         } catch (error) {
             console.error("Registration error:", error);
         }
