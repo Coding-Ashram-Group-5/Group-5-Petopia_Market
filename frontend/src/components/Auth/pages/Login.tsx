@@ -15,7 +15,11 @@ const Login = () => {
         e.preventDefault();
         try {
             const userData = await login(email, password);
-            updatePerson(userData?.data);
+
+            const { firstName, lastName, avatar } = userData?.data;
+
+            updatePerson(firstName, lastName, userData?.data?.email, avatar);
+
             if (userData?.success) {
                 navigate("/");
             }
@@ -23,35 +27,6 @@ const Login = () => {
             console.error("Login error:", error);
         }
     };
-
-    // useEffect(() => {
-    //     const autoRelogin = async () => {
-    //         try {
-    //             const existingRefreshToken = Cookies.get("refreshToken"); // Get refreshToken from cookie
-    //             if (existingRefreshToken) {
-    //                 const newAccessToken = await reloginWithRefreshToken(
-    //                     existingRefreshToken,
-    //                 );
-    //                 if (newAccessToken) {
-    //                     console.log("Auto relogin successful");
-    //                     navigate("/"); // Navigate to home page after successful relogin
-    //                 } else {
-    //                     console.log("Auto relogin failed");
-    //                 }
-    //             } else {
-    //                 console.log("No existing refresh token found");
-    //             }
-    //         } catch (error) {
-    //             console.error("Auto relogin error:", error);
-    //         }
-    //     };
-
-    //     autoRelogin();
-
-    //     return () => {
-    //         // Clean-up function if needed
-    //     };
-    // }, [navigate]); // Include 'navigate' in the dependency array
 
     return (
         <div className="flex justify-center p-6 md:p-2 mb-16">

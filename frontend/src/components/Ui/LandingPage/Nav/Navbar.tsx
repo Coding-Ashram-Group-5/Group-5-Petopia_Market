@@ -1,6 +1,6 @@
 import { ModeToggle } from "@/components/Ui/Buttons/mode-toggle";
 import Sidebar from "./Sidebar";
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from "framer-motion";
 import { CgProfile } from "react-icons/cg";
 import {
     DropdownMenu,
@@ -12,6 +12,7 @@ import {
 } from "@/components/Ui/Menu/dropdown-menu";
 import Logout from "../../../Auth/pages/Logout";
 import { Link } from "react-router-dom";
+import usePersonStore from "@/lib/Utils/zustandStore";
 
 const Navbar: React.FC = () => {
     const controls = useAnimation();
@@ -22,11 +23,13 @@ const Navbar: React.FC = () => {
         { name: "About", href: "/about" },
     ];
 
-    const isUserLoggedIn = () => {
-        // Check if the refresh token exists in the cookie storage
-        const refreshToken = document.cookie.split('; ').find(row => row.startsWith('refreshToken='));
-        return refreshToken !== undefined;
-    };
+    const isUserLoggedIn = usePersonStore((state) => state.email);
+
+    // const isUserLoggedIn = () => {
+    //     // Check if the refresh token exists in the cookie storage
+    //     const refreshToken = document.cookie.split('; ').find(row => row.startsWith('refreshToken='));
+    //     return refreshToken !== undefined;
+    // };
 
     const handleTap = async () => {
         controls.start({ opacity: 0 });
@@ -36,7 +39,10 @@ const Navbar: React.FC = () => {
     return (
         <div className="flex items-center justify-between p-4 border-b">
             <div className="flex items-center">
-                <Link to={"/"} className="text-2xl font-leag font-extrabold text-black flex items-center ml-4 dark:text-gray-100">
+                <Link
+                    to={"/"}
+                    className="text-2xl font-leag font-extrabold text-black flex items-center ml-4 dark:text-gray-100"
+                >
                     PetoPia🐶
                 </Link>
             </div>
@@ -57,34 +63,54 @@ const Navbar: React.FC = () => {
                 <div className="relative top-[-2.55px]">
                     <Sidebar />
                 </div>
-                {!isUserLoggedIn() && (
+                {!isUserLoggedIn && (
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <motion.button
-                            type="button"
-                            className="text-xs bg-yellow-300/100 dark:bg-blue-600/100 border border-gray-500 dark:border-gray-200 rounded-md p-2 transition duration-300 ease-in-out hidden sm:block"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onTap={handleTap}
+                                type="button"
+                                className="text-xs bg-yellow-300/100 dark:bg-blue-600/100 border border-gray-500 dark:border-gray-200 rounded-md p-2 transition duration-300 ease-in-out hidden sm:block"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onTap={handleTap}
                             >
-                            <Link to="/login" className="text-gray-800 dark:text-gray-200">Sign In</Link>
+                                <Link
+                                    to="/login"
+                                    className="text-gray-800 dark:text-gray-200"
+                                >
+                                    Sign In
+                                </Link>
                             </motion.button>
                         </DropdownMenuTrigger>
                     </DropdownMenu>
                 )}
-                {isUserLoggedIn() && (
+                {isUserLoggedIn && (
                     <DropdownMenu>
                         <DropdownMenuTrigger>
-                            <CgProfile className="text-3xl" title="My Account"/>
+                            <CgProfile
+                                className="text-3xl"
+                                title="My Account"
+                            />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuLabel className="cursor-default">My Account</DropdownMenuLabel>
+                            <DropdownMenuLabel className="cursor-default">
+                                My Account
+                            </DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
-                            <DropdownMenuItem className="cursor-pointer">Billing</DropdownMenuItem>
-                            <DropdownMenuItem className="cursor-pointer">Team</DropdownMenuItem>
-                            <DropdownMenuItem className="cursor-pointer">Subscription</DropdownMenuItem>
-                            <DropdownMenuItem className="bg-border text-red-500/100 dark:text-red-600/100 cursor-pointer"><Logout buttonLabel="Logout" /></DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer">
+                                Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer">
+                                Billing
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer">
+                                Team
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer">
+                                Subscription
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="bg-border text-red-500/100 dark:text-red-600/100 cursor-pointer">
+                                <Logout buttonLabel="Logout" />
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )}
