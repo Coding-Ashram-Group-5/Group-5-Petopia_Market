@@ -65,7 +65,7 @@ jobs:
         if: ${{ needs.run-unit-tests.result == 'success' }}
         with:
           severity: info
-          details: Deployment Succeeded!
+          details: Deployment Successfully Done!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Deployment Failure
