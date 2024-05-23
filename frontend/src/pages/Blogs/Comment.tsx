@@ -21,7 +21,6 @@ const Comment = ({
     const loggedInUser = usePersonStore((state) => state._id);
     const [showBtn, setShowBtn] = useState(false);
     const [showMore, setShowMore] = useState(false);
-    console.log(comment);
 
     return (
         <div className="flex flex-col gap-2 px-4 py-2 bg-gray-200 dark:bg-[#071b4d]  m-2 rounded-lg font-leag text-lg leading-6">
@@ -64,23 +63,25 @@ const Comment = ({
                     </div>
                 )}
             </div>
-            <div className="flex-nowrap text-justify py-1">
-                {comment.comment.length > 100 ? (
-                    <span>
-                        {showMore
-                            ? comment.comment.slice(1, 100) + "..."
-                            : comment.comment}
-                        <span
-                            onClick={() => setShowMore(!showMore)}
-                            className="text-pink-600 cursor-pointer"
-                        >
-                           {"  "} show {showMore ? "more" : "less"}
+            {comment?._id && (
+                <div className="flex-nowrap text-justify py-1">
+                    {comment.comment.length > 100 ? (
+                        <span>
+                            {showMore
+                                ? comment.comment.slice(1, 100) + "..."
+                                : comment.comment}
+                            <span
+                                onClick={() => setShowMore(!showMore)}
+                                className="text-pink-600 cursor-pointer"
+                            >
+                                {"  "} show {showMore ? "more" : "less"}
+                            </span>
                         </span>
-                    </span>
-                ) : (
-                    <span>{comment.comment}</span>
-                )}
-            </div>
+                    ) : (
+                        <span>{comment.comment}</span>
+                    )}
+                </div>
+            )}
         </div>
     );
 };
