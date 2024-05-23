@@ -16,9 +16,15 @@ const Login = () => {
         try {
             const userData = await login(email, password);
 
-            const { firstName, lastName, avatar } = userData?.data;
+            const { _id, firstName, lastName, avatar } = userData?.data;
 
-            updatePerson(firstName, lastName, userData?.data?.email, avatar);
+            updatePerson(
+                _id,
+                firstName,
+                lastName,
+                userData?.data?.email,
+                avatar,
+            );
 
             if (userData?.success) {
                 navigate("/");

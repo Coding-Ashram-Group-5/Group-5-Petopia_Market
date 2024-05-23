@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 type State = {
+    _id: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -12,6 +13,7 @@ type State = {
 
 type Action = {
     updatePerson: (
+        _id: State["_id"],
         firstName: State["firstName"],
         lastName: State["lastName"],
         email: State["email"],
@@ -20,12 +22,13 @@ type Action = {
 };
 
 const usePersonStore = create<State & Action>((set) => ({
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
     avatar: { publicId: "", url: "" },
-    updatePerson: (firstName, lastName, email, avatar) =>
-        set(() => ({ firstName, lastName, email, avatar })),
+    updatePerson: (_id, firstName, lastName, email, avatar) =>
+        set(() => ({ _id, firstName, lastName, email, avatar })),
 }));
 
 export default usePersonStore;
