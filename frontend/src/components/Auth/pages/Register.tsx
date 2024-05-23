@@ -42,8 +42,8 @@ const Register = () => {
             }
 
             const userData = await register(formData);
-            const { firstName, lastName, email, avatar } = userData?.data;
-            updatePerson(firstName, lastName, email, avatar);
+            const { _id, firstName, lastName, email, avatar } = userData?.data;
+            updatePerson(_id, firstName, lastName, email, avatar);
 
             // document.cookie =
             //     "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

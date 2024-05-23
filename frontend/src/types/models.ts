@@ -76,3 +76,13 @@ interface Rating {
     userId: string;
     rating: number;
 }
+
+export interface Blog {
+    _id: string;
+    title: string;
+    content: string;
+    category: string[];
+    likes: string[];
+    coverImage: { publicId: string; url: string };
+    userDetails: User;
+}

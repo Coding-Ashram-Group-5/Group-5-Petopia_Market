@@ -8,6 +8,13 @@ import Login from "./components/Auth/pages/Login";
 import Register from "./components/Auth/pages/Register";
 import Home from "./Pages/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
+import Products from "./components/Ui/Pages/ProductPage/Products.tsx";
+import Pets from "./components/Ui/Pets/Pets.tsx";
+import PetDetails from "./components/Ui/Pets/PetDetails.tsx";
+import Blogs from "./pages/Blogs/Blogs.tsx";
+import Blog from "./pages/Blogs/BlogDetails.tsx";
+import NewBlog from "./pages/Blogs/AddBlog.tsx";
+import EditBlog from "./pages/Blogs/EditBlog.tsx";
 import Products from "@/Pages/ProductPage/Products.tsx";
 import Pets from "@/Pages/Pets/Pets.tsx";
 import PetDetails from "@/Pages/Pets/PetDetails.tsx";
@@ -42,6 +49,10 @@ root.render(
                             element={<RegisterAndLogout />}
                         />
                         <Route path="/products" element={<Products />} />
+                        <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/blogs/:id" element={<Blog />} />
+                        <Route path="/blogs/add" element={<NewBlog />} />
+                        <Route path="/blogs/edit/:id" element={<EditBlog />} />
                         <Route path="/pets" element={<Pets />} />
                         <Route
                             path="/pets/getDetails/:id"
