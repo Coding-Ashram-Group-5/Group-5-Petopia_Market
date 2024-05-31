@@ -14,12 +14,14 @@ export default function PetDetails() {
   const { id } = useParams()
     const fetchData = async (id: string | undefined) => {
     const data = await getSinglePet(id)
+    console.log(data)
     return data
   }
 
   
   const { isLoading, error, data } = useQuery({ queryKey: ["GetSInglePetDetails", id], queryFn: () => fetchData(id) })
 
+  console.log(data)
   if(isLoading) return <div>Loading...</div>
   if(error) return <div>Error: {error.message}</div>
 
@@ -81,7 +83,7 @@ export default function PetDetails() {
                 <span className="text-black dark:text-white  font-semibold"> {data?.diseases}</span></h1>
 
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <Truck /> <span className="text-black dark:text-white font-semibold text-xs">2-5 day To Shipped</span></h1>
-              <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <CircleUserRound />  <span className="text-black dark:text-white font-semibold capitalize text-xs">Owner : {data?.userData.firstName} {data?.userData.lastName}</span></h1>
+              <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <CircleUserRound />  <span className="text-black dark:text-white font-semibold capitalize text-xs">Owner : {data?.userData?.firstName} {data?.userData?.lastName}</span></h1>
 
               <div className="flex gap-2.5 mt-4">
                 <a href="#" className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base">Add to cart</a>
