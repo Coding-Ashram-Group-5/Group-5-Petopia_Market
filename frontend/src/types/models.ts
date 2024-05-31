@@ -53,6 +53,30 @@ interface PetImage {
     _id: string;
 }
 
+export interface Product {
+    _id: string;
+    productName: string;
+    productDescription: string;
+    productPrice: number;
+    discount: number;
+    creator: string;
+    productImages:ProductImage[];
+    quantity: number;
+    category: string;
+    ratings: Rating[];
+    averageRating: number;
+}
+
+interface ProductImage {
+    publicId: string;
+    url: string;
+    _id: string;
+}
+interface Rating {
+    userId: string;
+    rating: number;
+}
+
 export interface Blog {
     _id: string;
     title: string;

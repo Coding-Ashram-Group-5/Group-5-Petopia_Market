@@ -10,7 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/Ui/Menu/dropdown-menu";
-import Logout from "../../../Auth/pages/Logout";
+import Logout from "@/components/Auth/pages/Logout";
 import { Link } from "react-router-dom";
 import usePersonStore from "@/lib/Utils/zustandStore";
 

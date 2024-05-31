@@ -1,20 +1,23 @@
 import React from 'react';
 import { ShoppingCart } from "lucide-react";
+import { Link } from 'react-router-dom';
 interface ProductCardProps {
   imageUrl: string;
   title: string;
   price: number;
   salePrice?: number; // Optional prop for sale price
+  productId:number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, price, salePrice }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, price, salePrice, productId }) => {
   return (
     <div className="bg-background dark:bg-card border border-border rounded-lg">
-      <a href="#" className="group relative mb-2 block h-40 overflow-hidden rounded-lg  lg:mb-3">
+      <Link to={`getDetails/${productId}`} className="group relative mb-2 block h-40 overflow-hidden rounded-lg  lg:mb-3">
         <img
           src={imageUrl}
           loading="lazy"
           alt={`Photo of ${title}`}
+
           className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
         />
         {salePrice && (
@@ -22,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, price, saleP
             sale
           </span>
         )}
-      </a>
+      </Link>
       <div className="p-2">
         <a href="#" className="hover:gray-800 mb-1 text-primary font-bold transition font-leag duration-100 lg:text-sm">
           {title}
