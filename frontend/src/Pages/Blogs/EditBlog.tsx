@@ -4,9 +4,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { X, Image } from "lucide-react";
-import { string } from "prop-types";
 
-function BlogPostForm() {
+function EditBlog() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
@@ -140,4 +139,4 @@ function BlogPostForm() {
     );
 }
 
-export default BlogPostForm;
+export default EditBlog;

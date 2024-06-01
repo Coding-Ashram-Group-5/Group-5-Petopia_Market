@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
-import { Blog } from "@/components/Auth/types/models";
 import { getAllBlogs } from "@/lib/api";
+import { Blog } from "@/types/models";
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -9,8 +9,6 @@ const Blogs = () => {
         const dataFetch = async () => {
             try {
                 const data = await getAllBlogs();
-                console.log(data.data);
-
                 setBlogs(data?.data);
             } catch (error) {
                 console.error("Error:", error);
