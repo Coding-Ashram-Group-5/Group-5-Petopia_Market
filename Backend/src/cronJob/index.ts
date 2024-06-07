@@ -1,3 +1,5 @@
+import cronJob from 'node-cron';
+
 const API_ENDPOINT: string = process.argv.slice(2)[1]; //!ex --URL http://localhost:5173
 
 if (!API_ENDPOINT && API_ENDPOINT.startsWith('http')) {
@@ -10,4 +12,4 @@ const sendRequestToServer = (): void => {
     .catch((err) => console.log(err));
 };
 
-sendRequestToServer();
+cronJob.schedule('* 13 * * *', () => sendRequestToServer());
