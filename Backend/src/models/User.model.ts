@@ -13,10 +13,12 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
     firstName: {
       type: String,
       required: [true, 'FirstName is Required Field'],
+      trim: true,
     },
     lastName: {
       type: String,
       default: '',
+      trim: true,
     },
     avatar: {
       publicId: {
@@ -31,10 +33,12 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'Email is Required Field'],
+      trim: true,
     },
     password: {
       type: String,
       required: [true, 'Password is Required Field'],
+      select: false,
     },
     refreshToken: {
       type: String,

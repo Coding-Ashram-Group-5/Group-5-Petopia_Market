@@ -1,6 +1,7 @@
 // ! Remaining Test Case
 // ! 1. Owner Can't Buy a Pet
 // ! 2. one user can't update the pet details if he is not owner
+// ! 3. Delete Pet
 
 import 'dotenv/config.js';
 import request from 'supertest';
@@ -10,15 +11,6 @@ import fs from 'fs';
 import { Server } from 'http';
 
 let server: Server, agent: any, token: string;
-
-const login = async (): Promise<void> => {
-  try {
-    const res = await agent.post('/api/v1/users/signin').send({ email: 'test_db@gmail.com', password: '12345678' });
-    token = res.headers['set-cookie'][0].split(';')[0].split('=')[1];
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 describe('Petopia test suite ', () => {
   beforeAll(async () => {
@@ -33,6 +25,15 @@ describe('Petopia test suite ', () => {
     await mongoose.connection.close();
     await server.close();
   });
+
+  const login = async (): Promise<void> => {
+    try {
+      const res = await agent.post('/api/v1/users/signin').send({ email: 'test_db@gmail.com', password: '12345678' });
+      token = res.headers['set-cookie'][0].split(';')[0].split('=')[1];
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Users API Endpoints Test Suit
   test('Users Can Signup', async () => {
@@ -104,7 +105,7 @@ describe('Petopia test suite ', () => {
 
     parsedResponse = JSON.parse(res.text);
 
-    expect(parsedResponse?.data?.petName).toBe('Test Pet Name');
+    expect(parsedResponse?.data[0]?.petName).toBe('Test Pet Name');
   });
 
   test('User can Update the Pets Detail', async () => {

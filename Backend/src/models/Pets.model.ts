@@ -9,18 +9,22 @@ const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
     petName: {
       type: String,
       required: [true, 'Petname is Required Field'],
+      trim: true,
     },
     petType: {
       type: String,
       required: [true, 'PetType is Required Field'],
+      trim: true,
     },
     petBread: {
       type: String,
       default: '',
+      trim: true,
     },
     petDescription: {
       type: String,
       required: [true, 'Pet Description is Required Field'],
+      trim: true,
     },
     price: {
       type: Number,
@@ -38,6 +42,7 @@ const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
     diseases: {
       type: String,
       default: '',
+      trim: true,
     },
     petImages: [
       {
@@ -52,7 +57,7 @@ const petSchema: mongoose.Schema<IPet> = new mongoose.Schema(
       },
     ],
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
   },
@@ -70,9 +75,9 @@ petSchema.path('petImages').validate(function (value: string[]) {
 }, 'At least one pet image is required.');
 
 petSchema.methods.deleteImages = async function (): Promise<boolean | null> {
-  if (this.petImages.length > 1) {
+  if (this.petImages.length > 0) {
     return this.petImages.map(async (image: CloudinaryImage) => {
-      await DeleteAssets(image?.publicId);
+      return await DeleteAssets(image?.publicId);
     });
   }
   return true;

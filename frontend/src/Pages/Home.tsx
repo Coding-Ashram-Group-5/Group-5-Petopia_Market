@@ -1,4 +1,4 @@
-import Landingpage from "./LandingPage/Landingpage";
+import Landingpage from "@/Pages/LandingPage/Landingpage";
 
 function Home() {
 

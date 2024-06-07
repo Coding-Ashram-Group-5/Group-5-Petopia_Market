@@ -1,10 +1,12 @@
-import Pets from '../models/Pets.model.js';
+import PetModel from '../models/Pets.model.js';
+
 import { APIError } from '../utils/APIError.util.js';
 import { APIResponse } from '../utils/APIResponse.util.js';
 import AsyncHandler from '../utils/AsyncHandler.util.js';
 import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 import { CloudinaryImage, IGetUserAuthInfoRequest } from '../types/model/user.type.js';
 import { RequestHandler, Response, Request } from 'express';
+import mongoose from 'mongoose';
 
 // This Controller add's Detail of Pet in Pet Controller
 const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
@@ -28,12 +30,12 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
     for (const file of petImages) {
       const localPath: string = file?.path;
       const response = await uploadOnCloudinary(localPath);
-      if (response?.url) {
-        petImage.push({ url: response.url, publicId: response.public_id });
+      if (response?.secure_url) {
+        petImage.push({ url: response.secure_url, publicId: response.public_id });
       }
     }
 
-    const addNewPet = await Pets.create({
+    const addNewPet = await PetModel.create({
       petName,
       petDescription,
       price,
@@ -60,7 +62,22 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
 const getAllPets = AsyncHandler(async (_, res: Response) => {
   try {
     // Retrieve all Available Pets
-    const pets = await Pets.find();
+
+    // const pets = await PetModel.find();
+    const pets = await PetModel.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'owner',
+          foreignField: '_id',
+          as: 'userData',
+        },
+      },
+      { $unset: ['owner', '__v', 'userData.password', 'userData.__v', 'userData.refreshToken'] },
+      {
+        $unwind: '$userData',
+      },
+    ]);
 
     res.status(200).json(new APIResponse('All Pets Retrieved Successfully', 200, pets));
   } catch (error: any) {
@@ -79,7 +96,27 @@ const getPetById: RequestHandler = AsyncHandler(async (req: Request, res: Respon
       return res.status(402).json(new APIError('Parameter id is Missing', 402));
     }
 
-    const pet = await Pets.findById(id);
+    // const pet = await PetModel.findById(id);
+    // Here Type Conversion is Required because findById handles it automatically
+    const objectId = new mongoose.Types.ObjectId(id);
+
+    const pet = await PetModel.aggregate([
+      {
+        $match: { _id: objectId },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'owner',
+          foreignField: '_id',
+          as: 'userData',
+        },
+      },
+      { $unset: ['owner', '__v', 'userData.password', 'userData.__v', 'userData.refreshToken'] },
+      {
+        $unwind: '$userData',
+      },
+    ]);
 
     if (!pet) {
       return res.status(404).json(new APIError('Pet not found', 404));
@@ -93,22 +130,27 @@ const getPetById: RequestHandler = AsyncHandler(async (req: Request, res: Respon
 });
 
 // This Controller Delete Pet Details by id
-const deletePetById = AsyncHandler(async (req: Request, res: Response) => {
+const deletePetById = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
     const { id } = req.params;
 
     if (!id) {
       return res.status(402).json(new APIError('Parameter id is Missing', 402));
     }
-    const petDetails = await Pets.findById(id);
+    const petDetails = await PetModel.findById(id);
 
     if (!petDetails) {
-      return res.status(402).json(new APIError('No Pet Found with Given Credentials', 402));
+      return res.status(402).json(new APIError(`No Pet Found with Given Parameter Id:${id}`, 402));
+    }
+
+    // Checking for condition of Only Owner Can Delete Product
+    if (req.user && String(petDetails.owner) != req.user._id) {
+      return res.status(402).json(new APIError('Only Owner can Delete Product', 402));
     }
 
     await petDetails.deleteImages();
 
-    const deletedPet = await Pets.findByIdAndDelete(id);
+    const deletedPet = await PetModel.findByIdAndDelete(id);
 
     if (!deletedPet) {
       return res.status(404).json(new APIError('Pet not found', 404));
@@ -125,10 +167,15 @@ const deletePetById = AsyncHandler(async (req: Request, res: Response) => {
 const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   let petsImageUrl: CloudinaryImage[] = [];
   try {
-    const { petName, petDescription, price, isFree, petType, petBreed, diseases } = req.body;
     const { id } = req.params;
 
-    const petDetails = await Pets.findById(id);
+    if (!id) {
+      return res.status(402).json(new APIError('Parameter id is Missing', 402));
+    }
+
+    const { petName, petDescription, price, isFree, petType, petBreed, diseases } = req.body;
+
+    const petDetails = await PetModel.findById(id);
 
     if (!petDetails) {
       return res.status(402).json(new APIError('Pet Not Exist with given Id', 402));
@@ -136,11 +183,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
 
     // Checking for condition of Only Owner Can Edit Details of Pet
     if (petDetails && req.user && String(petDetails.owner) != req.user._id) {
-      return res.status(402).json(new APIError('You are Not owner of this Pet', 402));
-    }
-
-    if (!id) {
-      return res.status(402).json(new APIError('Parameter id is Missing', 402));
+      return res.status(402).json(new APIError('only Owner can Edit Pet Details', 402));
     }
 
     // Basic validation checks
@@ -156,8 +199,8 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
       for (const file of petImages) {
         const localPath: string = file?.path;
         const response = await uploadOnCloudinary(localPath);
-        if (response?.url) {
-          petsImageUrl.push({ url: response.url, publicId: response.public_id });
+        if (response?.secure_url) {
+          petsImageUrl.push({ url: response.secure_url, publicId: response.public_id });
         }
       }
     }
@@ -166,7 +209,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
       petsImageUrl = petDetails?.petImages;
     }
 
-    const updatedPet = await Pets.findByIdAndUpdate(
+    const updatedPet = await PetModel.findByIdAndUpdate(
       id,
       {
         petName,
@@ -182,7 +225,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
     );
 
     if (!updatedPet) {
-      return res.status(404).json(new APIError('Pet Update Failed', 404));
+      return res.status(404).json(new APIError('Pet Update Failed', 502));
     }
 
     res.status(200).json(new APIResponse('Pet Details Updated Successfully', 200, updatedPet));
@@ -197,7 +240,7 @@ const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
   try {
     const { id } = req.params;
 
-    const PetDetails = await Pets.findById(id);
+    const PetDetails = await PetModel.findById(id);
 
     // Checking Existence of Pet Details
     if (!PetDetails) {
@@ -205,11 +248,11 @@ const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
     }
 
     // Checking Condition of Pet Owner can't Adopt his own Pet
-    if (PetDetails && req.user && String(PetDetails.owner) != req.user._id) {
+    if (PetDetails && req.user && String(PetDetails.owner) == req.user._id) {
       return res.status(402).json(new APIError("You Can't Adopt Your own Pet", 402));
     }
 
-    const updatePetAdoptStatus = await Pets.findByIdAndUpdate(id, { isAdopted: true });
+    const updatePetAdoptStatus = await PetModel.findByIdAndUpdate(id, { isAdopted: true });
 
     // Checking if any server side issue in update status
     if (!updatePetAdoptStatus) {
@@ -223,4 +266,44 @@ const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
   }
 });
 
-export { addPet, getAllPets, getPetById, deletePetById, updatePetDetails, buyPet };
+const getAdoptedPet = AsyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(402).json(new APIError('Parameter id is Missing', 402));
+    }
+
+    const objectId = new mongoose.Types.ObjectId(id);
+
+    const adoptedPet = await PetModel.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'owner',
+          foreignField: '_id',
+          as: 'userData',
+        },
+      },
+      {
+        $match: { isAdopted: true, 'userData._id': objectId },
+      },
+      { $unset: ['owner', '__v', 'userData.password', 'userData.__v', 'userData.refreshToken'] },
+
+      {
+        $unwind: '$userData',
+      },
+    ]);
+
+    res
+      .status(200)
+      .json(
+        new APIResponse(`Here\'s the List of Adopted Pet by ${adoptedPet[0]?.userData?.firstName}`, 200, adoptedPet),
+      );
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json(new APIError('Failed to update pet details', 500, error));
+  }
+});
+
+export { addPet, getAllPets, getPetById, deletePetById, updatePetDetails, buyPet, getAdoptedPet };
