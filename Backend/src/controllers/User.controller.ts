@@ -61,8 +61,7 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
     );
 
     const { accessToken, refreshToken } = (await generateToken(isUserExist?._id)) as TokenResponse;
-    console.log(cookiesOptions);
-    console.log(process.env.NODE_ENV);
+
     res
       .status(200)
       .cookie('authToken', accessToken, {
