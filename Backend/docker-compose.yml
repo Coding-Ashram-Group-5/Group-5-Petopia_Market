@@ -1,0 +1,26 @@
+services:
+  app:
+    build: 
+        context: .
+        target: dev
+    image: petopia:development
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - 3005:3005
+    env_file:
+      - .env
+    depends_on:
+      - db
+    environment:
+      MONGO_DB_URL: mongodb://db:27017/Petopia
+  db:
+    image: mongo:7.0.2
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-dev-data:/data/db
+volumes:
+  mongo-dev-data:

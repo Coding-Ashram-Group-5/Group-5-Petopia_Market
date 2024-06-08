@@ -20,7 +20,7 @@ app.use(express.json({ limit: '18kb' }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-const CORS_ORIGIN: string | undefined = process.env.CORS_ORIGIN;
+const CORS_ORIGIN: string | undefined = process.env.CORS_ORIGIN || '*';
 
 app.use(
   cors({
@@ -41,6 +41,6 @@ app.get('/api/v1/health', (_, res) => {
 });
 
 // Cron Job for Zero Down Time in free Render Instance
-cronJob.schedule('* 13 * * *', () => sendRequestToServer());
+export const job = cronJob.schedule('* 13 * * *', () => sendRequestToServer());
 
 export default app;

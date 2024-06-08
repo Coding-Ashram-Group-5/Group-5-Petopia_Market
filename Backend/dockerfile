@@ -1,0 +1,20 @@
+FROM --platform=$BUILDPLATFORM node:20.12.1-alpine as base
+WORKDIR /app
+COPY package.json /
+RUN npm install
+EXPOSE 3005
+
+FROM base as production
+ENV NODE_ENV=production
+# COPY package.json /
+# RUN npm install
+COPY . /app
+CMD npm run start
+
+FROM base as dev
+ENV NODE_ENV=development
+# COPY package.json /
+RUN ls
+# RUN npm install
+COPY . /app
+CMD npm run start
