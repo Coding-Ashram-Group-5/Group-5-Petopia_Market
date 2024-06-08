@@ -5,7 +5,6 @@ if (!API_ENDPOINT && API_ENDPOINT.startsWith('http')) {
 }
 
 const sendRequestToServer = (): void => {
-  console.log('Called');
   fetch(`${API_ENDPOINT}/api/v1/health`)
     .then(() => console.log('Server is Running'))
     .catch((err) => console.log(err));

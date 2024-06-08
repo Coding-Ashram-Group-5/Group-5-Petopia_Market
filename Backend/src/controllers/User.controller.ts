@@ -7,6 +7,13 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { CloudinaryImage, IGetUserAuthInfoRequest, TokenResponse } from '../types/model/user.type.js';
 import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 
+// Cookies options
+const cookiesOptions = {
+  secure: process.env.NODE_ENV === 'production',
+  httpOnly: process.env.NODE_ENV === 'development',
+  sameSite: 'none' as const,
+};
+
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   try {
     const user = await UserModel.findById(id).select('+password');
@@ -54,14 +61,17 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
     );
 
     const { accessToken, refreshToken } = (await generateToken(isUserExist?._id)) as TokenResponse;
-
+    console.log(cookiesOptions);
+    console.log(process.env.NODE_ENV);
     res
       .status(200)
       .cookie('authToken', accessToken, {
-        maxAge: 86400000, // 1 Days
+        maxAge: 86400000, // 1 Day
+        ...cookiesOptions,
       })
       .cookie('refreshToken', refreshToken, {
-        maxAge: 1296000000, //15 Days
+        maxAge: 1296000000, // 15 Days
+        ...cookiesOptions,
       })
       .json(new APIResponse('User Logged In Successfully', 200, loggedInUser));
   } catch (error: any) {
@@ -122,9 +132,11 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
         .status(200)
         .cookie('authToken', accessToken, {
           maxAge: 604800000,
+          ...cookiesOptions,
         })
         .cookie('refreshToken', refreshToken, {
           maxAge: 2592000000,
+          ...cookiesOptions,
         })
         .json(new APIResponse('User Created Successfully', 200, isUserCreated));
     } else {
