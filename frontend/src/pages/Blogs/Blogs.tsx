@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
-import { Blog } from "@/components/Auth/types/models";
+import { Blog } from "@/types/models";
 import { getAllBlogs } from "@/lib/api";
 
 const Blogs = () => {

@@ -10,8 +10,12 @@ function App() {
 
     if (refreshToken) {
         relogin().then((userData) => {
-            const { _id, firstName, lastName, email, avatar } = userData?.data;
-            updatePerson(_id, firstName, lastName, email, avatar);
+            if (userData?.data) {
+                const { _id, firstName, lastName, email, avatar } = userData.data;
+                if (_id && firstName && lastName && email && avatar) {
+                    updatePerson(_id, firstName, lastName, email, avatar);
+                }
+            }
         });
     }
 

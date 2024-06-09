@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Pet } from '@/types/pet';
+import { Pet } from '@/types/models';
 import { Button } from "@/components/Ui/Buttons/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Ui/dialog";
 import { addPet } from '@/lib/api';
@@ -135,7 +135,7 @@ const ToggleType = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
-         
+
           {type}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">

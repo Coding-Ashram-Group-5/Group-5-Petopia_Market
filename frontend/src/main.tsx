@@ -6,6 +6,7 @@ import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import Login from "./components/Auth/pages/Login";
 import Register from "./components/Auth/pages/Register";
+import Profile from "./components/Auth/userProfile/Profile.tsx";
 import Home from "./components/Ui/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
 import Products from "./components/Ui/Pages/ProductPage/Products.tsx";
@@ -16,7 +17,13 @@ import Blog from "./pages/Blogs/BlogDetails.tsx";
 import NewBlog from "./pages/Blogs/AddBlog.tsx";
 import EditBlog from "./pages/Blogs/EditBlog.tsx";
 
+function deleteCookie(name: string) {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+}
+
 function RegisterAndLogout() {
+    deleteCookie('refreshToken');
+    deleteCookie('authToken');
     return <Register />;
 }
 
@@ -40,6 +47,7 @@ root.render(
                             path="/register"
                             element={<RegisterAndLogout />}
                         />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/blogs" element={<Blogs />} />
                         <Route path="/blogs/:id" element={<Blog />} />

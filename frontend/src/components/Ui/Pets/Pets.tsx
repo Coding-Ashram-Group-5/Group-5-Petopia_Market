@@ -1,6 +1,6 @@
 import PetsCard from "./PetsCard"
 import { getAllPets } from "@/lib/api"
-import { Pet } from "@/components/Auth/types/models"
+import { Pet } from "@/types/models"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/Ui/Buttons/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/Ui/dropdown-menu"
