@@ -5,7 +5,7 @@ import { postBlog } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
 import { X, Image } from "lucide-react";
 
-function BlogPostForm() {
+function NewBlog() {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
@@ -112,4 +112,4 @@ function BlogPostForm() {
     );
 }
 
-export default BlogPostForm;
+export default NewBlog;

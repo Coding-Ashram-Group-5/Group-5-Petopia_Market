@@ -2,6 +2,7 @@
 import cookieParser from 'cookie-parser';
 import express, { Express } from 'express';
 import cors from 'cors';
+import cronJob from 'node-cron';
 
 // Routes Import
 import userRoutes from './routes/User.routes.js';
@@ -9,6 +10,7 @@ import petRoutes from './routes/Pets.routes.js';
 import productRoutes from './routes/Product.routes.js';
 import cartRoutes from './routes/Cart.routes.js';
 import blogRoutes from './routes/Blog.routes.js';
+import sendRequestToServer from './cronJob/index.js';
 
 const app: Express = express();
 
@@ -37,5 +39,8 @@ app.use('/api/v1/blogs', blogRoutes);
 app.get('/api/v1/health', (_, res) => {
   res.send('Server is Runnning');
 });
+
+// Cron Job for Zero Down Time in free Render Instance
+cronJob.schedule('* 13 * * *', () => sendRequestToServer());
 
 export default app;

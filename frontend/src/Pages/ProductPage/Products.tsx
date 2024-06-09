@@ -3,23 +3,25 @@ import ProductCard from "./ProductCard";
 import { Label } from "@/components/Ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/Ui/radio-group"
 import { Slider } from "@/components/Ui/slider"
-
 import { Checkbox } from "@/components/Ui/checkbox"
+import CardSkeleton from "@/components/Ui/Skeleton/CardSkeleton";
+import { useQuery } from "@tanstack/react-query"
+import { getAllProducts } from "@/lib/api";
 
-
-const products = [
-  {
-    id: 1,
-    imageUrl: "https://images.pexels.com/photos/2955820/pexels-photo-2955820.jpeg?auto=compress&cs=tinysrgb&w=400",
-    title: "Timely Watch",
-    price: 15.00,
-    salePrice: 30.00
-  }
-  
-
-];
 export default function Products() {
 
+  const dataFetch = async () => {
+    try {
+      const data = await getAllProducts()
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const { isLoading, error, data } = useQuery({ queryKey: ["GetAllProducts"], queryFn: dataFetch })
+  // const products  = data;
+  
 
   const [isfilterOpen, setIsFilterOpen] = useState(true);
 
@@ -70,7 +72,7 @@ export default function Products() {
               <h1 className="text-lg" >Price</h1>
               <div className="p-2">
                 <Slider />
-                </div>
+              </div>
 
             </div>
           </div>
@@ -88,15 +90,19 @@ export default function Products() {
 
               </div>
               <div className="grid gap-x-4 gap-y-8 grid-cols-2 sm:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
-                {products.map((product) => (
+                {isLoading && [1, 2, 3, 4].map((item) => (<CardSkeleton key={item} />))}
+                {error && <div>Something went wrong</div>}
+                {Array.isArray(data) && data.map((product) => (
                   <ProductCard
-                    key={product.id}
-                    imageUrl={product.imageUrl}
-                    title={product.title}
-                    price={product.price}
-                    salePrice={product.salePrice}
+                    key={product._id}
+                    productId={product._id}
+                    imageUrl={product.productImages[0].url}
+                    title={product.productName}
+                    price={product.productPrice}
+                    salePrice={product.discount}
                   />
                 ))}
+                
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@ export default function Banner() {
       {isMobile ? (
         <img src={mobile} alt="Mobile Image" loading="lazy" className="max-w-full max-h-full" />
       ) : (
-        <img src={desktop} alt="Desktop Image" loading="lazy" className="max-w-full max-h-full" />
+        <img src={desktop} alt="Desktop Image" loading="lazy" className="max-w-full max-h-full rounded-xl" />
       )}
     </div>
     </>

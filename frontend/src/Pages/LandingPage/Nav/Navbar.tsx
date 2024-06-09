@@ -10,7 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/Ui/Menu/dropdown-menu";
-import Logout from "../../../Auth/pages/Logout";
+import Logout from "@/components/Auth/pages/Logout";
 import { Link } from "react-router-dom";
 import  LinkDropdownMenuItem  from "./redirectComponent/LinkDropdownMenuItem";
 import usePersonStore from "@/lib/Utils/zustandStore";
@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
         { name: "Home", href: "/" },
         { name: "Products", href: "/products" },
         { name: "Pets", href: "/pets" },
-        { name: "About", href: "/about" },
+        { name: "Blogs", href: "/blogs" },
     ];
 
     const isUserLoggedIn = usePersonStore((state) => state.email);
