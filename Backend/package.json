@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "nodemon --watch \"*.ts\" --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"tsx server.ts\""
+    "start": "npx nodemon --watch \"*.ts\" --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"tsx server.ts\""
   },
   "lint-staged": {
     "*.js": [

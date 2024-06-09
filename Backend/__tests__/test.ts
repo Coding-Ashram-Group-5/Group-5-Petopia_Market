@@ -5,7 +5,7 @@
 
 import 'dotenv/config.js';
 import request from 'supertest';
-import app from '../src/index.js';
+import app, { job } from '../src/index.js';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import { Server } from 'http';
@@ -21,6 +21,7 @@ describe('Petopia test suite ', () => {
   });
 
   afterAll(async () => {
+    job.stop();
     await mongoose.connection.db.dropDatabase();
     await mongoose.connection.close();
     await server.close();

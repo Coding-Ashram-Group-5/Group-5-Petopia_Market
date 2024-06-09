@@ -14,6 +14,8 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
   try {
     const { petName, petDescription, price, isFree, petType, petBread, diseases } = req.body;
 
+    console.log(req.body);
+
     // checking for required fields
     if ([petName, petBread, petDescription, price, petType].some((val) => val?.trim() === '')) {
       return res.status(402).json(new APIError('Required Fields are Missing', 402));
@@ -173,7 +175,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
       return res.status(402).json(new APIError('Parameter id is Missing', 402));
     }
 
-    const { petName, petDescription, price, isFree, petType, petBreed, diseases } = req.body;
+    const { petName, petDescription, price, isFree, petType, petBread, diseases } = req.body;
 
     const petDetails = await PetModel.findById(id);
 
@@ -217,7 +219,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
         price,
         isFree,
         petType,
-        petBreed,
+        petBread,
         diseases,
         petImages: petsImageUrl,
       },
