@@ -13,7 +13,7 @@ function NotFound() {
                         <Link to={'/'} className="inline-block rounded-lg bg-red-200 px-8 py-3 text-center text-sm font-semibold text-red-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">Go home</Link>
                     </div>
                     <div className="relative h-80 overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-auto">
-                        <img src="https://images.pexels.com/photos/8646150/pexels-photo-8646150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" loading="lazy" alt="Photo by @heydevn" class="absolute inset-0 h-full w-full object-cover object-center" />
+                        <img src="https://images.pexels.com/photos/8646150/pexels-photo-8646150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" loading="lazy" alt="Photo by @heydevn" className="absolute inset-0 h-full w-full object-cover object-center" />
                     </div>
                 </div>
             </div>

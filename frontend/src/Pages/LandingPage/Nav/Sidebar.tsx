@@ -95,7 +95,7 @@ function Sidebar() {
                                     {isDropdownOpen && (
                                         <ul id="sidebar-multi-level-menu" className="py-2 space-y-2">
                                             <li>
-                                                <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                <a href="/pets" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                                     Pets
                                                 </a>
                                             </li>
@@ -112,7 +112,7 @@ function Sidebar() {
                                         </ul>
                                     )}
                                     <li>
-                                        <a href="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                        <a href="/products" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                             <HI2Icons.HiShoppingBag size={21.5} />
                                             <span className="ms-3">Products</span>
                                         </a>
@@ -124,7 +124,7 @@ function Sidebar() {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                        <a href="/about" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                             <LRIcons.Info size={21.5} />
                                             <span className="ms-3">About</span>
                                         </a>

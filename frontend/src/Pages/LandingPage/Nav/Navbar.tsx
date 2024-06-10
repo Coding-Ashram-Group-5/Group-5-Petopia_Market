@@ -12,6 +12,7 @@ import {
 } from "@/components/Ui/Menu/dropdown-menu";
 import Logout from "@/components/Auth/pages/Logout";
 import { Link } from "react-router-dom";
+import  LinkDropdownMenuItem  from "./redirectComponent/LinkDropdownMenuItem";
 import usePersonStore from "@/lib/Utils/zustandStore";
 
 const Navbar: React.FC = () => {
@@ -96,9 +97,9 @@ const Navbar: React.FC = () => {
                                 My Account
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem className="cursor-pointer">
+                            <LinkDropdownMenuItem to="/profile" className="cursor-pointer">
                                 Profile
-                            </DropdownMenuItem>
+                            </LinkDropdownMenuItem>
                             <DropdownMenuItem className="cursor-pointer">
                                 Billing
                             </DropdownMenuItem>

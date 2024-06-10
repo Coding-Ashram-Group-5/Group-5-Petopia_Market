@@ -4,8 +4,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { X, Image } from "lucide-react";
+// import { string } from "prop-types"; // 'string' is declared but its value is never read.ts(6133)
 
-function EditBlog() {
+
+
+function BlogPostForm() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
@@ -139,4 +142,4 @@ function EditBlog() {
     );
 }
 
-export default EditBlog;
+export default BlogPostForm;

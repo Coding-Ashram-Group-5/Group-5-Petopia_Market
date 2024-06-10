@@ -14,13 +14,11 @@ const Logout: React.FC<LogoutProps> = ({ buttonLabel }) => {
     if (confirmed) {
       try {
         await logout();
-        localStorage.clear(); // Clear local storage
         document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Clear refreshToken cookie
+        document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Clear authToken cookie
         navigate('/login'); // Redirect to login page
         // Auto-refresh after logout
-        setTimeout(() => {
           window.location.reload();
-        }, 100); // Refresh after 0.1 second
       } catch (error) {
         console.error(error); // Handle error
       }

@@ -35,6 +35,12 @@ const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
   }
 };
 
+const generateAvatarUrl = (name: string) => {
+  const baseUrl = process.env.AVATAR_URL;
+  const initial = name.charAt(0).toUpperCase();
+  return `${baseUrl}/?name=${initial}&background=random&color=fff&format=svg`;
+};
+
 const loginUser = AsyncHandler(async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -107,8 +113,10 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
 
     if (imagelocalPath) {
       const res = await uploadOnCloudinary(imagelocalPath);
-      avatar.url = res ? res?.url : '';
+      avatar.url = res ? res?.url : generateAvatarUrl(firstName);
       avatar.publicId = res ? res?.public_id : '';
+    } else {
+      avatar.url = generateAvatarUrl(firstName);
     }
 
     const createUser = await UserModel.create({

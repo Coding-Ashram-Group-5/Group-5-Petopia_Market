@@ -1,38 +1,82 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState } from "react"; //  useEffect, useCallback
 import { useNavigate } from "react-router-dom";
-import { login } from "../../../lib/api";
+import { login } from "../../../lib/api"; // relogin
+import { usePersonStore } from "@/types/models";
 import { Users } from "lucide-react";
 import { Input } from "@/components/Ui/input";
-import usePersonStore from "@/lib/Utils/zustandStore";
+// import Cookies from "js-cookie";
+
+interface APIError {
+    errorMessage: string;
+    data: null;
+    statusCode: number;
+    errors: never[] | string[];
+    success: boolean;
+}
 
 const Login = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("one@one.com");
-    const [password, setPassword] = useState("11111111");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [apiError, setApiError] = useState<APIError | null>(null);
     const updatePerson = usePersonStore((state) => state.updatePerson);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setApiError(null);
+
         try {
             const userData = await login(email, password);
 
-            const { _id, firstName, lastName, avatar } = userData?.data;
+            if (userData && userData.data) {
+                const { _id, firstName, lastName, email, avatar } = userData.data;
+                updatePerson(_id, firstName, lastName, email, avatar);
 
-            updatePerson(
-                _id,
-                firstName,
-                lastName,
-                userData?.data?.email,
-                avatar,
-            );
-
-            if (userData?.success) {
-                navigate("/");
+                if (userData.success) {
+                    navigate("/");
+                    window.location.reload();
+                }
             }
+
         } catch (error) {
-            console.error("Login error:", error);
+            if (axios.isAxiosError(error)) {
+                const apiErrorResponse = error.response?.data as APIError;
+                setApiError(apiErrorResponse);
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }
     };
+
+    // ------------------------------------------------------------------------------------------------
+    // When LoggedIn users tries to access the login page,
+    // This code checks for a refresh token in the cookies when the component mounts.
+    // If the token is found and has been validated,
+    // it tries to validate the token by re-logging in. If successful, it navigates to the home page;
+    // Please remove this whole comment/code if you don't want.
+    // ------------------------------------------------------------------------------------------------
+    //
+    // const validateRefreshToken = useCallback(async () => {
+    //     try {
+    //         const response = await relogin();
+    //         if (response.success) {
+    //             navigate("/");
+    //         }
+    //     } catch (error) {
+    //         console.error("Token validation error:", error);
+    //     }
+    // }, [navigate]);
+
+    // useEffect(() => {
+    //     const refreshToken = Cookies.get("refreshToken"); // Check for the refresh token in cookies
+    //     let validated = false;
+
+    //     if (refreshToken && !validated) {
+    //         validateRefreshToken();
+    //         validated = true; // Set the flag to true after validation
+    //     }
+    // }, [validateRefreshToken]);
 
     return (
         <div className="flex justify-center p-6 md:p-2 mb-16">
@@ -87,6 +131,18 @@ const Login = () => {
                                             className="p-2.5 shadow-md"
                                             required
                                         />
+                                        {apiError && (
+                                            <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                                                {`Error ${apiError.statusCode}: ${apiError.errorMessage}`}
+                                                {apiError.errors.length > 0 && (
+                                                    <ul>
+                                                        {apiError.errors.map((err, index) => (
+                                                            <li key={index}>{err}</li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-start"></div>
