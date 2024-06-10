@@ -1,4 +1,4 @@
-import Landingpage from "@/Pages/LandingPage/Landingpage";
+import Landingpage from "@/components/Ui/LandingPage/Pages/LandingPage/Landingpage";
 
 function Home() {
 
