@@ -1,14 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getSingleProduct } from "@/lib/api"
+import { getSingleProduct } from "@/lib/ProductApi"
 import { useQuery } from "@tanstack/react-query"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/Ui/tooltip"
-import { CircleUserRound, Heart, HeartPulse, Truck, UserRoundSearch } from "lucide-react"
+import { CircleUserRound, Heart, Truck, UserRoundSearch } from "lucide-react"
 
 export default function ProductDetails() {
   const { id } = useParams()

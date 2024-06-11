@@ -6,13 +6,13 @@ interface ProductCardProps {
   title: string;
   price: number;
   salePrice?: number; // Optional prop for sale price
-  productId:number;
+  productId:string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, price, salePrice, productId }) => {
   return (
     <div className="bg-background dark:bg-card border border-border rounded-lg">
-      <Link to={`getDetails/${productId}`} className="group relative mb-2 block h-40 overflow-hidden rounded-lg  lg:mb-3">
+      <Link to={`getDetails/${productId}`} className="group relative mb-2 block h-48 overflow-hidden rounded-lg  lg:mb-3">
         <img
           src={imageUrl}
           loading="lazy"

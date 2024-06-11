@@ -1,10 +1,10 @@
 import axios from "axios";
-import { User, TokenResponse, Pet, Blog, Product } from "@/types/models"; // Import User and TokenResponse types
+import { User, TokenResponse, Pet, Blog } from "@/types/models"; // Import User and TokenResponse types
 
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
 
-const authApi = axios.create({
+export const authApi = axios.create({
     baseURL,
     withCredentials: true,
 });
@@ -46,7 +46,7 @@ export const getAllPets = async (): Promise<Pet> => {
 
 export const getSinglePet = async (id: string | undefined): Promise<Pet> => {
     const { data } = await authApi.get(`api/v1/pets/getDetails/` + id);
-    return data.data[0];
+    return data.data;
    
 };
 
@@ -192,15 +192,6 @@ export const deletePet = async (id: string): Promise<void> => {
     await authApi.delete(`/api/v1/pets/delete/${id}`);
 }
 
-export const getAllProducts = async (): Promise<Product> => {
-    const { data } = await authApi.get<{data:Product;}>("api/v1/product/getDetails/all/10");
-    return data.data;
-}
-
-export const getSingleProduct = async (id:string): Promise<Product> => {
-    const { data } = await authApi.get(`api/v1/product/getDetails/${id}`)
-    return data;
-}
 
 // Helper function to clear local storage
 const clearLocalStorage = () => {

@@ -72,6 +72,16 @@ interface ProductImage {
     url: string;
     _id: string;
 }
+export interface ProductForm {
+    productName: string;
+    productDescription: string;
+    productPrice: number;
+    discount: number;
+    category: string;
+    quantity: number;
+    images: File[];
+
+}
 interface Rating {
     userId: string;
     rating: number;
@@ -86,3 +96,13 @@ export interface Blog {
     coverImage: { publicId: string; url: string };
     userDetails: User;
 }
+
+export interface CartItem {
+    productId: string;
+    quantity: number;
+    purchasedPrice: number;
+    user?: { 
+      name: string;
+    };
+    isPurchased?: boolean; 
+  }
