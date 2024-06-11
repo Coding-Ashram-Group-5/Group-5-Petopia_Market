@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { Outlet } from "react-router-dom";
-import Navbar from "@/Pages/LandingPage/Nav/Navbar";
+import Navbar from "@/components/Ui/LandingPage/Nav/Navbar";
 import { relogin } from "./lib/api";
 import usePersonStore from "./lib/Utils/zustandStore";
 
