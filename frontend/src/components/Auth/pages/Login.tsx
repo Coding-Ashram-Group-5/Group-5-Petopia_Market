@@ -15,8 +15,15 @@ const Login = () => {
         e.preventDefault();
         try {
             const userData = await login(email, password);
+            if (!userData.data){
+                throw new Error("User Data Not Found");
+            }
+{
+            const { _id, firstName, lastName, avatar } = userData.data;
 
-            const { _id, firstName, lastName, avatar } = userData?.data;
+            if(!_id || !lastName || !avatar){
+                throw new Error("Required Fields are Missing");
+            }
 
             updatePerson(
                 _id,
@@ -24,9 +31,9 @@ const Login = () => {
                 lastName,
                 userData?.data?.email,
                 avatar,
-            );
+            );}
 
-            if (userData?.success) {
+            if (userData.data) {
                 navigate("/");
             }
         } catch (error) {

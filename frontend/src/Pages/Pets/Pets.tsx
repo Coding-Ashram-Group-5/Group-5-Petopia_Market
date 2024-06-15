@@ -65,30 +65,11 @@ export default function Pets() {
                                                     Pets Types
                                                 </DropdownMenuLabel>
                                                 <DropdownMenuSeparator />
-<<<<<<< Updated upstream
-                                                <DropdownMenuRadioGroup
-                                                    value={type}
-                                                    onValueChange={setType}
-                                                >
-                                                    <DropdownMenuRadioItem value="Dog">
-                                                        Dog
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="Cat">
-                                                        Cat
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="Bird">
-                                                        Bird
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="all">
-                                                        All
-                                                    </DropdownMenuRadioItem>
-=======
                                                 <DropdownMenuRadioGroup value={type} onValueChange={setType} >
                                                     <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
                                                     <DropdownMenuRadioItem value="Dog">Dog</DropdownMenuRadioItem>
                                                     <DropdownMenuRadioItem value="Cat">Cat</DropdownMenuRadioItem>
                                                     <DropdownMenuRadioItem value="Bird">Bird</DropdownMenuRadioItem>
->>>>>>> Stashed changes
                                                 </DropdownMenuRadioGroup>
                                             </DropdownMenuContent>
                                         </DropdownMenu>

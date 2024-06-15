@@ -9,7 +9,7 @@ export const authApi = axios.create({
     withCredentials: true,
 });
 
-export const register = async (userData: User): Promise<User> => {
+export const register = async (userData: User): Promise<TokenResponse> => {
     const { data } = await authApi.post("/api/v1/users/signup", userData);
     return data;
 };
@@ -36,6 +36,7 @@ export const logout = async (): Promise<void> => {
 
 export const relogin = async (): Promise<TokenResponse> => {
     const { data } = await authApi.get("/api/v1/users/refresh/token");
+    
     return data;
 };
 

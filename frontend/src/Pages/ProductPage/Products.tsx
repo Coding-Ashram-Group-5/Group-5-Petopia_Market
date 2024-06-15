@@ -4,14 +4,9 @@ import Filter from "./Filter";
 import CardSkeleton from "@/components/Ui/Skeleton/CardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/lib/ProductApi";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTrigger,
-} from "@/components/Ui/drawer"
-import { ShoppingBasket } from "lucide-react";
 import { Product } from "@/types/models";
+
+
 interface FilterState {
   animal: string;
   seasons: string[];
@@ -21,7 +16,7 @@ interface FilterState {
 export default function Products() {
   const dataFetch = async (): Promise<Product[]> => {
     try {
-      const data = await getAllProducts();
+      const data = await getAllProducts() as unknown as Product[];
       console.log(data)
       return data;
     } catch (error) {
@@ -52,16 +47,17 @@ export default function Products() {
     setFilters(newFilters);
   };
 
-  // const applyFilters = (products: Product[]) => {
-  //   return products.filter((product) => {
-  //     const matchesAnimal = filters.animal === "all" || product.category === filters.animal;
-  //     const matchesSeason =
-  //       filters.seasons.length === 0 ||
-  //       filters.seasons.some((season) => product.seasons.includes(season));
-  //     const matchesPrice = product.price >= filters.price[0] && product.price <= filters.price[1];
-  //     return matchesAnimal && matchesSeason && matchesPrice;
-  //   });
-  // };
+  const applyFilters = (products: Product[]) => {
+    return products.filter((product) => {
+      const matchesAnimal = filters.animal === "all" || product.category === filters.animal;
+      const matchesSeason = true;
+        // filters.seasons.length === 0 || filters.seasons.some((season) => product.seasons.includes(season));
+      const matchesPrice = true
+      // product.price >= filters.price[0] && product.price <= filters.price[1];
+      return matchesAnimal && matchesSeason && matchesPrice;
+    });
+  };
+  
 
   return (
     <div className="main flex flex-col md:flex-row">
@@ -82,47 +78,18 @@ export default function Products() {
               {isLoading &&
                 [1, 2, 3, 4].map((item) => <CardSkeleton key={item} />)}
               {error && <div>Something went wrong</div>}
-              {Array.isArray(data) &&
-              data.map((product) => (
+              {Array.isArray(data) && 
+              applyFilters(data).map((product) => (
                  <>
                   <ProductCard
-                    key={product._id}
-                    productId={product._id}
-                    imageUrl={product.productImages[0].url}
-                    title={product.productName}
-                    price={product.productPrice}
-                    salePrice={product.discount}
+                   data={product}
                   /></>
                 ))}
             </div>
           </div>
         </div>
       </div>
-      <Drawer>
-       <div className=" p-2 px-3 fixed bg-red-500 rounded-xl top-[90%] right-4">
-       <DrawerTrigger> <div className=""><ShoppingBasket size={30} /> </div></DrawerTrigger>
-       </div>
-        <DrawerContent>
-         <div className="h-[60vh]">
-                <div className="head flex justify-between px-4">
-                  <h1 className="text-2xl font-bold ">Cart </h1>
-                  <DrawerClose><div className="px-2 py-1 border rounded-lg text-sm text-red-500">Close</div></DrawerClose>
-                </div>
-                <div className="Products px-1 mt-2">
-                  <div className="product flex px-2">
-                    <div className="product-image mx-5">
-                      <img src="https://via.placeholder.com/150" className=" rounded-xl" alt="product" />
-                    </div>
-                    <div className="product-details">
-                      <h1 className="text-lg font-bold">Product Name</h1>
-                      <p className="text-sm">Price: $100</p>
-                      <p className="text-sm">Quantity: 1</p>
-                    </div>
-                  </div>
-                </div>
-         </div>
-        </DrawerContent>
-      </Drawer>
+     
     </div>
   );
 }

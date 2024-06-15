@@ -10,8 +10,14 @@ function App() {
 
     if (refreshToken) {
         relogin().then((userData) => {
-            const { _id, firstName, lastName, email, avatar } = userData?.data;
-            updatePerson(_id, firstName, lastName, email, avatar);
+            console.log(userData);
+            
+            if (userData?.data) {
+                const { _id, firstName, lastName, email, avatar } = userData.data;
+                if (_id && firstName && lastName && email && avatar) {
+                    updatePerson(_id, firstName, lastName, email, avatar);
+                }
+            }
         });
     }
 
@@ -24,3 +30,8 @@ function App() {
 }
 
 export default App;
+
+
+// ak our chiz ish branch me mat karo git checkout -b "branch name" karlo!! 
+// dev seh tumare wale meh
+// sceen dekho!

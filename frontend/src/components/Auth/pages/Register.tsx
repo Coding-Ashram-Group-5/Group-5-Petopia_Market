@@ -40,14 +40,23 @@ const Register = () => {
                 // You might want to show an error to the user
                 return;
             }
-
             const userData = await register(formData);
-            const { _id, firstName, lastName, email, avatar } = userData?.data;
+
+            if (!userData.data) {
+                throw new Error("User Data Not Found");
+            }
+
+            const { _id, firstName, lastName, avatar } = userData.data;
+
+            if (!_id || !lastName || !avatar) {
+                throw new Error("Required Fields are Missing");
+            }
             updatePerson(_id, firstName, lastName, email, avatar);
 
             // document.cookie =
             //     "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            if (userData?.success) navigate("/");
+            if (userData.data) navigate("/");
+
         } catch (error) {
             console.error("Registration error:", error);
         }

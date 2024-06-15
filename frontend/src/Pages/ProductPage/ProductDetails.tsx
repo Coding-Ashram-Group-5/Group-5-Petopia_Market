@@ -3,21 +3,28 @@ import { useEffect, useState } from "react"
 import { getSingleProduct } from "@/lib/ProductApi"
 import { useQuery } from "@tanstack/react-query"
 import { CircleUserRound, Heart, Truck, UserRoundSearch } from "lucide-react"
+import useStore from "@/hooks/useStore";
+import ProductView from "@/components/Ui/Skeleton/ProductView"
 
 export default function ProductDetails() {
   const { id } = useParams()
+  const { addProduct, cartItems } = useStore();
+  console.log(cartItems)
 
-    const fetchData = async (id: string | undefined) => {
+  if (!id) {
+    throw new Error("Parameter Id is Required")
+  }
+  const fetchData = async (id: string) => {
     const data = await getSingleProduct(id)
     return data.data[0]
   }
 
-  
   const { isLoading, error, data } = useQuery({ queryKey: ["GetSingleProductDetails", id], queryFn: () => fetchData(id) })
 
-  console.log(isLoading, error, data)
-  if(isLoading) return <div>Loading...</div>
-  if(error) return <div>Error: {error.message}</div>
+
+  if (isLoading) return <ProductView />;
+  if (error) return <div>Error: {error.message}</div>
+
 
   return (
     <>
@@ -59,21 +66,21 @@ export default function ProductDetails() {
               </div>
               <div className="mb-2">
                 <div className="flex items-end gap-2">
-                    <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">${data?.productPrice}.00</span>
+                  <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">${data?.productPrice}.00</span>
                 </div>
                 <span className="text-sm text-gray-500">incl. GST plus shipping</span>
               </div>
-           
+
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <Truck /> <span className="text-black dark:text-white font-semibold text-xs">2-5 day To Shipped</span></h1>
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <CircleUserRound />  <span className="text-black dark:text-white font-semibold capitalize text-xs">Owner : {data?.userData.firstName} {data?.userData.lastName}</span></h1>
 
               <div className="flex gap-2.5 mt-4">
-                <a href="#" className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base">Add to cart</a>
+                <a onClick={() => addProduct(data)} className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base">Add to cart</a>
                 <a href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
                   <Heart />
                 </a>
                 <a href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
-                <UserRoundSearch />
+                  <UserRoundSearch />
                 </a>
 
               </div>
@@ -102,12 +109,12 @@ const ImgBox = ({ petImg = [{ url: '' }] }) => {
   return (
     <div className=" flex flex-col w-full h-full gap-1.5 rounded-md overflow-hidden">
       <div className=" overflow-hidden rounded-lg">
-      <img
-        src={mainImg.url} // throw error here can not read url of undefined
-        alt="product"
-        className=" h-60 md:h-80 w-80 rounded-lg object-cover object-center hover:scale-125 transition duration-300 ease-in-out"
-      />
-         
+        <img
+          src={mainImg.url} // throw error here can not read url of undefined
+          alt="product"
+          className=" h-60 md:h-80 w-80 rounded-lg object-cover object-center hover:scale-125 transition duration-300 ease-in-out"
+        />
+
       </div>
       <div className="flex  gap-x-1.5">
         {petImg.map((img, index) => (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button } from "@/components/Ui/Buttons/button";
 import { Input } from '@/components/Ui/input';
@@ -19,8 +19,10 @@ const AddProduct: React.FC = () => {
   const images = watch("images");
 
   const removeImage = (index: number) => {
-    const newImages = Array.from(images).filter((_, i) => i !== index);
-    setValue("images", newImages);
+    const newImagesArray = Array.from(images).filter((_, i) => i !== index);
+    const newImages = new DataTransfer();
+    newImagesArray.forEach(file => newImages.items.add(file));
+    setValue("images", newImages.files);
   };
 
   const onSubmit: SubmitHandler<ProductForm> = async (data) => {
