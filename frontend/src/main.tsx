@@ -6,18 +6,18 @@ import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import Login from "./components/Auth/pages/Login";
 import Register from "./components/Auth/pages/Register";
-import Home from "./components/Ui/LandingPage/Pages/Home.tsx";
+import Home from "./Pages/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
-import Products from "@/components/Ui/LandingPage/Pages/ProductPage/ProductDetails.tsx";
-import AddProduct from "@/components/Ui/LandingPage/Pages/ProductPage/AddProduct.tsx";
-import Pets from "@/components/Ui/LandingPage/Pages/Pets/Pets.tsx";
-import PetDetails from "@/components/Ui/LandingPage/Pages/Pets/PetDetails.tsx";
+import Products from "@/Pages/ProductPage/Products.tsx";
+import AddProduct from "@/Pages/ProductPage/AddProduct.tsx";
+import Pets from "@/Pages/Pets/Pets.tsx";
+import PetDetails from "@/Pages/Pets/PetDetails.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ProductDetails from "./components/Ui/LandingPage/Pages/ProductPage/ProductDetails.tsx";
-import Blogs from "./components/Ui/LandingPage/Pages/Blogs/Blogs.tsx";
-import Blog from "./components/Ui/LandingPage/Pages/Blogs/BlogDetails.tsx";
-import NewBlog from "./components/Ui/LandingPage/Pages/Blogs/AddBlog.tsx";
-import EditBlog from "./components/Ui/LandingPage/Pages/Blogs/EditBlog.tsx";
+import ProductDetails from "./Pages/ProductPage/ProductDetails.tsx";
+import Blogs from "./Pages/Blogs/Blogs.tsx";
+import Blog from "./Pages/Blogs/BlogDetails.tsx";
+import NewBlog from "./Pages/Blogs/AddBlog.tsx";
+import EditBlog from "./Pages/Blogs/EditBlog.tsx";
 
 const queryClient = new QueryClient();
 
