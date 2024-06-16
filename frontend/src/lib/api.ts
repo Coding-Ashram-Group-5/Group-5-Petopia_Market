@@ -40,6 +40,16 @@ export const relogin = async (): Promise<TokenResponse> => {
     return data;
 };
 
+export const profile = async (): Promise<TokenResponse> => {
+    const { data } = await authApi.get("/api/v1/users/profile");
+    return data;
+};
+
+export const deleteAccount = async (id: string): Promise<TokenResponse> => {
+    const { data } = await authApi.delete(`/api/v1/users/delete/${id}`);
+    return data;
+};
+
 export const getAllPets = async (): Promise<Pet> => {
     const { data } = await authApi.get<{data:Pet;}>("api/v1/pets/getDetails/all");
     return data.data;
