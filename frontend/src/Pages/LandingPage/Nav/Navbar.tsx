@@ -23,7 +23,7 @@ import {
   import { ShoppingBasket } from "lucide-react";
   import  useStore  from "@/hooks/useStore";
   import Cart from "@/Pages/Cart/Cart"
-import LinkDropdownMenuItem from "@/components/Ui/LandingPage/Nav/redirectComponent/LinkDropdownMenuItem";
+import LinkDropdownMenuItem from "@/Pages/LandingPage/Nav/redirectComponent/LinkDropdownMenuItem";
 
 const Navbar: React.FC = () => {
     const controls = useAnimation();
@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
         { name: "Blogs", href: "/blogs" },
     ];
    const  { cartItems } = useStore();
-   
+
 
     const isUserLoggedIn = usePersonStore((state) => state.email);
 

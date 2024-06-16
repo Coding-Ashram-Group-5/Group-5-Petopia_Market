@@ -30,8 +30,3 @@ function App() {
 }
 
 export default App;
-
-
-// ak our chiz ish branch me mat karo git checkout -b "branch name" karlo!! 
-// dev seh tumare wale meh
-// sceen dekho!

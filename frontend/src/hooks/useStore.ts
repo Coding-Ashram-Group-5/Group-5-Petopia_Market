@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 // Utility function to load the cart items from localStorage
 const loadCartItems = () => {
