@@ -1,45 +1,26 @@
-import axios from "axios";
 import { useState } from "react";
 import { register } from "../../../lib/api";
 import { useNavigate } from "react-router-dom";
 import { UserPlus } from "lucide-react";
 import { Input } from "@/components/Ui/input";
-import { usePersonStore } from "@/types/models";
+import usePersonStore from "@/lib/Utils/zustandStore";
 
-interface APIError {
-    errorMessage: string;
-    data: null;
-    statusCode: number;
-    errors: never[] | string[];
-    success: boolean;
-}
-
-export interface RegisterForm {
-    _id: string;
+interface RegisterForm {
     firstName: string;
     lastName?: string;
     email: string;
     password: string;
-    confirmPassword: string;
-    Delete: boolean;
-    success: boolean;
-    data: boolean;
+    confirmPassword: string; // Added confirmPassword field
 }
 
 const Register = () => {
     const navigate = useNavigate();
-    const [apiError, setApiError] = useState<APIError | null>(null);
-    const [passwordError, setPasswordError] = useState<string | null>(null);
     const [formData, setFormData] = useState<RegisterForm>({
-        _id: "",
         firstName: "",
-        lastName: "",
+        lastName: "", // Make lastName optional
         email: "",
         password: "",
-        confirmPassword: "",
-        Delete: false,
-        success: true,
-        data: Boolean(true),
+        confirmPassword: "", // Initialize confirmPassword
     });
 
     const { firstName, lastName, email, password, confirmPassword } = formData;
@@ -52,32 +33,32 @@ const Register = () => {
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setApiError(null);
-        setPasswordError(null);
 
         try {
             if (password !== confirmPassword) {
-                setPasswordError("Passwords do not match");
+                console.error("Passwords do not match");
+                // You might want to show an error to the user
                 return;
             }
-
             const userData = await register(formData);
-            if (userData && userData.data) {
-                const { _id, firstName, lastName, email, avatar } = userData.data;
-                updatePerson(_id, firstName, lastName, email, avatar);
 
-                if (userData.success) {
-                    navigate("/login");
-                }
+            if (!userData.data) {
+                throw new Error("User Data Not Found");
             }
+
+            const { _id, firstName, lastName, avatar } = userData.data;
+
+            if (!_id || !lastName || !avatar) {
+                throw new Error("Required Fields are Missing");
+            }
+            updatePerson(_id, firstName, lastName, email, avatar);
+
+            // document.cookie =
+            //     "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            if (userData.data) navigate("/");
 
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                const apiErrorResponse = error.response?.data as APIError;
-                setApiError(apiErrorResponse);
-            } else {
-                console.error("Unexpected error:", error);
-            }
+            console.error("Registration error:", error);
         }
     };
 
@@ -126,7 +107,7 @@ const Register = () => {
                                             htmlFor="lastName"
                                             className=" mb-1 text-sm font-medium text-gray-900 dark:text-white"
                                         >
-                                            Last Name (Optional)
+                                            Last Name
                                         </label>
                                         <Input
                                             type="text"
@@ -207,34 +188,17 @@ const Register = () => {
                                         <label
                                             htmlFor="terms"
                                             className="font-light text-gray-500 dark:text-gray-300"
-                                            >
+                                        >
                                             I accept the{" "}
                                             <a
                                                 className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                                                 href="#"
-                                                >
+                                            >
                                                 Terms and Conditions
                                             </a>
                                         </label>
                                     </div>
                                 </div>
-                                {passwordError && (
-                                <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
-                                    {passwordError}
-                                </div>
-                                )}
-                                {apiError && (
-                                    <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
-                                        {`Error ${apiError.statusCode}: ${apiError.errorMessage}`}
-                                        {apiError.errors.length > 0 && (
-                                            <ul>
-                                                {apiError.errors.map((err, index) => (
-                                                    <li key={index}>{err}</li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                )}
                                 <button
                                     type="submit"
                                     className="w-full bg-red-600 text-white hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm rounded-lg px-4 py-2.5 transition-colors duration-200 transform bg-gradient-to-br from-primary-600 to-primary-500 focus:ring-offset-2 focus:ring-offset-gray-200 bg-border"

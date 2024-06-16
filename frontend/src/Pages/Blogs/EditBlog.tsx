@@ -1,5 +1,5 @@
 import { getBlogById, updateBlog } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { ChangeEvent,FormEvent, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,20 +9,20 @@ import { X, Image } from "lucide-react";
 
 
 function BlogPostForm() {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("");
-    const [content, setContent] = useState("");
-    const [cover, setCover] = useState(null);
-    const [error, setError] = useState("");
+    const [title, setTitle] = useState<string>("");
+    const [category, setCategory] = useState<string>("");
+    const [content, setContent] = useState<string>("");
+    const [cover, setCover] = useState<{ publicId: string; url: string } | File | null>(null);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        const dataFetch = async (id: string) => {
+        const dataFetch = async (blogId: string) => {
             try {
-                const data = await getBlogById(id);
+                const data = await getBlogById(blogId);
                 let spreadCategory = "";
-                data.data[0].category.forEach((element: any) => {
+                data.data[0].category.forEach((element: string) => {
                     spreadCategory += element + ",";
                 });
 
@@ -34,10 +34,12 @@ function BlogPostForm() {
                 console.error("Error:", error);
             }
         };
-        dataFetch(id);
-    }, []);
+        if (id) {
+            dataFetch(id);
+        }
+    }, [id]);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!title || !category || !content || !cover) {
             setError("All fields are required.");
@@ -45,9 +47,11 @@ function BlogPostForm() {
         }
         setError("");
 
+        const coverFile = cover instanceof File ? cover : await urlToFile(cover.url);
+
         const data = await updateBlog(
-            { title, category, content, image: cover },
-            id,
+            { title, category, content, image: coverFile },
+            id!,
         );
 
         if (data.success) {
@@ -55,12 +59,20 @@ function BlogPostForm() {
         }
     };
 
-    const handleCoverChange = (event) => {
-        setCover(event.target.files[0]);
+    const handleCoverChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files) {
+            setCover(event.target.files[0]);
+        }
     };
 
     const removeCoverImage = () => {
         setCover(null);
+    };
+
+    const urlToFile = async (url: string): Promise<File> => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], "coverImage", { type: blob.type });
     };
 
     return (
@@ -76,10 +88,11 @@ function BlogPostForm() {
                 >
                     {cover ? (
                         <img
-                            src={
-                                cover?.url ||
-                                URL.createObjectURL(cover).toString()
-                            }
+                        src={
+                            cover instanceof File
+                                ? URL.createObjectURL(cover)
+                                : cover?.url || ""
+                        }
                             alt="Image Preview"
                             className="w-80 h-48 m-2 rounded flex items-center justify-evenly"
                         />
@@ -94,9 +107,9 @@ function BlogPostForm() {
                     id="cover-input"
                     type="file"
                     accept="image/*"
-                    value={cover && null}
+                    value={cover ? undefined : ""}
                     onChange={handleCoverChange}
-                    style={{ display: "none" }}
+                    className="hidden"
                 />
                 {cover && (
                     <button
@@ -104,6 +117,7 @@ function BlogPostForm() {
                         onClick={removeCoverImage}
                         disabled={!cover}
                         className={`font-bold text-gray-700 dark:text-gray-200 bg-transparent rounded hover:text-red-700`}
+                        aria-label="Remove Cover Image"
                     >
                         <X />
                     </button>

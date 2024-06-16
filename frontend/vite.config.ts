@@ -15,6 +15,6 @@ export default defineConfig({
     outDir: 'dist', // Specify the output directory for the build
   },
   preview: {
-    port: 5137,
+    port: 5173,
   }
 })

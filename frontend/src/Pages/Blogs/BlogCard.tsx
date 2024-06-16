@@ -9,7 +9,7 @@ interface BlogCardProps {
     category: string[];
     likes: string[];
     coverImage: { publicId: string; url: string };
-    userDetails: { firstName: string; lastName: string; created_at: string };
+    userDetails: { firstName: string; lastName?: string; created_at: string };
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({
@@ -28,9 +28,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
     return (
         <div className="rounded-2xl shadow-xl bg-white dark:bg-gray-900 font-leag">
             <div className="flex flex-col overflow-hidden rounded-t-2xl border bg-white">
-                <Link
-                    to={`/blogs/${blogId}`}
-                    className="group relative block h-48 overflow-hidden bg-gray-100 md:h-64"
+                <div
+                    
+                    className="group relative block h-48 overflow-hidden bg-gray-100 md:h-64" 
                 >
                     <img
                         src={coverImage?.url}
@@ -46,7 +46,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                             Read more <MoveRight />
                         </Link>
                     </div>
-                </Link>
+                </div>
             </div>
             <div className="text-lg flex items-center justify-between">
                 <div className="px-4 py-2 text-lg flex items-center">

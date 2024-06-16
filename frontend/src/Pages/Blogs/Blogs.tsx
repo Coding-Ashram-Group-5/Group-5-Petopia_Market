@@ -30,7 +30,7 @@ const Blogs = () => {
                         category={blog.category}
                         coverImage={blog.coverImage}
                         likes={blog?.likes}
-                        userDetails={blog.userDetails}
+                        userDetails={blog.userData}
                     />
                 </div>
             ))}

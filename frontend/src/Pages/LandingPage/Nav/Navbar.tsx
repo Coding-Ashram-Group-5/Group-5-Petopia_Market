@@ -14,6 +14,15 @@ import Logout from "@/components/Auth/pages/Logout";
 import { Link } from "react-router-dom";
 import  LinkDropdownMenuItem  from "./redirectComponent/LinkDropdownMenuItem";
 import usePersonStore from "@/lib/Utils/zustandStore";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerTrigger,
+  } from "@/components/Ui/drawer"
+  import { ShoppingBasket } from "lucide-react";
+  import  useStore  from "@/hooks/useStore";
+  import Cart from "@/Pages/Cart/Cart"
 
 const Navbar: React.FC = () => {
     const controls = useAnimation();
@@ -23,6 +32,8 @@ const Navbar: React.FC = () => {
         { name: "Pets", href: "/pets" },
         { name: "Blogs", href: "/blogs" },
     ];
+   const  { cartItems } = useStore();
+   
 
     const isUserLoggedIn = usePersonStore((state) => state.email);
 
@@ -58,6 +69,22 @@ const Navbar: React.FC = () => {
                 ))}
             </nav>
             <div className="flex items-center gap-5">
+                <div className="hidden lg:flex relative left-4">
+                    <Drawer>
+                        <div className="">
+                            <DrawerTrigger> <div className=" p-2 border rounded-lg"><ShoppingBasket  /> <div className=" absolute bottom-8 text-xs font-bold px-2 bg-red-500 text-white p-1 rounded-full left-6"><span>{cartItems.length}</span></div></div></DrawerTrigger>
+                        </div>
+                        <DrawerContent>
+                            <div className="h-[70vh]">
+                                <div className="head flex justify-between px-4">
+                                    <h1 className="text-2xl font-bold ">Cart </h1>
+                                    <DrawerClose><div className="px-2 py-1 border rounded-lg text-sm text-red-500">Close</div></DrawerClose>
+                                </div>
+                                <Cart />
+                            </div>
+                        </DrawerContent>
+                    </Drawer>
+                </div>
                 <div className="hidden lg:flex relative left-4">
                     <ModeToggle />
                 </div>

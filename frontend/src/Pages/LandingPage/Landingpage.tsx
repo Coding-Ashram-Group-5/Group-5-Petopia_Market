@@ -7,6 +7,7 @@ import FAQ from "./FAQ"
 import Footer from "./Footer"
 import VideoAdd from "./VideoAdd"
 import DogBanner from "./Banners/DogBanner"
+import Banner2 from "./Banners/Banner2"
 
 export default function Landingpage() {
     return (
@@ -15,9 +16,10 @@ export default function Landingpage() {
             <Hero />
             <Products/>
             <VideoAdd />
-            <Banner/>
-            <Sales/>
             <DogBanner/>
+            <Sales/>
+            <Banner2 />
+            <Banner/>
             <FAQ/>
             <Footer/>
 

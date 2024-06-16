@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-const mobile = "https://pawsindia.com/cdn/shop/files/1_-_Dog_Toys_Banner_Mobile_43cf8d2d-9311-4627-a468-9d2a5b5b7f50.png?v=1699289051"
-const desktop = "https://pawsindia.com/cdn/shop/files/1_-_Dog_Toys_Banner_Desktop_1920x_fd7c2ddc-4498-4659-98da-22381a39b20b_1920x.webp?v=1711527648"
-export default function DogBanner() {
+const mobile = "https://pawsindia.com/cdn/shop/files/Collars-With-tags-Banner-Mobile-Version.jpg?v=1713878541"
+const desktop = "https://pawsindia.com/cdn/shop/files/Collars-With-tags-Banner_1920x.jpg?v=1713878509"
+export default function Banner2() {
 
     const [isMobile, setIsMobile] = useState(true);
 
