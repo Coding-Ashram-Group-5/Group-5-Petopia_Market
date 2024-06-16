@@ -2,14 +2,13 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getSingleProduct } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
-// import {
-//   Tooltip,
-//   TooltipContent,
-//   TooltipProvider,
-//   TooltipTrigger,
-// } from "@/components/Ui/tooltip"
-import { CircleUserRound, Heart, Truck, UserRoundSearch } from "lucide-react";
-// HeartPulse
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/Ui/tooltip"
+import { CircleUserRound, Heart, HeartPulse, Truck, UserRoundSearch } from "lucide-react"
 
 export default function ProductDetails() {
   const { id } = useParams()
@@ -19,7 +18,7 @@ export default function ProductDetails() {
     return data.data[0]
   }
 
-
+  
   const { isLoading, error, data } = useQuery({ queryKey: ["GetSingleProductDetails", id], queryFn: () => fetchData(id) })
 
   console.log(isLoading, error, data)
@@ -70,7 +69,7 @@ export default function ProductDetails() {
                 </div>
                 <span className="text-sm text-gray-500">incl. GST plus shipping</span>
               </div>
-
+           
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <Truck /> <span className="text-black dark:text-white font-semibold text-xs">2-5 day To Shipped</span></h1>
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <CircleUserRound />  <span className="text-black dark:text-white font-semibold capitalize text-xs">Owner : {data?.userData.firstName} {data?.userData.lastName}</span></h1>
 
@@ -114,7 +113,7 @@ const ImgBox = ({ petImg = [{ url: '' }] }) => {
         alt="product"
         className=" h-60 md:h-80 w-80 rounded-lg object-cover object-center hover:scale-125 transition duration-300 ease-in-out"
       />
-
+         
       </div>
       <div className="flex  gap-x-1.5">
         {petImg.map((img, index) => (
