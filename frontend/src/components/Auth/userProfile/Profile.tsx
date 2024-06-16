@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { profile, deleteAccount } from '@/lib/api';
-import { usePersonStore } from '@/types/models';
+import usePersonStore from '@/lib/Utils/zustandStore';
 
 interface APIError {
     errorMessage: string;
@@ -25,7 +25,13 @@ const Profile = () => {
         try {
             const userData = await profile();
             if (userData && userData.data) {
+
                 const { _id, firstName, lastName, email, avatar } = userData.data;
+
+                if(!_id || !lastName || !avatar){
+                    throw new Error("Required Fields are Missing");
+                }
+                
                 updatePerson(_id, firstName, lastName, email, avatar);
             }
         } catch (error) {

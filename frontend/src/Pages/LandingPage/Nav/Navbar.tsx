@@ -12,7 +12,7 @@ import {
 } from "@/components/Ui/Menu/dropdown-menu";
 import Logout from "@/components/Auth/pages/Logout";
 import { Link } from "react-router-dom";
-import  LinkDropdownMenuItem  from "./redirectComponent/LinkDropdownMenuItem";
+
 import usePersonStore from "@/lib/Utils/zustandStore";
 import {
     Drawer,
@@ -23,6 +23,7 @@ import {
   import { ShoppingBasket } from "lucide-react";
   import  useStore  from "@/hooks/useStore";
   import Cart from "@/Pages/Cart/Cart"
+import LinkDropdownMenuItem from "@/components/Ui/LandingPage/Nav/redirectComponent/LinkDropdownMenuItem";
 
 const Navbar: React.FC = () => {
     const controls = useAnimation();
