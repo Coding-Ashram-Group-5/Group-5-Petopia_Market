@@ -10,7 +10,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './', // Set the base path to make paths relative
+  base: '/', // Set the base path to make paths relative
   build: {
     outDir: 'dist', // Specify the output directory for the build
   },
