@@ -1,43 +1,61 @@
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../lib/api";
 import { Users } from "lucide-react";
 import { Input } from "@/components/Ui/input";
 import usePersonStore from "@/lib/Utils/zustandStore";
 
+interface APIError {
+    errorMessage: string;
+    data: null;
+    statusCode: number;
+    errors: never[] | string[];
+    success: boolean;
+}
+
 const Login = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("one@one.com");
-    const [password, setPassword] = useState("11111111");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [apiError, setApiError] = useState<APIError | null>(null);
     const updatePerson = usePersonStore((state) => state.updatePerson);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setApiError(null);
+
         try {
             const userData = await login(email, password);
-            if (!userData.data){
+            if (!userData.data) {
                 throw new Error("User Data Not Found");
             }
-{
-            const { _id, firstName, lastName, avatar } = userData.data;
+            {
+                const { _id, firstName, lastName, avatar } = userData.data;
 
-            if(!_id || !lastName || !avatar){
-                throw new Error("Required Fields are Missing");
+                if (!_id || !lastName || !avatar) {
+                    throw new Error("Required Fields are Missing");
+                }
+
+                updatePerson(
+                    _id,
+                    firstName,
+                    lastName,
+                    userData?.data?.email,
+                    avatar,
+                );
             }
-
-            updatePerson(
-                _id,
-                firstName,
-                lastName,
-                userData?.data?.email,
-                avatar,
-            );}
 
             if (userData.data) {
                 navigate("/");
             }
         } catch (error) {
-            console.error("Login error:", error);
+            console.error("Login error:", error); if (axios.isAxiosError(error)) {
+                const apiErrorResponse = error.response?.data as APIError;
+                setApiError(apiErrorResponse);
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }
     };
 
@@ -95,6 +113,18 @@ const Login = () => {
                                             required
                                         />
                                     </div>
+                                    {apiError && (
+                                        <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                                            {`Error ${apiError.statusCode}: ${apiError.errorMessage}`}
+                                            {apiError.errors.length > 0 && (
+                                                <ul>
+                                                    {apiError.errors.map((err, index) => (
+                                                        <li key={index}>{err}</li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    )}
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-start"></div>
                                     </div>
