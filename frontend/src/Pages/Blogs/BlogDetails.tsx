@@ -181,9 +181,12 @@ const Blogs = () => {
                                     className="border-b border-b-gray-600 dark:border-b-white outline-none w-full mx-4 break-words text-xl bg-transparent"
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
+                                    aria-label="Comment"
+                                    placeholder="Add a comment..."
                                 ></textarea>
                                 {updating === "" ? (
                                     <button
+                                    type="button"
                                         className="text-xl text-white bg-pink-500 py-1 px-3 rounded-md font-bold"
                                         onClick={addComment}
                                     >
@@ -191,6 +194,7 @@ const Blogs = () => {
                                     </button>
                                 ) : (
                                     <button
+                                    type="button"
                                         className="text-xl text-white bg-pink-500 py-1 px-3 rounded-md font-bold"
                                         onClick={() => updComment(updating)}
                                     >

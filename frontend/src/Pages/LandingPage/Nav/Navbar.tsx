@@ -33,16 +33,9 @@ const Navbar: React.FC = () => {
         { name: "Pets", href: "/pets" },
         { name: "Blogs", href: "/blogs" },
     ];
-   const  { cartItems } = useStore();
-
+    const  { cartItems } = useStore();
 
     const isUserLoggedIn = usePersonStore((state) => state.email);
-
-    // const isUserLoggedIn = () => {
-    //     // Check if the refresh token exists in the cookie storage
-    //     const refreshToken = document.cookie.split('; ').find(row => row.startsWith('refreshToken='));
-    //     return refreshToken !== undefined;
-    // };
 
     const handleTap = async () => {
         controls.start({ opacity: 0 });
