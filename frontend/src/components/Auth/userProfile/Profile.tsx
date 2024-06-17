@@ -31,7 +31,7 @@ const Profile = () => {
                 if(!_id || !lastName || !avatar){
                     throw new Error("Required Fields are Missing");
                 }
-                
+
                 updatePerson(_id, firstName, lastName, email, avatar);
             }
         } catch (error) {

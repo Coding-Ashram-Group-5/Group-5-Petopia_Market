@@ -113,6 +113,7 @@ const AddProduct: React.FC = () => {
                           type="button"
                           onClick={() => removeImage(index)}
                           className="absolute top-0 right-0 p-1 text-red-500 rounded-full"
+                          aria-label='Remove Image'
                         >
                           <Trash2 />
                         </button>

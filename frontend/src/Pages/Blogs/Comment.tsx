@@ -44,6 +44,7 @@ const Comment = ({
                 {showBtn && (
                     <div className="absolute right-2 top-4 p-2 rounded-lg text-gray-800 font-medium bg-gray-300 flex flex-col justify-between items-start">
                         <button
+                        type="button"
                             onClick={() => {
                                 editComment(comment.comment);
                                 setUpdating(comment._id);
@@ -53,6 +54,7 @@ const Comment = ({
                             Edit
                         </button>
                         <button
+                        type="button"
                             onClick={() => {
                                 delComment(comment._id);
                                 setShowBtn(false);
