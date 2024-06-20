@@ -61,6 +61,11 @@ export const getSinglePet = async (id: string | undefined): Promise<Pet> => {
    
 };
 
+export const deletePetById = async (id: string): Promise<Pet> => {
+    const { data } = await authApi.delete(`api/v1/pets/delete/${id}`);
+    return data;
+};
+
 export const addPet = async (petData: Pet): Promise<Pet> => {
     const { data } = await authApi.post("/api/v1/pets/add", petData, {
         headers: {
