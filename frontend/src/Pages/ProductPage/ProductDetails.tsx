@@ -1,25 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getSingleProduct } from "@/lib/api";
+import { getSingleProduct } from "@/lib/ProductApi";
 import { useQuery } from "@tanstack/react-query";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/Ui/tooltip";
-import {
-    CircleUserRound,
-    Heart,
-    HeartPulse,
-    Truck,
-    UserRoundSearch,
-} from "lucide-react";
+import { CircleUserRound, Heart, Truck, UserRoundSearch } from "lucide-react";
+import useStore from "@/hooks/useStore";
+import ProductView from "@/components/Ui/Skeleton/ProductView";
 
 export default function ProductDetails() {
     const { id } = useParams();
+    const { addProduct, cartItems } = useStore();
+    console.log(cartItems);
 
-    const fetchData = async (id: string | undefined) => {
+    if (!id) {
+        throw new Error("Parameter Id is Required");
+    }
+    const fetchData = async (id: string) => {
         const data = await getSingleProduct(id);
         return data.data[0];
     };
@@ -29,8 +24,7 @@ export default function ProductDetails() {
         queryFn: () => fetchData(id),
     });
 
-    console.log(isLoading, error, data);
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <ProductView />;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
@@ -136,18 +130,20 @@ export default function ProductDetails() {
 
                             <div className="flex gap-2.5 mt-4">
                                 <a
-                                    href="#"
+                                    onClick={() => addProduct(data)}
                                     className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base"
                                 >
                                     Add to cart
                                 </a>
                                 <a
+                                    aria-label="Like"
                                     href="#"
                                     className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
                                 >
                                     <Heart />
                                 </a>
                                 <a
+                                    aria-label="Share"
                                     href="#"
                                     className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
                                 >

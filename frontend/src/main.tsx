@@ -6,6 +6,7 @@ import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import Login from "./components/Auth/pages/Login";
 import Register from "./components/Auth/pages/Register";
+import Profile from "./components/Auth/userProfile/Profile.tsx";
 import Home from "./Pages/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
 import Products from "@/Pages/ProductPage/Products.tsx";
@@ -21,7 +22,13 @@ import EditBlog from "./Pages/Blogs/EditBlog.tsx";
 
 const queryClient = new QueryClient();
 
+function deleteCookie(name: string) {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+}
+
 function RegisterAndLogout() {
+    deleteCookie('refreshToken');
+    deleteCookie('authToken');
     return <Register />;
 }
 
@@ -46,6 +53,7 @@ root.render(
                                 path="/register"
                                 element={<RegisterAndLogout />}
                             />
+                            <Route path="/profile" element={<Profile />} />
                             <Route path="/products" element={<Products />} />
                             <Route
                                 path="/products/add"

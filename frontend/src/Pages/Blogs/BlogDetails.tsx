@@ -13,13 +13,15 @@ import { Share2, Heart, Dot } from "lucide-react";
 import DOMPurify from "dompurify";
 import Comment from "./Comment";
 import usePersonStore from "@/lib/Utils/zustandStore";
+import { Blog } from "@/types/models";
 
-const Blog = () => {
+const Blogs = () => {
     const { id } = useParams();
     const loggedInUser = usePersonStore((state) => state._id);
     const [comment, setComment] = useState("");
     const [updating, setUpdating] = useState("");
-    const [blogDetails, setBlogDetails] = useState({
+    const [blogDetails, setBlogDetails] = useState<Blog>({
+        _id:"",
         title: "",
         content: "",
         coverImage: {
@@ -56,6 +58,10 @@ const Blog = () => {
     const [isLiked, setIsLiked] = useState(
         blogDetails?.likes.includes(loggedInUser),
     );
+
+    if(!id){
+        throw new Error("Parameter Id is Required")
+    }
 
     useEffect(() => {
         const dataFetch = async (id: string) => {
@@ -175,9 +181,12 @@ const Blog = () => {
                                     className="border-b border-b-gray-600 dark:border-b-white outline-none w-full mx-4 break-words text-xl bg-transparent"
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
+                                    aria-label="Comment"
+                                    placeholder="Add a comment..."
                                 ></textarea>
                                 {updating === "" ? (
                                     <button
+                                    type="button"
                                         className="text-xl text-white bg-pink-500 py-1 px-3 rounded-md font-bold"
                                         onClick={addComment}
                                     >
@@ -185,6 +194,7 @@ const Blog = () => {
                                     </button>
                                 ) : (
                                     <button
+                                    type="button"
                                         className="text-xl text-white bg-pink-500 py-1 px-3 rounded-md font-bold"
                                         onClick={() => updComment(updating)}
                                     >
@@ -219,4 +229,4 @@ const Blog = () => {
         );
 };
 
-export default Blog;
+export default Blogs;

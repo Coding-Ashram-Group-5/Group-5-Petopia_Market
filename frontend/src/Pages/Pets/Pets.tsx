@@ -65,22 +65,11 @@ export default function Pets() {
                                                     Pets Types
                                                 </DropdownMenuLabel>
                                                 <DropdownMenuSeparator />
-                                                <DropdownMenuRadioGroup
-                                                    value={type}
-                                                    onValueChange={setType}
-                                                >
-                                                    <DropdownMenuRadioItem value="Dog">
-                                                        Dog
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="Cat">
-                                                        Cat
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="Bird">
-                                                        Bird
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="all">
-                                                        All
-                                                    </DropdownMenuRadioItem>
+                                                <DropdownMenuRadioGroup value={type} onValueChange={setType} >
+                                                    <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
+                                                    <DropdownMenuRadioItem value="Dog">Dog</DropdownMenuRadioItem>
+                                                    <DropdownMenuRadioItem value="Cat">Cat</DropdownMenuRadioItem>
+                                                    <DropdownMenuRadioItem value="Bird">Bird</DropdownMenuRadioItem>
                                                 </DropdownMenuRadioGroup>
                                             </DropdownMenuContent>
                                         </DropdownMenu>

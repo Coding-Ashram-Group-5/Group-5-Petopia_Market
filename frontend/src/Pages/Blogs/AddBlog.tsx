@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, ChangeEvent, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { postBlog } from "@/lib/api";
@@ -10,10 +10,10 @@ function NewBlog() {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [content, setContent] = useState("");
-    const [cover, setCover] = useState(null);
+    const [cover, setCover] = useState<File | null>(null);
     const [error, setError] = useState("");
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!title || !category || !content || !cover) {
             setError("All fields are required.");
@@ -28,8 +28,10 @@ function NewBlog() {
         }
     };
 
-    const handleCoverChange = (event) => {
-        setCover(event.target.files[0]);
+    const handleCoverChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            setCover(event.target.files[0]);
+        }
     };
 
     const removeCoverImage = () => {
@@ -64,9 +66,9 @@ function NewBlog() {
                     id="cover-input"
                     type="file"
                     accept="image/*"
-                    value={cover && null}
+                    value={cover ? undefined : ""}
                     onChange={handleCoverChange}
-                    style={{ display: "none" }}
+                    className="hidden"
                 />
                 {cover && (
                     <button
@@ -74,6 +76,7 @@ function NewBlog() {
                         onClick={removeCoverImage}
                         disabled={!cover}
                         className={`font-bold text-gray-700 dark:text-gray-200 bg-transparent rounded hover:text-red-700`}
+                        aria-label="Remove Cover Image"
                     >
                         <X />
                     </button>

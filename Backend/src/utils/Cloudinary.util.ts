@@ -26,6 +26,8 @@ const uploadOnCloudinary: UploadOnCloudinary = async (localFilePath) => {
     const response = await cloudinary.uploader.upload(localFilePath, {
       upload_preset: 'petopia',
       resource_type: 'auto',
+      format: 'webp',
+      quality: 'auto:best',
     });
 
     // Remove file from public/temp on successful upload
