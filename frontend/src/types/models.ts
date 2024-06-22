@@ -60,7 +60,7 @@ export interface Product {
     productPrice: number;
     discount: number;
     creator: string;
-    productImages:ProductImage[];
+    productImages: ProductImage[];
     quantity: number;
     category: string;
     ratings: Rating[];
