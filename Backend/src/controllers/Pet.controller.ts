@@ -14,8 +14,6 @@ const addPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
   try {
     const { petName, petDescription, price, isFree, petType, petBread, diseases } = req.body;
 
-    console.log(req.body);
-
     // checking for required fields
     if ([petName, petBread, petDescription, price, petType].some((val) => val?.trim() === '')) {
       return res.status(402).json(new APIError('Required Fields are Missing', 402));

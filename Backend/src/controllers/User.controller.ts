@@ -11,6 +11,7 @@ import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 const cookiesOptions = {
   secure: process.env.NODE_ENV == 'production',
   httpOnly: true,
+  sameSite: 'none' as 'none',
 };
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
@@ -323,6 +324,17 @@ const updateProfileDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, r
   }
 });
 
+const getAllUsers = AsyncHandler(async (req: Request, res: Response) => {
+  try {
+    let usersList = await UserModel.find({});
+
+    res.status(200).json(new APIResponse('All Available User List', 200, usersList));
+  } catch (error: any) {
+    console.log(error);
+    res.status(502).json(new APIError(error?.message || 'Internal Server Error', 502));
+  }
+});
+
 export {
   loginUser,
   registerUser,
@@ -331,4 +343,5 @@ export {
   refreshAccessToken,
   getProfileDetails,
   updateProfileDetails,
+  getAllUsers,
 };
