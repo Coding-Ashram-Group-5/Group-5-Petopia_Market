@@ -41,6 +41,6 @@ app.get('/api/v1/health', (_, res) => {
 });
 
 // Cron Job for Zero Down Time in free Render Instance
-export const job = cronJob.schedule('* 13 * * *', () => sendRequestToServer());
+export const job = cronJob.schedule('30 * * * *', () => sendRequestToServer());
 
 export default app;
