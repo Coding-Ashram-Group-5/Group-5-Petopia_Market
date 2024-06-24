@@ -19,6 +19,8 @@ import Blogs from "./Pages/Blogs/Blogs.tsx";
 import Blog from "./Pages/Blogs/BlogDetails.tsx";
 import NewBlog from "./Pages/Blogs/AddBlog.tsx";
 import EditBlog from "./Pages/Blogs/EditBlog.tsx";
+import AddPet from "./Pages/Pets/AddPet.tsx";
+import EditPet from "./Pages/Pets/EditPet.tsx";
 
 const queryClient = new QueryClient();
 
@@ -27,8 +29,8 @@ function deleteCookie(name: string) {
 }
 
 function RegisterAndLogout() {
-    deleteCookie('refreshToken');
-    deleteCookie('authToken');
+    deleteCookie("refreshToken");
+    deleteCookie("authToken");
     return <Register />;
 }
 
@@ -67,6 +69,11 @@ root.render(
                                 element={<EditBlog />}
                             />
                             <Route path="/pets" element={<Pets />} />
+                            <Route path="/pets/add" element={<AddPet />} />
+                            <Route
+                                path="/pets/edit/:id"
+                                element={<EditPet />}
+                            />
                             <Route
                                 path="/pets/getDetails/:id"
                                 element={<PetDetails />}
