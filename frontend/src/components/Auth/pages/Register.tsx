@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { register } from "../../../lib/api";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ interface RegisterForm {
 const Register = () => {
     const navigate = useNavigate();
     const [apiError, setApiError] = useState<APIError | null>(null);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
     const [formData, setFormData] = useState<RegisterForm>({
         firstName: "",
         lastName: "", // Make lastName optional
@@ -41,14 +42,21 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const isUserLoggedIn = usePersonStore((state) => state._id);
+
+    useEffect(() => {
+        if (isUserLoggedIn) {
+            navigate("/");
+        }
+    }, [isUserLoggedIn, navigate]);
+
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setApiError(null);
 
         try {
             if (password !== confirmPassword) {
-                console.error("Passwords do not match");
-                // You might want to show an error to the user
+                setPasswordError("Passwords do not match");
                 return;
             }
             const userData = await register(formData);
@@ -190,6 +198,11 @@ const Register = () => {
                                         required
                                     />
                                 </div>
+                                {passwordError && (
+                                    <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                                        {passwordError}
+                                    </div>
+                                )}
                                 <div className="flex items-start">
                                     <div className="flex items-center h-5">
                                         <input
@@ -215,18 +228,18 @@ const Register = () => {
                                         </label>
                                     </div>
                                 </div>
-                                    {apiError && (
-                                        <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
-                                            {`Error ${apiError.statusCode}: ${apiError.errorMessage}`}
-                                            {apiError.errors.length > 0 && (
-                                                <ul>
-                                                    {apiError.errors.map((err, index) => (
-                                                        <li key={index}>{err}</li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                        </div>
-                                    )}
+                                {apiError && (
+                                    <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                                        {`Error ${apiError.statusCode}: ${apiError.errorMessage}`}
+                                        {apiError.errors.length > 0 && (
+                                            <ul>
+                                                {apiError.errors.map((err, index) => (
+                                                    <li key={index}>{err}</li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+                                )}
                                 <button
                                     type="submit"
                                     className="w-full bg-red-600 text-white hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm rounded-lg px-4 py-2.5 transition-colors duration-200 transform bg-gradient-to-br from-primary-600 to-primary-500 focus:ring-offset-2 focus:ring-offset-gray-200 bg-border"
