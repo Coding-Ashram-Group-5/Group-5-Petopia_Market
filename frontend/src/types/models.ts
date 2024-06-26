@@ -57,6 +57,19 @@ interface PetImage {
     _id: string;
 }
 
+export interface PetForm {
+    petName: string;
+    petDescription: string;
+    price: number;
+    isFree: boolean;
+    petType: string;
+    petBread: string;
+    diseases: string;
+    images: FileList;
+    petImages: PetImage[];
+    [key: string]: any;
+}
+
 export interface Product {
     _id: string;
     productName: string;
