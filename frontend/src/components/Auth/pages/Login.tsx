@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../lib/api";
@@ -20,6 +20,13 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [apiError, setApiError] = useState<APIError | null>(null);
     const updatePerson = usePersonStore((state) => state.updatePerson);
+    const isUserLoggedIn = usePersonStore((state) => state._id);
+
+    useEffect(() => {
+        if (isUserLoggedIn) {
+            navigate("/");
+        }
+    }, [isUserLoggedIn, navigate]);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
