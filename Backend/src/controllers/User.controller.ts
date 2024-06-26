@@ -177,6 +177,7 @@ const logoutUser = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Respon
     res
       .status(200)
       .clearCookie('authToken')
+      .clearCookie('refreshToken')
       .json(new APIResponse('User Logged Out Successfully', 200, []));
   } catch (error) {
     console.log(error);
