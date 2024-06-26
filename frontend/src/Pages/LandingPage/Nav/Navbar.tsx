@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
     ];
     const  { cartItems } = useStore();
 
-    const isUserLoggedIn = usePersonStore((state) => state.email);
+    const isUserLoggedIn = usePersonStore((state) => state._id);
 
     const handleTap = async () => {
         controls.start({ opacity: 0 });

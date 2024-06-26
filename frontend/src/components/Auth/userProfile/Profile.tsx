@@ -87,9 +87,7 @@ const Profile = () => {
         setShowOverlay(false);
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+    useEffect(() => {}, [fetchData]);
 
     return (
         <div>

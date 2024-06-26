@@ -75,7 +75,7 @@ export default function ProductDetails() {
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <CircleUserRound />  <span className="text-black dark:text-white font-semibold capitalize text-xs">Owner : {data?.userData.firstName} {data?.userData.lastName}</span></h1>
 
               <div className="flex gap-2.5 mt-4">
-                <a onClick={() => addProduct(data)} className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base">Add to cart</a>
+                <a onClick={() => addProduct(data)} className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base cursor-pointer">Add to cart</a>
                 <a aria-label="Like" href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
                   <Heart />
                 </a>
