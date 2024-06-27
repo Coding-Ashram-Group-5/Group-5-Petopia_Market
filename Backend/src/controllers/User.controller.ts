@@ -11,6 +11,7 @@ import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 const cookiesOptions = {
   secure: process.env.NODE_ENV == 'production',
   httpOnly: true,
+  sameSite: "none" as "none"
 };
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
