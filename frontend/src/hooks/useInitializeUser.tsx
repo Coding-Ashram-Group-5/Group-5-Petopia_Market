@@ -4,9 +4,12 @@ import usePersonStore from "@/lib/Utils/zustandStore";
 
 const useInitializeUser = () => {
     const updatePerson = usePersonStore((state) => state.updatePerson);
+    const loggedIn = usePersonStore((state) => state.loggedIn);
 
     useEffect(() => {
         const initializeUser = async () => {
+            if (!loggedIn) return;
+
             try {
                 const userData = await relogin();
                 if (userData?.data) {
@@ -21,7 +24,7 @@ const useInitializeUser = () => {
         };
 
         initializeUser();
-    }, [updatePerson]);
+    }, [updatePerson, loggedIn]);
 };
 
 export default useInitializeUser;
