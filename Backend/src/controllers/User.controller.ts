@@ -11,7 +11,7 @@ import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 const cookiesOptions = {
   secure: process.env.NODE_ENV == 'production',
   httpOnly: true,
-  sameSite: 'none' as 'none',
+  sameSite: "none" as "none"
 };
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
@@ -178,7 +178,6 @@ const logoutUser = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Respon
     res
       .status(200)
       .clearCookie('authToken')
-      .clearCookie('refreshToken')
       .json(new APIResponse('User Logged Out Successfully', 200, []));
   } catch (error) {
     console.log(error);
@@ -246,9 +245,11 @@ const refreshAccessToken = AsyncHandler(async (req: Request, res: Response) => {
         .status(200)
         .cookie('authToken', accessToken, {
           maxAge: 604800000, // 7 Days
+          ...cookiesOptions,
         })
         .cookie('refreshToken', refreshToken, {
           maxAge: 2592000000, //30 Days
+          ...cookiesOptions,
         })
         .json(new APIResponse('Access Token Refreshed', 200, loggedInUser));
     } else {

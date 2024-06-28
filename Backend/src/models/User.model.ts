@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 
 import { IUser } from '../types/model/user.type.js';
 import { DeleteAssets } from '../utils/Cloudinary.util.js';
-import e from 'express';
 
 const SALT_ROUND = 10;
 
@@ -34,11 +33,33 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
       type: String,
       required: [true, 'Email is Required Field'],
       trim: true,
+      unique: true,
     },
     password: {
       type: String,
       required: [true, 'Password is Required Field'],
       select: false,
+    },
+    details: {
+      zipcode: {
+        type: Number,
+        default: '',
+      },
+      street: {
+        type: String,
+        default: '',
+        trim: true,
+      },
+      phoneNumber: {
+        type: Number,
+        maxlength: 10,
+        minlength: 10,
+      },
+      city: {
+        type: String,
+        default: '',
+        trim: true,
+      },
     },
     refreshToken: {
       type: String,

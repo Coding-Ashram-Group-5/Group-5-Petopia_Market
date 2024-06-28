@@ -1,4 +1,5 @@
 import PetModel from '../models/Pets.model.js';
+import UserModel from '../models/User.model.js';
 
 import { APIError } from '../utils/APIError.util.js';
 import { APIResponse } from '../utils/APIResponse.util.js';
@@ -239,6 +240,26 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
 const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
     const { id } = req.params;
+    const { zipcode, street, city, phoneNumber } = req.body;
+
+    // Validate Zip Code
+    if (!zipcode.trim().match(/^[1-9][0-9]{5}$/)) {
+      return res.status(402).json(new APIError('Please Provide Valid Zip Code Value', 402));
+    }
+
+    // Validate Mobile Number
+    if (!phoneNumber.trim().match(/^\d{10}$/)) {
+      return res.status(402).json(new APIError('Please Provide Valid Mobile Number', 402));
+    }
+
+    await UserModel.findByIdAndUpdate(req.user?._id, {
+      details: {
+        street,
+        zipcode: +zipcode,
+        phoneNumber: +phoneNumber,
+        city,
+      },
+    });
 
     const PetDetails = await PetModel.findById(id);
 

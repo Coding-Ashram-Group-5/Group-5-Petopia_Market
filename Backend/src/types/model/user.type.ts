@@ -7,6 +7,12 @@ export interface IUser extends mongoose.Document {
   lastName?: string;
   email: string;
   password: string;
+  details?: {
+    street: string;
+    zipcode: number;
+    city: string;
+    phoneNumber: string;
+  };
   refreshToken?: string;
   avatar?: CloudinaryImage;
   ComparePassword(password: string): Promise<boolean>;
