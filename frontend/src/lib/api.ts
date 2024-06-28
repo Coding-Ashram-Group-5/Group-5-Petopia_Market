@@ -240,11 +240,7 @@ export const adoptPet = async (data: AdoptPetFormData & { pet_id: string }): Pro
     const response = await authApi.patch(`/api/v1/pets/adopt/${data.pet_id}`, data);
     return response.data;
 
-// Helper function to clear local storage
-const clearLocalStorage = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-};
+}
 
 
 export default authApi;
