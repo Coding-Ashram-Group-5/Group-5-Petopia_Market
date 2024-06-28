@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App.tsx";
@@ -13,6 +12,7 @@ import Products from "@/Pages/ProductPage/Products.tsx";
 import AddProduct from "@/Pages/ProductPage/AddProduct.tsx";
 import Pets from "@/Pages/Pets/Pets.tsx";
 import PetDetails from "@/Pages/Pets/PetDetails.tsx";
+import AdoptPet from "@/Pages/Pets/AdoptPet.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductDetails from "./Pages/ProductPage/ProductDetails.tsx";
 import Blogs from "./Pages/Blogs/Blogs.tsx";
@@ -21,16 +21,6 @@ import NewBlog from "./Pages/Blogs/AddBlog.tsx";
 import EditBlog from "./Pages/Blogs/EditBlog.tsx";
 
 const queryClient = new QueryClient();
-
-function deleteCookie(name: string) {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-}
-
-function RegisterAndLogout() {
-    deleteCookie('refreshToken');
-    deleteCookie('authToken');
-    return <Register />;
-}
 
 const rootElement = document.getElementById("root");
 
@@ -41,7 +31,6 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-    <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
                 <BrowserRouter>
@@ -51,7 +40,7 @@ root.render(
                             <Route path="/login" element={<Login />} />
                             <Route
                                 path="/register"
-                                element={<RegisterAndLogout />}
+                                element={<Register />}
                             />
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/products" element={<Products />} />
@@ -72,6 +61,10 @@ root.render(
                                 element={<PetDetails />}
                             />
                             <Route
+                                path="/adoption/user/dataform/:id"
+                                element={<AdoptPet />}
+                            />
+                            <Route
                                 path="/products/getDetails/:id"
                                 element={<ProductDetails />}
                             />
@@ -81,5 +74,4 @@ root.render(
                 </BrowserRouter>
             </ThemeProvider>
         </QueryClientProvider>
-    </React.StrictMode>,
 );

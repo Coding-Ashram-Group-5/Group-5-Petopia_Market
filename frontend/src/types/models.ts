@@ -103,12 +103,14 @@ export interface Blog {
     comments:Comment[];
     coverImage:{ publicId: string; url: string};
     likes: string[];
-    userData: BlogUser;
+    created_at:string;
+    userDetails: BlogUser;
+    userData?: BlogUser;
     data?: any;
 }
 
 interface Comment{
-    _id: string; 
+    _id: string;
     comment: string;
      owner: string;
       blogId: string;
@@ -125,7 +127,7 @@ interface BlogUser{
     email: string;
     refreshToken?: string;
     avatar?: { publicId: string; url: string};
-    created_at:string;
+    created_at: string;
     updated_at?:string;
 }
 
@@ -135,8 +137,21 @@ export interface CartItem {
     productId: string;
     quantity: number;
     purchasedPrice: number;
-    user?: { 
+    user?: {
       name: string;
     };
-    isPurchased?: boolean; 
+    isPurchased?: boolean;
   }
+
+
+export interface AdoptPetFormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    pet_id: string;
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    phoneNumber: string;
+}

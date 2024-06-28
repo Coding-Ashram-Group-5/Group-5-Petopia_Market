@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, TokenResponse, Pet, Blog } from "@/types/models"; // Import User and TokenResponse types
+import { User, TokenResponse, Pet, Blog, AdoptPetFormData } from "@/types/models"; // Import User and TokenResponse types
 
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
@@ -28,7 +28,6 @@ export const login = async (
 export const logout = async (): Promise<void> => {
     try {
         await authApi.get("/api/v1/users/logout");
-        clearLocalStorage(); // Clear local storage after logout
     } catch (error) {
         console.error("Logout error:", error);
     }
@@ -58,7 +57,7 @@ export const getAllPets = async (): Promise<Pet> => {
 export const getSinglePet = async (id: string | undefined): Promise<Pet> => {
     const { data } = await authApi.get(`api/v1/pets/getDetails/` + id);
     return data.data;
-   
+
 };
 
 export const addPet = async (petData: Pet): Promise<Pet> => {
@@ -203,11 +202,10 @@ export const deletePet = async (id: string): Promise<void> => {
     await authApi.delete(`/api/v1/pets/delete/${id}`);
 }
 
-
-// Helper function to clear local storage
-const clearLocalStorage = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
+export const adoptPet = async (data: AdoptPetFormData & { pet_id: string }): Promise<void> => {
+    const response = await authApi.patch(`/api/v1/pets/adopt/${data.pet_id}`, data);
+    return response.data;
 };
+
 
 export default authApi;
