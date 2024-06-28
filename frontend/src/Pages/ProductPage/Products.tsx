@@ -17,7 +17,6 @@ export default function Products() {
   const dataFetch = async (): Promise<Product[]> => {
     try {
       const data = await getAllProducts() as unknown as Product[];
-      console.log(data)
       return data;
     } catch (error) {
       console.error("Error:", error);
@@ -29,7 +28,6 @@ export default function Products() {
     queryKey: ["GetAllProducts"],
     queryFn: dataFetch,
   });
-  console.log(isLoading, error, data)
 
 
   const [isFilterOpen, setIsFilterOpen] = useState(true);

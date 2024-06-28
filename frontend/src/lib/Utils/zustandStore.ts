@@ -9,6 +9,7 @@ type State = {
         publicId: string;
         url: string;
     };
+    loggedIn: boolean;
 };
 
 type Action = {
@@ -19,6 +20,7 @@ type Action = {
         email: State["email"],
         avatar: State["avatar"],
     ) => void;
+    setLoggedIn: (loggedIn: boolean) => void;
 };
 
 const usePersonStore = create<State & Action>((set) => ({
@@ -27,8 +29,18 @@ const usePersonStore = create<State & Action>((set) => ({
     lastName: "",
     email: "",
     avatar: { publicId: "", url: "" },
-    updatePerson: (_id, firstName, lastName, email, avatar) =>
-        set(() => ({ _id, firstName, lastName, email, avatar })),
+    loggedIn: localStorage.getItem('loggedIn') === 'true',
+
+    updatePerson: (_id, firstName, lastName, email, avatar) => {
+        const loggedIn = Boolean(_id);
+        localStorage.setItem('loggedIn', loggedIn.toString());
+        set({ _id, firstName, lastName, email, avatar, loggedIn });
+    },
+
+    setLoggedIn: (loggedIn) => {
+        localStorage.setItem('loggedIn', loggedIn.toString());
+        set({ loggedIn });
+    },
 }));
 
 export default usePersonStore;
