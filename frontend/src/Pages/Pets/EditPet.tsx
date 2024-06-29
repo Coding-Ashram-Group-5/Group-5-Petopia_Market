@@ -250,6 +250,7 @@ const EditPet: React.FC = () => {
                                     className="w-full h-full rounded-md"
                                 />
                                 <button
+                                title="Remove Image"
                                     type="button"
                                     onClick={() => removeImage(index)}
                                     className="absolute top-0 right-0 p-1 text-red-500 rounded-full"

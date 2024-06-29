@@ -63,10 +63,10 @@ const Navbar: React.FC = () => {
                 ))}
             </nav>
             <div className="flex items-center gap-5">
-                <div className=" lg:flex relative left-4">
+                <div className=" lg:flex relative left-4 top-[3px]">
                     <Drawer>
                         <div className="">
-                            <DrawerTrigger> <div className=" p-2 border rounded-lg"><ShoppingBasket  /> <div className=" absolute bottom-8 text-xs font-bold px-2 bg-red-500 text-white p-1 rounded-full left-6"><span>{cartItems.length}</span></div></div></DrawerTrigger>
+                            <DrawerTrigger> <div className=" p-2 border rounded-lg"><ShoppingBasket size={21.5} /> <div className=" absolute bottom-8 text-xs font-bold px-2 bg-red-500 text-white p-1 rounded-full left-6"><span>{cartItems.length}</span></div></div></DrawerTrigger>
                         </div>
                         <DrawerContent>
                             <div className="h-[70vh]">
