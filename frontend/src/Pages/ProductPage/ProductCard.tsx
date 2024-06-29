@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         </a>
         <div className="flex items-end justify-between gap-2 px-2">
           <span className="font-bold text-gray-700 dark:text-white lg:text-lg">
-          ₹{data.productPrice} {data.productPrice && <span className="mb-0.5 text-red-500 line-through">${data.discount}</span>}
+          ₹{data.productPrice} {data.productPrice && <span className="mb-0.5 text-red-500 line-through">₹{data.discount}</span>}
           </span>
           <span className='px-2'>
             <button  onClick={handleAddCart}>{!alreadyInCart? <ShoppingCart/>: <span className='text-red-500'><ShoppingCart  /></span>}</button>
