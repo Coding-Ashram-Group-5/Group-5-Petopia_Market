@@ -1,4 +1,4 @@
-import { getAllPets, deletePetById } from  "@/lib/api"
+import { getAllPets } from  "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
 
 export default function PetManagement() {
@@ -57,9 +57,7 @@ console.log(isLoading, error, data)
                       Edit
                     </a>
                     <button
-                     onClick={() => deletePetById(data._id)
-                     
-                     }
+                    
                       className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
                     >
                       Delete
