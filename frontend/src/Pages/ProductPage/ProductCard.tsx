@@ -2,6 +2,7 @@ import React from 'react';
 import { ShoppingCart } from "lucide-react";
 import { Link } from 'react-router-dom';
 import useStore from "@/hooks/useStore";
+import { useToast } from '@/components/Ui/use-toast';
 
 interface ProductCardProps {
   data: {
@@ -15,11 +16,16 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const { cartItems, addProduct } = useStore();
+  const { toast } = useToast();
 
   const handleAddCart = () => {
     if (cartItems.includes(data)) return alert("Product already in cart");
     addProduct(data);
-    alert("Product added to cart");
+    toast({
+      title: " 🛒 Product Added",
+      description: "Product has been added to cart",
+    
+    })
   }
   const alreadyInCart = cartItems.includes(data);
 
@@ -44,10 +50,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         </a>
         <div className="flex items-end justify-between gap-2 px-2">
           <span className="font-bold text-gray-700 dark:text-white lg:text-lg">
-            ${data.productPrice} {data.productPrice && <span className="mb-0.5 text-red-500 line-through">${data.discount}</span>}
+          ₹{data.productPrice} {data.productPrice && <span className="mb-0.5 text-red-500 line-through">${data.discount}</span>}
           </span>
           <span className='px-2'>
-            <button onClick={handleAddCart}>{!alreadyInCart? <ShoppingCart/>: <span className='text-red-500'><ShoppingCart  /></span>}</button>
+            <button  onClick={handleAddCart}>{!alreadyInCart? <ShoppingCart/>: <span className='text-red-500'><ShoppingCart  /></span>}</button>
           </span>
         </div>
       </div>

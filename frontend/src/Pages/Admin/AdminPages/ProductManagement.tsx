@@ -1,12 +1,13 @@
 import { getAllProducts } from "@/lib/ProductApi"
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/models";
+import { Input } from "@/components/Ui/input";
+import { Link } from "react-router-dom";
 
 export default function ProductManagement() {
   const dataFetch = async (): Promise<Product[]> => {
     try {
       const data = await getAllProducts() as unknown as Product[];
-      console.log(data)
       return data;
     } catch (error) {
       console.error("Error:", error);
@@ -25,6 +26,7 @@ export default function ProductManagement() {
         <div className="header">
           <div className="header-title my-3">
             <h2 className="text-center font-bold text-3xl">Products Management</h2>
+            <div className="flex justify-between px-8 my-4"><div className="flex  gap-x-2 items-center"><h2 className=" font-bold font-cab">Search</h2><Input type="text" /></div><Link to={"/products/add"} className="text-center  bg-red-500 px-2 py-1 font-bold rounded-md  font-cab">Add Products</Link></div>
           </div>
         </div>
         <div className="flex justify-center">

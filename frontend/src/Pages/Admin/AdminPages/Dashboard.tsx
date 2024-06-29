@@ -44,7 +44,14 @@ export default function Dashboard() {
             </div>
           ))
         }
-      
+        </div>
+      </section>
+      <section className="p-6 py-1 flex gap-x-2  bg-background dark:text-gray-200" >
+        <div className=" border h-80 w-full rounded-lg">
+          <h1 className=" text-xl  text-center my-4">Track</h1>
+        </div>
+        <div className=" border h-80 w-80 rounded-lg">
+          <h1 className=" text-xl  text-center my-4">Reports</h1>
         </div>
       </section>
     </>

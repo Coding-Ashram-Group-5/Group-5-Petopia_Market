@@ -9,13 +9,14 @@ import {
   TooltipTrigger,
 } from "@/components/Ui/tooltip"
 import { CircleUserRound, Heart, HeartPulse, Truck, UserRoundSearch } from "lucide-react"
+import { Pet } from "@/types/models"
 
 export default function PetDetails() {
   const { id } = useParams()
     const fetchData = async (id: string | undefined) => {
-    const data = await getSinglePet(id)
-    return data
-  }
+    const data = await getSinglePet(id)  as unknown as Pet[]
+    return data[0] 
+    }
 
 
   const { isLoading, error, data } = useQuery({ queryKey: ["GetSInglePetDetails", id], queryFn: () => fetchData(id) })
@@ -63,7 +64,7 @@ export default function PetDetails() {
               </div>
               <div className="mb-2">
                 <div className="flex items-end gap-2">
-                  {data?.isFree ? <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">Free</span> : <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">${data?.price}.00</span>}
+                  {data?.isFree ? <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">Free</span> : <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">₹{data?.price}.00</span>}
                 </div>
                 <span className="text-sm text-gray-500">incl. GST plus shipping</span>
               </div>

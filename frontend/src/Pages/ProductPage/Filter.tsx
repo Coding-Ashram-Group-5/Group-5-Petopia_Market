@@ -40,7 +40,7 @@ export default function Filter({ onFilterChange }: FilterProps) {
   return (
     <div className="sidebar w-full md:w-[20vw] md:h-screen border-r-2">
       <div className="p-2 font-leag sticky">
-        <h1 className="text-xl">Filter</h1>
+        <h1 className="text-xl py-4 font-bold">Filter</h1>
         <div className="w-fit p-2">
           <RadioGroup value={animal} onValueChange={handleAnimalChange}>
             <div className="flex items-center space-x-2">
