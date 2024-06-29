@@ -19,6 +19,12 @@ import Blogs from "./Pages/Blogs/Blogs.tsx";
 import Blog from "./Pages/Blogs/BlogDetails.tsx";
 import NewBlog from "./Pages/Blogs/AddBlog.tsx";
 import EditBlog from "./Pages/Blogs/EditBlog.tsx";
+import Admin from "./Pages/Admin/Admin.tsx";
+import Dashboard from "./Pages/Admin/AdminPages/Dashboard.tsx";
+import ProductManagement from "./Pages/Admin/AdminPages/ProductManagement.tsx";
+import PetManagement from "./Pages/Admin/AdminPages/PetManagement.tsx";
+import BlogsManagement from "./Pages/Admin/AdminPages/BlogsManagement.tsx";
+import UserManagement from "./Pages/Admin/AdminPages/UserManagement.tsx";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +74,19 @@ root.render(
                                 path="/products/getDetails/:id"
                                 element={<ProductDetails />}
                             />
+                            <Route 
+                               path="/admin"
+                               element={<Admin />}
+                               >
+                                <Route 
+                                      path="/admin"
+                                      element={<Dashboard />}
+                                />
+                                <Route path="products" element={<ProductManagement />} />
+                                <Route path="pets" element={<PetManagement />} />
+                                <Route path="blogs" element={<BlogsManagement />} />
+                                <Route path="users" element={<UserManagement />} />
+                               </Route>
                             <Route path="*" element={<NotFound />} />
                         </Route>
                     </Routes>

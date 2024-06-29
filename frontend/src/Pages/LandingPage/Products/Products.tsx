@@ -39,8 +39,8 @@ const Card: React.FC<ICardProps> = ({ product }) => (
         </Link>
         <div className="my-4">
             <h1 className="font-bold text-xl">{product.productName}</h1>
-            <p className="font-leag text-red-500">
-                Price: ${product.productPrice}
+            <p className="font-leag font-bold text-red-500">
+                Price: ₹{product.productPrice}
             </p>
         </div>
     </div>
@@ -74,10 +74,10 @@ const Products: React.FC = () => {
 
     return (
         <>
-            <h1 className="font-bold text-[2rem] font-leag pt-2 text-center">
-                Products{" "}
-                <span className="font-bold text-red-500 text-[2rem] text-center">
-                    Here
+            <h1 className=" font-extrabold text-[2rem]  pt-2 text-center">
+                Trending{" "}
+                <span className="font-bold text-red-600 text-[2rem] text-center">
+                    Products
                 </span>
             </h1>
             <div className="p-10 flex justify-center gap-4">

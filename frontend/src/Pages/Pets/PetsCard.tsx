@@ -34,7 +34,7 @@ const PetsCard: React.FC<ProductCardProps> = ({ imageUrl, title, price, petBread
                 <span className='flex justify-center text-[0.8rem] font-mad'>{petType} & {petBread}</span>
                 <div className="flex items-end justify-between px-2 py-2 gap-2">
                     <span className="font-bold text-green-400 lg:text-lg">
-                        ${price}
+                    ₹{price}
                     </span>
                     <span><Link to={`/pets/getDetails/${petId}`}> <HandHelping /></Link></span>
                 </div>

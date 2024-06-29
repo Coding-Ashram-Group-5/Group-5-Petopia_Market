@@ -83,6 +83,7 @@ export interface Product {
     ratings: Rating[];
     averageRating: number;
     data?: any;
+    userData?:User;
 }
 
 interface ProductImage {
