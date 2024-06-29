@@ -10,6 +10,7 @@ import DogBanner from "./Banners/DogBanner"
 import Banner2 from "./Banners/Banner2"
 import Category from "./Banners/Category"
 import Stats from "./Stats"
+import CookieConsent from "@/hooks/CookieConsent"
 
 export default function Landingpage() {
     return (
@@ -32,6 +33,7 @@ export default function Landingpage() {
             </div>
             <FAQ/>
             <Footer/>
+            <CookieConsent/>
           </div>
         </>
       )
