@@ -20,47 +20,13 @@ const Blogs = () => {
     const loggedInUser = usePersonStore((state) => state._id);
     const [comment, setComment] = useState("");
     const [updating, setUpdating] = useState("");
-    const [blogDetails, setBlogDetails] = useState<Blog>({
-        _id:"",
-        title: "",
-        content: "",
-        coverImage: {
-            publicId: "",
-            url: "",
-        },
-        category: [],
-        likes: [],
-        comments: [
-            {
-                _id: "66434d68768da922e6e1477c",
-                comment: "This is Test Commetn",
-                owner: "663e2428f5165ec1a97c923d",
-                blogId: "6642de4f650f268265323efc",
-                created_at: "2024-05-14T11:39:20.278Z",
-                updated_at: "2024-05-14T11:39:20.278Z",
-                ownerFirstName: "Javid",
-                ownerLastName: "",
-            },
-        ],
-        userData: {
-            _id: "663e2428f5165ec1a97c923d",
-            firstName: "Javid",
-            lastName: "",
-            avatar: {
-                publicId: "",
-                url: "",
-            },
-            email: "javidsumra135@gmail.com",
-            created_at: "2024-05-10T13:42:00.429Z",
-            updated_at: "2024-05-14T03:35:10.069Z",
-        },
-    });
+    const [blogDetails, setBlogDetails] = useState<Blog>();
     const [isLiked, setIsLiked] = useState(
         blogDetails?.likes.includes(loggedInUser),
     );
 
-    if(!id){
-        throw new Error("Parameter Id is Required")
+    if (!id) {
+        throw new Error("Parameter Id is Required");
     }
 
     useEffect(() => {
@@ -100,28 +66,30 @@ const Blogs = () => {
     const toggleLike = async () => {
         if (isLiked) {
             const data = await dislikeBlog(id);
-            if (data.success) setIsLiked(!isLiked);
+            if (data) setIsLiked(!isLiked);
         } else {
             const data = await likeBlog(id);
-            if (data.success) setIsLiked(!isLiked);
+            if (data) setIsLiked(!isLiked);
         }
     };
 
-    const dirtyHTML = blogDetails?.content;
+    const dirtyHTML = blogDetails?.content || "";
     const cleanHTML = DOMPurify.sanitize(dirtyHTML);
-    const date = new Date(blogDetails.userData.created_at.split("T")[0]);
+    const date = new Date(
+        blogDetails?.userData?.created_at.split("T")[0] || "",
+    );
 
-    if (blogDetails._id)
+    if (blogDetails?._id)
         return (
             <div className="flex justify-evenly gap-4 my-5">
                 <div className="w-full lg:w-3/4 px-4">
                     <h1 className="font-bold text-3xl text-center mb-5">
-                        {blogDetails.title}
+                        {blogDetails?.title}
                     </h1>
                     <div className="mb-5">
                         <img
-                            src={blogDetails.coverImage.url}
-                            alt={blogDetails.title}
+                            src={blogDetails?.coverImage.url}
+                            alt={blogDetails?.title}
                             className="w-full h-auto rounded-lg"
                         />
                     </div>
@@ -129,8 +97,8 @@ const Blogs = () => {
                         <div className="py-2 text-lg flex items-center">
                             Written by
                             <span className="italic px-1 font-bold text-pink-600 text-xl capitalize">
-                                {blogDetails.userData.firstName}{" "}
-                                {blogDetails.userData.lastName}
+                                {blogDetails?.userData?.firstName}{" "}
+                                {blogDetails?.userData?.lastName}
                             </span>
                             <Dot />
                             {date.toLocaleDateString("default", {
@@ -147,7 +115,7 @@ const Blogs = () => {
                                     } text-pink-600`}
                                 />
                                 <span className="text-xs">
-                                    {blogDetails.likes.length}
+                                    {blogDetails?.likes.length}
                                 </span>
                             </div>
                             <Link
@@ -159,7 +127,7 @@ const Blogs = () => {
                     </div>
                     <div className="flex items-center justify-start w-full gap-2 capitalize overflow-scroll">
                         <p className="font-bold text-xl">Category :</p>
-                        {blogDetails.category?.map((x, index) => (
+                        {blogDetails?.category?.map((x, index) => (
                             <div
                                 key={index}
                                 className="bg-pink-600 text-white rounded-2xl px-3 text-lg font-semibold w-fit"
@@ -181,6 +149,7 @@ const Blogs = () => {
                                     className="border-b border-b-gray-600 dark:border-b-white outline-none w-full mx-4 break-words text-xl bg-transparent"
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
+                                    aria-label="Comments"
                                 ></textarea>
                                 {updating === "" ? (
                                     <button

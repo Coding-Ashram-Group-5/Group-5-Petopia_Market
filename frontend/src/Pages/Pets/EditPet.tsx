@@ -1,12 +1,13 @@
 import { Checkbox } from "@/components/Ui/checkbox";
-import { addPet } from "@/lib/api";
+import { getSinglePet, updatePet } from "@/lib/api";
 import { PetForm } from "@/types/models";
 import { Image, X } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddPet: React.FC = () => {
+const EditPet: React.FC = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const {
         register,
@@ -16,6 +17,7 @@ const AddPet: React.FC = () => {
         formState: { errors },
     } = useForm<PetForm>();
     const images = watch("images");
+    const petImages = watch("petImages");
 
     const removeImage = (index: number) => {
         const newImagesArray = Array.from(images).filter((_, i) => i !== index);
@@ -24,9 +26,48 @@ const AddPet: React.FC = () => {
         setValue("images", newImages.files);
     };
 
+    useEffect(() => {
+        type PetKey =
+            | "petName"
+            | "petDescription"
+            | "price"
+            | "isFree"
+            | "petType"
+            | "petBread"
+            | "diseases"
+            | "petImages"
+            | "images";
+
+        const validKeys: PetKey[] = [
+            "petName",
+            "petDescription",
+            "price",
+            "isFree",
+            "petType",
+            "petBread",
+            "diseases",
+            "petImages",
+            "images",
+        ];
+
+        getSinglePet(id).then((res: Record<string, any>) => {
+            const val = res[0];
+
+            for (const key in val) {
+                if (
+                    val.hasOwnProperty(key) &&
+                    validKeys.includes(key as PetKey)
+                ) {
+                    setValue(key as PetKey, val[key]);
+                }
+            }
+        });
+    }, []);
+
     const onSubmit: SubmitHandler<PetForm> = async (data) => {
-        const res = await addPet(data);
-        if (res?.success) {
+        if (!id) return;
+        const res = await updatePet(id, data);
+        if (res) {
             navigate("/pets");
         }
     };
@@ -220,14 +261,30 @@ const AddPet: React.FC = () => {
                     </div>
                 )}
             </div>
+            <div className="flex flex-wrap my-2 flex-col">
+                <p className="text-xl">Uploaded images</p>
+                {petImages && petImages?.length > 0 && (
+                    <div className="flex gap-1 flex-wrap justify-start md:gap-2">
+                        {petImages?.map((image, index) => (
+                            <div key={index} className="relative w-32 h-32">
+                                <img
+                                    src={image.url}
+                                    alt={`${image?._id}`}
+                                    className="w-full h-full rounded-md"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
             <button
                 type="submit"
                 className="bg-indigo-500 text-white py-2 px-4 rounded place-items-center"
             >
-                Add Pet
+                Edit Pet
             </button>
         </form>
     );
 };
 
-export default AddPet;
+export default EditPet;

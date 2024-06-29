@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getSinglePet } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
@@ -14,14 +14,12 @@ export default function PetDetails() {
   const { id } = useParams()
     const fetchData = async (id: string | undefined) => {
     const data = await getSinglePet(id)
-    console.log(data)
     return data
   }
 
-  
+
   const { isLoading, error, data } = useQuery({ queryKey: ["GetSInglePetDetails", id], queryFn: () => fetchData(id) })
 
-  console.log(data)
   if(isLoading) return <div>Loading...</div>
   if(error) return <div>Error: {error.message}</div>
 
@@ -86,11 +84,11 @@ export default function PetDetails() {
               <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white"> <CircleUserRound />  <span className="text-black dark:text-white font-semibold capitalize text-xs">Owner : {data?.userData?.firstName} {data?.userData?.lastName}</span></h1>
 
               <div className="flex gap-2.5 mt-4">
-                <a href="#" className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base">Add to cart</a>
-                <a href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
+                <Link to={`/adoption/user/dataform/${id}`} className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 sm:flex-none md:text-base">Adopt Pet</Link>
+                <a aria-label="Like" href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
                   <Heart />
                 </a>
-                <a href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
+                <a aria-label="People" href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
                 <UserRoundSearch />
                 </a>
 
@@ -125,7 +123,7 @@ const ImgBox = ({ petImg = [{ url: '' }] }) => {
         alt="product"
         className=" h-60 md:h-80 w-80 rounded-lg object-cover object-center hover:scale-125 transition duration-300 ease-in-out"
       />
-         
+
       </div>
       <div className="flex  gap-x-1.5">
         {petImg.map((img, index) => (

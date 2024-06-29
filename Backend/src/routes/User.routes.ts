@@ -9,6 +9,7 @@ import {
   logoutUser,
   deleteAccount,
   getProfileDetails,
+  getAllUsers,
 } from '../controllers/User.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 
@@ -24,5 +25,8 @@ router.route('/refresh/token').get(refreshAccessToken);
 router.route('/logout').get(isAuthenticate, logoutUser);
 router.route('/profile').get(isAuthenticate, getProfileDetails);
 router.route('/delete/:id').delete(isAuthenticate, deleteAccount);
+
+// Route to get details of All users
+router.route('/all').get(isAuthenticate, getAllUsers);
 
 export default router;

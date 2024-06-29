@@ -37,11 +37,11 @@ const Card = ({data}:any) => {
                     <p className="text-sm">Price: ${data.productPrice}</p>
                     <p className="text-sm">Quantity: 1</p>
                     <div className="flex gap-x-2  pt-2">
-                    <button className="bg-gray-200 text-black px-2 py-1 rounded-lg font-bold text-sm">Count</button>
-                    <button onClick={removeHandle} className=" bg-red-500 text-white px-2 py-1 rounded-lg font-bold text-sm">Remove</button>
+                    <button type="button" className="bg-gray-200 text-black px-2 py-1 rounded-lg font-bold text-sm">Count</button>
+                    <button type="button" onClick={removeHandle} className=" bg-red-500 text-white px-2 py-1 rounded-lg font-bold text-sm">Remove</button>
                 </div>
                 </div>
-                
+
             </div>
         </div>
     </>

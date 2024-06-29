@@ -5,9 +5,9 @@ export interface User {
     email: string;
     password: string;
     refreshToken?: string;
-    avatar?: { publicId: string; url: string};
-    created_at?:string;
-    updated_at?:string;
+    avatar?: { publicId: string; url: string };
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface AuthState {
@@ -57,6 +57,19 @@ interface PetImage {
     _id: string;
 }
 
+export interface PetForm {
+    petName: string;
+    petDescription: string;
+    price: number;
+    isFree: boolean;
+    petType: string;
+    petBread: string;
+    diseases: string;
+    images: FileList;
+    petImages: PetImage[];
+    [key: string]: any;
+}
+
 export interface Product {
     _id: string;
     productName: string;
@@ -64,7 +77,7 @@ export interface Product {
     productPrice: number;
     discount: number;
     creator: string;
-    productImages:ProductImage[];
+    productImages: ProductImage[];
     quantity: number;
     category: string;
     ratings: Rating[];
@@ -87,57 +100,71 @@ export interface ProductForm {
     quantity: number;
     images: FileList;
     [key: string]: any;
-
 }
 interface Rating {
     userId: string;
     rating: number;
 }
 
-
-
 export interface Blog {
     _id: string;
     title: string;
     content: string;
     category: string[];
-    comments:Comment[];
-    coverImage:{ publicId: string; url: string};
+    comments: Comment[];
+    coverImage: { publicId: string; url: string };
     likes: string[];
-    userData: BlogUser;
+    created_at:string;
+    userDetails: BlogUser;
+    userData?: BlogUser;
     data?: any;
 }
 
-interface Comment{
-    _id: string; 
+interface Comment {
+    _id: string;
     comment: string;
-     owner: string;
-      blogId: string;
-       created_at: string;
-        updated_at: string;
-         ownerFirstName: string;
-          ownerLastName: string;
+    owner: string;
+    blogId: string;
+    created_at: string;
+    updated_at: string;
+    ownerFirstName: string;
+    ownerLastName: string;
 }
 
-interface BlogUser{
+interface BlogUser {
     _id?: string;
     firstName: string;
     lastName?: string;
     email: string;
     refreshToken?: string;
-    avatar?: { publicId: string; url: string};
-    created_at:string;
-    updated_at?:string;
+    avatar?: { publicId: string; url: string };
+    created_at: string;
+    updated_at?: string;
 }
-
-
 
 export interface CartItem {
     productId: string;
     quantity: number;
     purchasedPrice: number;
-    user?: { 
+    user?: {
       name: string;
+    user?: {
+        name: string;
     };
-    isPurchased?: boolean; 
+    isPurchased?: boolean;
   }
+    isPurchased?: boolean;
+}
+
+
+export interface AdoptPetFormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    pet_id: string;
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    phoneNumber: string;
+}

@@ -17,7 +17,6 @@ export default function Products() {
   const dataFetch = async (): Promise<Product[]> => {
     try {
       const data = await getAllProducts() as unknown as Product[];
-      console.log(data)
       return data;
     } catch (error) {
       console.error("Error:", error);
@@ -29,8 +28,7 @@ export default function Products() {
     queryKey: ["GetAllProducts"],
     queryFn: dataFetch,
   });
-  console.log(isLoading, error, data)
-  
+
 
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [filters, setFilters] = useState<FilterState>({
@@ -57,7 +55,7 @@ export default function Products() {
       return matchesAnimal && matchesSeason && matchesPrice;
     });
   };
-  
+
 
   return (
     <div className="main flex flex-col md:flex-row">
@@ -68,6 +66,7 @@ export default function Products() {
             <div className="mb-6 flex items-end justify-between gap-4">
               <h2 className="text-2xl font-bold text-primary lg:text-3xl">Products</h2>
               <button
+              type="button"
                 onClick={onHandleclick}
                 className="flex items-center font-mad hover:bg-slate-200 gap-2 text-primary lg:text-lg rounded-md border p-1 px-2"
               >
@@ -78,7 +77,7 @@ export default function Products() {
               {isLoading &&
                 [1, 2, 3, 4].map((item) => <CardSkeleton key={item} />)}
               {error && <div>Something went wrong</div>}
-              {Array.isArray(data) && 
+              {Array.isArray(data) &&
               applyFilters(data).map((product) => (
                  <>
                   <ProductCard
@@ -89,7 +88,7 @@ export default function Products() {
           </div>
         </div>
       </div>
-     
+
     </div>
   );
 }

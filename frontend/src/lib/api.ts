@@ -1,6 +1,5 @@
 import axios from "axios";
-import { User, TokenResponse, Pet, Blog } from "@/types/models"; // Import User and TokenResponse types
-
+import { User, TokenResponse, Pet, Blog, PetForm, AdoptPetFormData } from "@/types/models"; // Import User and TokenResponse types
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
 
@@ -28,7 +27,6 @@ export const login = async (
 export const logout = async (): Promise<void> => {
     try {
         await authApi.get("/api/v1/users/logout");
-        clearLocalStorage(); // Clear local storage after logout
     } catch (error) {
         console.error("Logout error:", error);
     }
@@ -36,7 +34,7 @@ export const logout = async (): Promise<void> => {
 
 export const relogin = async (): Promise<TokenResponse> => {
     const { data } = await authApi.get("/api/v1/users/refresh/token");
-    
+
     return data;
 };
 
@@ -51,28 +49,39 @@ export const deleteAccount = async (id: string): Promise<TokenResponse> => {
 };
 
 export const getAllPets = async (): Promise<Pet> => {
-    const { data } = await authApi.get<{data:Pet;}>("api/v1/pets/getDetails/all");
+    const { data } = await authApi.get<{ data: Pet }>(
+        "api/v1/pets/getDetails/all",
+    );
     return data.data;
 };
 
 export const getSinglePet = async (id: string | undefined): Promise<Pet> => {
     const { data } = await authApi.get(`api/v1/pets/getDetails/` + id);
     return data.data;
-   
 };
 
-export const deletePetById = async (id: string): Promise<Pet> => {
-    const { data } = await authApi.delete(`api/v1/pets/delete/${id}`);
-    return data;
-};
+export const addPet = async (data: PetForm) => {
+    try {
+        const formData = new FormData();
 
-export const addPet = async (petData: Pet): Promise<Pet> => {
-    const { data } = await authApi.post("/api/v1/pets/add", petData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
-    });
-    return data;
+        Object.keys(data).forEach((key) => {
+            if (key === "images") {
+                const files = data[key];
+                for (let i = 0; i < files.length; i++) {
+                    formData.append(key, files[i]);
+                }
+            } else formData.append(key, data[key]);
+        });
+
+        const res = await authApi.post("/api/v1/pets/add", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return res?.data;
+    } catch (error: any) {
+        return error?.response?.data;
+    }
 };
 
 export const getAllBlogs = async (): Promise<Blog> => {
@@ -199,20 +208,39 @@ export const dislikeBlog = async (id: string) => {
     }
 };
 
-export const updatePet = async (id: string, petData: Pet): Promise<Pet> => {
-    const { data } = await authApi.put(`/api/v1/pets/update/${id}`, petData);
-    return data;
+export const updatePet = async (id: string, data: PetForm): Promise<Pet> => {
+    try {
+        const formData = new FormData();
+
+        Object.keys(data).forEach((key) => {
+            if (key === "images") {
+                const files = data[key];
+                for (let i = 0; i < files.length; i++) {
+                    formData.append(key, files[i]);
+                }
+            } else formData.append(key, data[key]);
+        });
+
+        const res = await authApi.put(`/api/v1/pets/update/${id}`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return res?.data;
+    } catch (error: any) {
+        return error?.response?.data;
+    }
 };
 
 export const deletePet = async (id: string): Promise<void> => {
     await authApi.delete(`/api/v1/pets/delete/${id}`);
 }
 
+export const adoptPet = async (data: AdoptPetFormData & { pet_id: string }): Promise<void> => {
+    const response = await authApi.patch(`/api/v1/pets/adopt/${data.pet_id}`, data);
+    return response.data;
 
-// Helper function to clear local storage
-const clearLocalStorage = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-};
+}
+
 
 export default authApi;

@@ -9,7 +9,6 @@ const Blogs = () => {
         const dataFetch = async () => {
             try {
                 const data = await getAllBlogs();
-                console.log(data.data);
 
                 setBlogs(data?.data);
             } catch (error) {
@@ -30,7 +29,7 @@ const Blogs = () => {
                         category={blog.category}
                         coverImage={blog.coverImage}
                         likes={blog?.likes}
-                        userDetails={blog.userData}
+                        userDetails={blog.userDetails}
                     />
                 </div>
             ))}

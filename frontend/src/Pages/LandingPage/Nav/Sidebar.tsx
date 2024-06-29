@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ModeToggle } from "@/components/Ui/Buttons/mode-toggle";
 import * as RXIcons from "react-icons/rx";
@@ -8,20 +8,15 @@ import * as LuIcons from "react-icons/lu";
 import * as HI2Icons from "react-icons/hi2";
 import * as FA6Icons from "react-icons/fa6";
 import * as LRIcons from 'lucide-react';
-import Cookies from 'js-cookie';
+import * as PIIcons from "react-icons/pi";
+import usePersonStore from '@/lib/Utils/zustandStore';
 
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const sidebarRef = useRef<HTMLDivElement>(null);
-    const [refreshToken, setRefreshToken] = useState<string | null>(null);
 
-    useEffect(() => {
-        const token = Cookies.get('refreshToken');
-        if (token) {
-            setRefreshToken(token);
-        }
-    }, []);
+    const isUserLoggedIn = usePersonStore((state) => state._id);
 
     const handleToggleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
@@ -118,6 +113,12 @@ function Sidebar() {
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="/blogs" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                        <PIIcons.PiReadCvLogoDuotone size={21.5}/>
+                                            <span className="ms-3">Blogs</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                             <IOIcons.IoIosWallet size={21.5} />
                                             <span className="ms-3">Pricing</span>
@@ -131,7 +132,7 @@ function Sidebar() {
                                     </li>
                                 </div>
                             </li>
-                            {!refreshToken && (
+                            {!isUserLoggedIn && (
                                 <>
                                     <li>
                                         <a href="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

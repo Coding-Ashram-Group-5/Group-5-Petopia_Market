@@ -11,6 +11,7 @@ import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 const cookiesOptions = {
   secure: process.env.NODE_ENV == 'production',
   httpOnly: true,
+  sameSite: "none" as "none"
 };
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
@@ -244,9 +245,11 @@ const refreshAccessToken = AsyncHandler(async (req: Request, res: Response) => {
         .status(200)
         .cookie('authToken', accessToken, {
           maxAge: 604800000, // 7 Days
+          ...cookiesOptions,
         })
         .cookie('refreshToken', refreshToken, {
           maxAge: 2592000000, //30 Days
+          ...cookiesOptions,
         })
         .json(new APIResponse('Access Token Refreshed', 200, loggedInUser));
     } else {
@@ -323,6 +326,17 @@ const updateProfileDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, r
   }
 });
 
+const getAllUsers = AsyncHandler(async (req: Request, res: Response) => {
+  try {
+    let usersList = await UserModel.find({});
+
+    res.status(200).json(new APIResponse('All Available User List', 200, usersList));
+  } catch (error: any) {
+    console.log(error);
+    res.status(502).json(new APIError(error?.message || 'Internal Server Error', 502));
+  }
+});
+
 export {
   loginUser,
   registerUser,
@@ -331,4 +345,5 @@ export {
   refreshAccessToken,
   getProfileDetails,
   updateProfileDetails,
+  getAllUsers,
 };
