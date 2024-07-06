@@ -12,6 +12,7 @@ import {
   getAllUsers,
 } from '../controllers/User.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
+import { redisCacheMiddleware } from '../middlewares/redisCache.middleware.js';
 
 const router: Router = Router();
 

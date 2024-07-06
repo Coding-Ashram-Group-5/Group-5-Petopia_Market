@@ -10,10 +10,9 @@ const skip = () => {
   return env !== 'development';
 };
 
-const morganMiddleware = morgan(
-  ':remote-addr :method :url :status :res[content-length] - :response-time ms',
-
-  { stream, skip },
-);
+const morganMiddleware = morgan(':remote-addr :method :url :status :res[content-length] - :response-time ms', {
+  stream,
+  skip,
+});
 
 export default morganMiddleware;

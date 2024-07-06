@@ -30,7 +30,7 @@ const format = winston.format.combine(
 
   winston.format.colorize({ all: true }),
 
-  winston.format.printf((info) => `${info.timestamp} ${info.level} ${info.message}`),
+  winston.format.printf((info) => ` ${info.level} ${info.message} ${info.timestamp}`),
 );
 
 const transports = [
