@@ -63,14 +63,14 @@ export default function Cart() {
             //     contact: "9999999999",
             // },
             notes: {
-                address: "Soumya Dey Corporate Office",
+                address: "Petopia",
             },
             theme: {
                 color: "#61dafb",
             },
         };
 
-        const paymentObject = new window.Razorpay(options);
+        const paymentObject = new (window as any).Razorpay(options);
         paymentObject.open();
     }
 
