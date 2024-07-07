@@ -10,6 +10,9 @@ import petRoutes from './routes/Pets.routes.js';
 import productRoutes from './routes/Product.routes.js';
 import cartRoutes from './routes/Cart.routes.js';
 import blogRoutes from './routes/Blog.routes.js';
+import paymentRoutes from './routes/Payment.routes.js';
+
+// Middlewares import
 import sendRequestToServer from './cronJob/index.js';
 import morganMiddleware from './middlewares/morgan.middleware.js';
 import logger from './utils/logger.util.js';
@@ -38,6 +41,7 @@ app.use('/api/v1/pets', petRoutes);
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/cart', cartRoutes);
 app.use('/api/v1/blogs', blogRoutes);
+app.use('/api/v1/payment', paymentRoutes);
 
 // Health Verifying Route
 app.get('/api/v1/health', (_, res) => {
