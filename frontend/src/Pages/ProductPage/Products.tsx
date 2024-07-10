@@ -68,7 +68,7 @@ export default function Products() {
               <button
               type="button"
                 onClick={onHandleclick}
-                className="flex items-center font-mad hover:bg-slate-200 gap-2 text-primary lg:text-lg rounded-md border p-1 px-2"
+                className="flex items-center hover:bg-slate-200 font-semibold  dark:hover:bg-slate-800 gap-2 text-primary lg:text-md rounded-sm border p-1 px-2"
               >
                 Filter
               </button>

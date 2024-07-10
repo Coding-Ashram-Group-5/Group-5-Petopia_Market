@@ -15,7 +15,7 @@ export default function Animated() {
     <div onClick={handleClick} className="group relative w-[621px] h-fit">
       <div className="absolute top-0 left-0 z-10">
         <svg className="" width="621" height="418" viewBox="0 0 621 718" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path className="group-hover:fill-[#63de50] transition" d="M0 400.691C0 212.129 0 117.848 58.5786 59.2696C117.157 0.690918 211.438 0.690918 400 0.690918H500.945C557.513 0.690918 585.798 0.690918 603.371 18.2645C620.945 35.8381 620.945 64.1224 620.945 120.691V633.116C620.945 672.714 620.945 692.513 608.643 704.815C596.342 717.116 576.543 717.116 536.945 717.116H83.9999C44.402 717.116 24.603 717.116 12.3015 704.815C0 692.513 0 672.714 0 633.116V400.691Z" fill="#DE5050" />
+          <path className="group-hover:fill-[#63de50] transition" d="M0 400.691C0 212.129 0 117.848 58.5786 59.2696C117.157 0.690918 211.438 0.690918 400 0.690918H500.945C557.513 0.690918 585.798 0.690918 603.371 18.2645C620.945 35.8381 620.945 64.1224 620.945 120.691V633.116C620.945 672.714 620.945 692.513 608.643 704.815C596.342 717.116 576.543 717.116 536.945 717.116H83.9999C44.402 717.116 24.603 717.116 12.3015 704.815C0 692.513 0 672.714 0 633.116V400.691Z" fill="#ef4444" />
         </svg>
       </div>
       <img className="absolute top-0 left-36 z-20 h-[26rem]" src={img} alt="" />
@@ -36,7 +36,7 @@ export default function Animated() {
       <div className="absolute top-60 left-0 z-20 h-28">
         <svg width="604" height="137" viewBox="0 0 904 237" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
           <g filter="url(#filter0_d_91_31)">
-            <rect className="group-hover:fill-[#de5050ff] transition" x="4" width="596" height="229" rx="23" fill="#63DE50" />
+            <rect className="group-hover:fill-[#ef4444] transition" x="4" width="596" height="229" rx="23" fill="#63DE50" />
           </g>
           <rect x="34.5" y="28.5" width="535" height="172" rx="6.5" stroke="white" strokeWidth="3" />
           <rect x="294.5" y="106.5" width="275" height="94" stroke="white" strokeWidth="3" />
