@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const mobile = "https://pawsindia.com/cdn/shop/files/Collars-With-tags-Banner-Mobile-Version.jpg?v=1713878541"
 const desktop = "https://pawsindia.com/cdn/shop/files/Collars-With-tags-Banner_1920x.jpg?v=1713878509"
 export default function Banner2() {
-
+  const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(true);
 
     useEffect(() => {
@@ -22,7 +23,7 @@ export default function Banner2() {
 
   return (
     <>
-    <div className="flex justify-center items-center h-fit">
+    <div onClick={() => navigate('/products')} className="flex justify-center cursor-pointer items-center h-fit">
       {isMobile ? (
         <img src={mobile} alt="Mobile Image" loading="lazy" className="max-w-full max-h-full" />
       ) : (
