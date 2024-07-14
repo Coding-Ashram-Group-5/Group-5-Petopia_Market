@@ -1,9 +1,22 @@
 import useStore from "@/hooks/useStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/components/Ui/use-toast";
 import { payment, paymentSuccess } from "@/lib/api";
+import usePersonStore from "@/lib/Utils/zustandStore";
+import { generateAlphanumericString } from "@/lib/Utils/util";
 export default function Cart() {
     const { cartItems, removeAllProducts } = useStore();
+    const [totalAmount, setTotalAmount] = useState<number>(0);
+    const user = usePersonStore((state) => state);
+
+    useEffect(() => {
+        const amount = cartItems.reduce(
+            (acc, item) => acc + item.productPrice,
+            0,
+        );
+        setTotalAmount(amount);
+    }, []);
+
     function loadScript(src: string) {
         return new Promise((resolve) => {
             const script = document.createElement("script");
@@ -17,6 +30,7 @@ export default function Cart() {
             document.body.appendChild(script);
         });
     }
+
     async function displayRazorpay() {
         const res = await loadScript(
             "https://checkout.razorpay.com/v1/checkout.js",
@@ -28,7 +42,13 @@ export default function Cart() {
         }
 
         // creating a new order
-        const result = await payment();
+        const receipt = generateAlphanumericString();
+        const result = await payment({
+            amount: totalAmount * 100,
+            currency: "INR",
+            receipt,
+            notes: {},
+        });
 
         if (!result) {
             alert("Server error. Are you online?");
@@ -39,34 +59,42 @@ export default function Cart() {
         const { amount, id: order_id, currency } = result.data;
 
         const options = {
-            key: process.env.RAZORPAY_KEY,
+            key: import.meta.env.VITE_RAZORPAY_KEY,
             amount: amount.toString(),
-            currency: currency,
+            currency,
             name: "Petopia",
             description: "Test Transaction",
-            order_id: order_id,
+            order_id,
             handler: async function (response: any) {
                 const data = {
-                    orderCreationId: order_id,
-                    razorpayPaymentId: response.razorpay_payment_id,
-                    razorpayOrderId: response.razorpay_order_id,
-                    razorpaySignature: response.razorpay_signature,
+                    // orderCreationId: order_id,
+                    payment_id: response.razorpay_payment_id,
+                    order_id: response.razorpay_order_id,
+                    // razorpaySignature: response.razorpay_signature,
                 };
+                const signature = response.razorpay_signature;
 
-                const result = paymentSuccess(data);
+                const result = await paymentSuccess({
+                    data,
+                    signature,
+                });
 
-                alert(result);
+                alert(result?.message);
+
+                if (result?.success) {
+                    removeAllProducts();
+                }
             },
             prefill: {
-                name: "Petopia",
-                email: "user@petopia.com",
-                contact: "9999999999",
+                name: `${user.firstName} ${user.lastName}`,
+                email: user.email,
+                contact: "9876543210",
             },
             notes: {
                 address: "Petopia",
             },
             theme: {
-                color: "#61dafb",
+                color: "#ef4444",
             },
         };
 
@@ -77,7 +105,7 @@ export default function Cart() {
     return (
         <>
             <div className="mt-2">
-                <div className=" overflow-y-scroll h-[52vh]">
+                <div className="overflow-y-scroll h-[52vh] border">
                     {cartItems.map((item) => {
                         return <Card data={item} />;
                     })}
@@ -92,8 +120,9 @@ export default function Cart() {
                     </button>
                     <button
                         type="button"
+                        disabled={cartItems.length === 0}
                         onClick={displayRazorpay}
-                        className=" bg-red-500 text-white px-2 py-1 rounded-lg font-bold text-sm"
+                        className="bg-red-500 text-white px-2 py-1 rounded-lg font-bold text-sm disabled:bg-opacity-80 disabled:cursor-not-allowed"
                     >
                         Buy Now
                     </button>
@@ -102,6 +131,7 @@ export default function Cart() {
         </>
     );
 }
+
 const Card = ({ data }: any) => {
     const { removeProduct } = useStore();
     const { toast } = useToast();
