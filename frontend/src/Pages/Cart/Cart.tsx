@@ -57,11 +57,11 @@ export default function Cart() {
 
                 alert(result);
             },
-            // prefill: {
-            //     name: "Petopia",
-            //     email: "user@petopia.com",
-            //     contact: "9999999999",
-            // },
+            prefill: {
+                name: "Petopia",
+                email: "user@petopia.com",
+                contact: "9999999999",
+            },
             notes: {
                 address: "Petopia",
             },
