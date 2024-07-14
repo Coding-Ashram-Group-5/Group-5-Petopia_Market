@@ -23,7 +23,7 @@ export default function DogBanner() {
 
   return (
     <>
-    <div onClick={() => navigate('/products')} className="flex justify-center cursor-pointer items-center h-fit">
+    <div onClick={() => navigate('/products')} className="flex justify-center cursor-pointer my-2 items-center h-fit">
       {isMobile ? (
         <img src={mobile} alt="Mobile Image" loading="lazy" className="max-w-full max-h-full" />
       ) : (

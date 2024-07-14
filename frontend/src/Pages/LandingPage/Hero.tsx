@@ -1,7 +1,7 @@
-import logo from "@/assets/logo.png"
 import { useNavigate } from 'react-router-dom'
 import Animated from "@/assets/Animated"
 import { motion } from "framer-motion";
+import Boor from "@/components/Ui/Error/Boor";
 
 export default function Hero() {
   const navigate = useNavigate(); // Hook for navigation
@@ -14,7 +14,7 @@ export default function Hero() {
   return (
     <div className="p-2 pt-5 md:p-8 flex justify-between  border-b-2 flex-col md:flex-row bg-background dark:bg-background">
       <div className=" pl-4 md:pt-12">
-        <div className="flex"><h1 className="text-black font-bold text-[3.5rem] md:text-[5rem]  -tracking-[0.3rem] leading-[4rem] dark:text-white  ">Your Pet</h1> <div className="h-20 w-20 bg-red-500 rounded-3xl   flex justify-center"> <img src={logo} className=" h-24 md:h-28" alt="logo" /></div></div>
+        <div className="flex"><h1 className="text-black font-bold text-[3.5rem] md:text-[5rem]  -tracking-[0.3rem] leading-[4rem] dark:text-white  ">Your Pet</h1> <div className="h-20 w-20 bg-green-500 rounded-3xl   flex justify-center"><Boor /></div></div>
         <div><h1 className=" text-red-500 font-bold text-[4rem] md:text-[5rem] -tracking-[0.3rem] leading-[4rem]   "> BestFriends</h1></div>
         <div><h1 className="text-black font-bold text-[4rem] md:text-[5rem]  -tracking-[0.3rem] leading-[4rem] dark:text-white  "> Forever</h1></div>
         <div className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden">
