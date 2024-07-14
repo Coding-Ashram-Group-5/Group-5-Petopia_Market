@@ -9,7 +9,6 @@ import {
   logoutUser,
   deleteAccount,
   getProfileDetails,
-  getAllUsers,
 } from '../controllers/User.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { redisCacheMiddleware } from '../middlewares/redisCache.middleware.js';
@@ -23,11 +22,8 @@ router.route('/signin').post(loginUser);
 router.route('/refresh/token').get(refreshAccessToken);
 
 // Protected or Secure Route
-router.route('/logout').get(isAuthenticate, logoutUser);
-router.route('/profile').get(isAuthenticate, getProfileDetails);
-router.route('/delete/:id').delete(isAuthenticate, deleteAccount);
-
-// Route to get details of All users
-router.route('/all').get(isAuthenticate, getAllUsers);
+router.route('/logout').get(isAuthenticate(false), logoutUser);
+router.route('/profile').get(isAuthenticate(false), getProfileDetails);
+router.route('/delete/:id').delete(isAuthenticate(false), deleteAccount);
 
 export default router;

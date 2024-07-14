@@ -4,7 +4,7 @@ import { isAuthenticate } from '../middlewares/isAuth.middleware.js';
 
 const router: Router = Router();
 
-router.route('/order').post(isAuthenticate, PaymentGateway.createPayment);
-router.route('/verifyOrder').post(isAuthenticate, PaymentGateway.verifyOrder);
+router.route('/order').post(isAuthenticate(false), PaymentGateway.createPayment);
+router.route('/verifyOrder').post(isAuthenticate(false), PaymentGateway.verifyOrder);
 
 export default router;

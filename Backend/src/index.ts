@@ -11,6 +11,7 @@ import productRoutes from './routes/Product.routes.js';
 import cartRoutes from './routes/Cart.routes.js';
 import blogRoutes from './routes/Blog.routes.js';
 import paymentRoutes from './routes/Payment.routes.js';
+import adminRoutes from './routes/Admin.routes.js';
 
 // Middlewares import
 import sendRequestToServer from './cronJob/index.js';
@@ -42,6 +43,7 @@ app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/cart', cartRoutes);
 app.use('/api/v1/blogs', blogRoutes);
 app.use('/api/v1/payment', paymentRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // Health Verifying Route
 app.get('/api/v1/health', (_, res) => {

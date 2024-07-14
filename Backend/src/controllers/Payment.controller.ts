@@ -15,8 +15,6 @@ class PaymentGateway {
   }
 
   public createPayment = async (req: Request, res: Response): Promise<Response> => {
-    console.log(this.KEY_ID);
-    console.log(this.KEY_SECRET);
     try {
       if (!this.KEY_ID || !this.KEY_SECRET) {
         logger.error('Razorpay Credentials Missing');

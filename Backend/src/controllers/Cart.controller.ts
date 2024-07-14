@@ -55,6 +55,68 @@ const addProduct = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Respon
   }
 });
 
+const getCartProduct = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
+  try {
+    const userId = req.user?._id;
+    const getPurchasedProduct: any = await CartModel.aggregate([
+      {
+        $match: { purchasedBy: userId, _id: { $exists: true, $ne: null }, isPurchased: false },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'purchasedBy',
+          foreignField: '_id',
+          as: 'userData',
+        },
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'productDetails',
+        },
+      },
+      {
+        $unset: [
+          'productId',
+          'purchasedBy',
+          'userData.password',
+          'userData.refreshToken',
+          'userData.__v',
+          '__v',
+          'productDetails.__v',
+          'productDetails.owner',
+          'isPurchased',
+        ],
+      },
+      {
+        $unwind: '$productDetails',
+      },
+      {
+        $unwind: '$userData',
+      },
+    ]);
+    if (!getPurchasedProduct.length) {
+      return res.status(200).json(new APIResponse("You haven't purchased any products yet.", 200, []));
+    }
+
+    res
+      .status(200)
+      .json(
+        new APIResponse(
+          `Here is Your Cart ${getPurchasedProduct[0]?.userData?.firstName}`,
+          200,
+          getPurchasedProduct[0],
+        ),
+      );
+  } catch (error: any) {
+    console.log(error);
+    res.status(502).json(new APIError(error?.message || 'Error While Fetching Cart Details'));
+  }
+});
+
 const getPurchasedProduct = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
     const userId = req.user?._id;
@@ -276,4 +338,12 @@ const deleteEntireCart = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
   }
 });
 
-export { addProduct, getPurchasedProduct, buyProductById, buyAllCartProducts, deleteCartItemById, deleteEntireCart };
+export {
+  addProduct,
+  getPurchasedProduct,
+  buyProductById,
+  buyAllCartProducts,
+  getCartProduct,
+  deleteCartItemById,
+  deleteEntireCart,
+};

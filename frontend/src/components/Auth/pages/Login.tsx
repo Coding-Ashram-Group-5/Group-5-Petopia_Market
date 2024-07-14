@@ -129,9 +129,13 @@ const Login = () => {
                                             {`Error ${apiError.statusCode}: ${apiError.errorMessage}`}
                                             {apiError.errors.length > 0 && (
                                                 <ul>
-                                                    {apiError.errors.map((err, index) => (
-                                                        <li key={index}>{err}</li>
-                                                    ))}
+                                                    {apiError.errors.map(
+                                                        (err, index) => (
+                                                            <li key={index}>
+                                                                {err}
+                                                            </li>
+                                                        ),
+                                                    )}
                                                 </ul>
                                             )}
                                         </div>
@@ -162,7 +166,9 @@ const Login = () => {
                                                             fill="currentFill"
                                                         />
                                                     </svg>
-                                                    <span className="sr-only">Loading...</span>
+                                                    <span className="sr-only">
+                                                        Loading...
+                                                    </span>
                                                 </div>
                                             </div>
                                         ) : (

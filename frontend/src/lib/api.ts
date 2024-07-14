@@ -254,7 +254,7 @@ export const adoptPet = async (
 };
 
 export const payment = async () => {
-    const response = await authApi.post(`/api/v1/payment/create`);
+    const response = await authApi.post(`/api/v1/payment/order`);
     return response.data;
 };
 

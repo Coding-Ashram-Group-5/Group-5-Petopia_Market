@@ -31,6 +31,7 @@ export interface CloudinaryImage {
 export interface IGetUserAuthInfoRequest extends Request {
   user?: {
     _id?: string | undefined;
+    userRole: string;
   };
 }
 
