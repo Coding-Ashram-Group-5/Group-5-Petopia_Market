@@ -65,6 +65,10 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
       type: String,
       default: '',
     },
+    userRole: {
+      type: String,
+      default: 'Customer',
+    },
   },
   {
     timestamps: {

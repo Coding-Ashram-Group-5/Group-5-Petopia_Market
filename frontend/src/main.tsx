@@ -37,60 +37,48 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-        <QueryClientProvider client={queryClient}>
-            <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<App />}>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/login" element={<Login />} />
+    <QueryClientProvider client={queryClient}>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<App />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/products/add" element={<AddProduct />} />
+                        <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/blogs/:id" element={<Blog />} />
+                        <Route path="/blogs/add" element={<NewBlog />} />
+                        <Route path="/blogs/edit/:id" element={<EditBlog />} />
+                        <Route path="/pets" element={<Pets />} />
+                        <Route
+                            path="/pets/getDetails/:id"
+                            element={<PetDetails />}
+                        />
+                        <Route
+                            path="/adoption/user/dataform/:id"
+                            element={<AdoptPet />}
+                        />
+                        <Route
+                            path="/products/getDetails/:id"
+                            element={<ProductDetails />}
+                        />
+                        <Route path="/admin" element={<Admin />}>
+                            <Route path="/admin" element={<Dashboard />} />
                             <Route
-                                path="/register"
-                                element={<Register />}
+                                path="products"
+                                element={<ProductManagement />}
                             />
-                            <Route path="/profile" element={<Profile />} />
-                            <Route path="/products" element={<Products />} />
-                            <Route
-                                path="/products/add"
-                                element={<AddProduct />}
-                            />
-                            <Route path="/blogs" element={<Blogs />} />
-                            <Route path="/blogs/:id" element={<Blog />} />
-                            <Route path="/blogs/add" element={<NewBlog />} />
-                            <Route
-                                path="/blogs/edit/:id"
-                                element={<EditBlog />}
-                            />
-                            <Route path="/pets" element={<Pets />} />
-                            <Route
-                                path="/pets/getDetails/:id"
-                                element={<PetDetails />}
-                            />
-                            <Route
-                                path="/adoption/user/dataform/:id"
-                                element={<AdoptPet />}
-                            />
-                            <Route
-                                path="/products/getDetails/:id"
-                                element={<ProductDetails />}
-                            />
-                            <Route 
-                               path="/admin"
-                               element={<Admin />}
-                               >
-                                <Route 
-                                      path="/admin"
-                                      element={<Dashboard />}
-                                />
-                                <Route path="products" element={<ProductManagement />} />
-                                <Route path="pets" element={<PetManagement />} />
-                                <Route path="blogs" element={<BlogsManagement />} />
-                                <Route path="users" element={<UserManagement />} />
-                               </Route>
-                            <Route path="*" element={<NotFound />} />
+                            <Route path="pets" element={<PetManagement />} />
+                            <Route path="blogs" element={<BlogsManagement />} />
+                            <Route path="users" element={<UserManagement />} />
                         </Route>
-                    </Routes>
-                </BrowserRouter>
-            </ThemeProvider>
-        </QueryClientProvider>
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </ThemeProvider>
+    </QueryClientProvider>,
 );

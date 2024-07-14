@@ -145,7 +145,7 @@ const deletePetById = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Res
     }
 
     // Checking for condition of Only Owner Can Delete Product
-    if (req.user && String(petDetails.owner) != req.user._id) {
+    if (req.user && (String(petDetails.owner) != req.user._id || req.user.userRole === 'Admin')) {
       return res.status(402).json(new APIError('Only Owner can Delete Product', 402));
     }
 
@@ -273,7 +273,7 @@ const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
       return res.status(402).json(new APIError("You Can't Adopt Your own Pet", 402));
     }
 
-    const updatePetAdoptStatus = await PetModel.findByIdAndUpdate(id, { isAdopted: true });
+    const updatePetAdoptStatus = await PetModel.findByIdAndUpdate(id, { isAdopted: true, owner: req.user?._id });
 
     // Checking if any server side issue in update status
     if (!updatePetAdoptStatus) {

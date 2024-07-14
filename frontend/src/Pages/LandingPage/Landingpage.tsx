@@ -11,6 +11,7 @@ import Banner3 from "./Banners/Banner3"
 import Category from "./Banners/Category"
 import Stats from "./Stats"
 import Info from "./Info"
+import CookieConsent from "@/hooks/CookieConsent"
 
 export default function Landingpage() {
     return (
@@ -34,6 +35,7 @@ export default function Landingpage() {
             </div>
             <FAQ/>
             <Footer/>
+            <CookieConsent/>
           </div>
         </>
       )

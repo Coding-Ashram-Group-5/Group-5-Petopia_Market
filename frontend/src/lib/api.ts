@@ -1,5 +1,12 @@
 import axios from "axios";
-import { User, TokenResponse, Pet, Blog, PetForm, AdoptPetFormData } from "@/types/models"; // Import User and TokenResponse types
+import {
+    User,
+    TokenResponse,
+    Pet,
+    Blog,
+    PetForm,
+    AdoptPetFormData,
+} from "@/types/models"; // Import User and TokenResponse types
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
 
@@ -234,13 +241,26 @@ export const updatePet = async (id: string, data: PetForm): Promise<Pet> => {
 
 export const deletePet = async (id: string): Promise<void> => {
     await authApi.delete(`/api/v1/pets/delete/${id}`);
-}
+};
 
-export const adoptPet = async (data: AdoptPetFormData & { pet_id: string }): Promise<void> => {
-    const response = await authApi.patch(`/api/v1/pets/adopt/${data.pet_id}`, data);
+export const adoptPet = async (
+    data: AdoptPetFormData & { pet_id: string },
+): Promise<void> => {
+    const response = await authApi.patch(
+        `/api/v1/pets/adopt/${data.pet_id}`,
+        data,
+    );
     return response.data;
+};
 
-}
+export const payment = async () => {
+    const response = await authApi.post(`/api/v1/payment/order`);
+    return response.data;
+};
 
+export const paymentSuccess = async (data: any) => {
+    const response = await authApi.post(`/api/v1/payment/success`, data);
+    return response.data;
+};
 
 export default authApi;
