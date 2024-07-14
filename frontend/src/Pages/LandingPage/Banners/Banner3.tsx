@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const mobile = "https://pawsindia.com/cdn/shop/files/Collars-With-tags-Banner-Mobile-Version.jpg?v=1713878541"
-const desktop = "https://pawsindia.com/cdn/shop/files/Collars-With-tags-Banner_1920x.jpg?v=1713878509"
+const mobile = "https://pawsindia.com/cdn/shop/files/Dog_Raincoat_Banner_Mobile.png?v=1716742965"
+const desktop = "https://pawsindia.com/cdn/shop/files/Dog_Raincoat_Banner_Desktop.png?v=1716742929"
 export default function Banner2() {
   const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(true);
