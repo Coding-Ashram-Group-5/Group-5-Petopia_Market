@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getSingleProduct } from "@/lib/ProductApi";
 import { useQuery } from "@tanstack/react-query";
-import { CircleUserRound, Heart, Truck, UserRoundSearch } from "lucide-react";
+import * as LRIcons from "lucide-react";
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import useStore from "@/hooks/useStore";
 import ProductView from "@/components/Ui/Skeleton/ProductView"
 import { useToast } from "@/components/Ui/use-toast"
@@ -55,50 +56,11 @@ export default function ProductDetails() {
                             </div>
                             <div className="mb-4 flex items-center md:mb-4">
                                 <div className="-ml-1 flex gap-0.5">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6 text-yellow-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6 text-yellow-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6 text-yellow-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6 text-yellow-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6 text-gray-300"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
+                                <AiFillStar className="h-6 w-6 text-yellow-400" />
+                                    <AiFillStar className="h-6 w-6 text-yellow-400" />
+                                    <AiFillStar className="h-6 w-6 text-yellow-400" />
+                                    <AiFillStar className="h-6 w-6 text-yellow-400" />
+                                    <AiOutlineStar className="h-6 w-6 text-gray-300" />
                                 </div>
 
                                 <span className="ml-2 text-sm text-gray-500">
@@ -118,14 +80,14 @@ export default function ProductDetails() {
 
                             <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white">
                                 {" "}
-                                <Truck />{" "}
+                                <LRIcons.Truck />{" "}
                                 <span className="text-black dark:text-white font-semibold text-xs">
                                     2-5 day To Shipped
                                 </span>
                             </h1>
                             <h1 className="mb-0.5 flex gap-x-2 items-center font-cab font-extrabold text-black dark:text-white">
                                 {" "}
-                                <CircleUserRound />{" "}
+                                <LRIcons.CircleUserRound />{" "}
                                 <span className="text-black dark:text-white font-semibold capitalize text-xs">
                                     Owner : {data?.userData.firstName}{" "}
                                     {data?.userData.lastName}
@@ -141,7 +103,7 @@ export default function ProductDetails() {
                       description: "Your Product has already in Cart",
                     })
                   }
-                  else { 
+                  else {
                     addProduct(data)
                     toast({
                       title: "Added to Cart",
@@ -149,14 +111,14 @@ export default function ProductDetails() {
                     })
                   }
 
-                  
-                } 
+
+                }
                 } className="inline-block flex-1 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring cursor-pointer active:bg-red-700 sm:flex-none md:text-base">Add to cart</a>
-                <a href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
-                  <Heart />
+                <a title="Like" href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
+                  <LRIcons.Heart />
                 </a>
-                <a href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
-                  <UserRoundSearch />
+                <a title="User" href="#" className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-red-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
+                  <LRIcons.UserRoundSearch />
                 </a>
 
               </div>

@@ -118,7 +118,7 @@ const deleteProductById = AsyncHandler(async (req: IGetUserAuthInfoRequest, res:
     }
 
     // Checking for condition of Only Owner Can Delete Product
-    if (req.user && String(productDetail.creator) != req.user._id) {
+    if (req.user && (String(productDetail.creator) != req.user._id || req.user.userRole === 'Admin')) {
       return res.status(402).json(new APIError('Only Owner can Delete Product', 402));
     }
 
