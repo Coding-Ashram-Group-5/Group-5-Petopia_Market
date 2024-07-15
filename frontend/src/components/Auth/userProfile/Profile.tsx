@@ -153,7 +153,7 @@ const Profile = () => {
             </div>
             {showOverlay && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-yellow-300/100 p-6 rounded-lg shadow-md max-w-sm dark:bg-cyan-900">
+                    <div className="bg-yellow-300/100 p-6 rounded-lg shadow-md max-w-sm dark:bg-[#071b4d]">
                         <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
                         <p className="text-sm mb-4">To confirm deletion, type <strong>DELETE</strong> in the input field:</p>
                         <input
