@@ -2,7 +2,7 @@ import { authApi } from "./api";
 import { Product, ProductForm } from "@/types/models";
 
 export const getAllProducts = async (): Promise<Product> => {
-    const { data } = await authApi.get<{data:Product;}>("api/v1/product/getDetails/all/10");
+    const { data } = await authApi.get<{data:Product;}>("api/v1/product/getDetails/all/20");
     return data.data;
 }
 
@@ -32,4 +32,9 @@ export const addProduct = async (data:ProductForm): Promise<Product> => {
     } catch (error: any) {
         return error?.response?.data;
     }
+};
+
+export const deleteProductbyId = async (id: string): Promise<Product> => {
+    const { data } = await authApi.delete(`/api/v1/product/delete/${id}`);
+    return data;
 };

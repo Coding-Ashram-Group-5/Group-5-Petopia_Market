@@ -8,6 +8,7 @@ export interface User {
     avatar?: { publicId: string; url: string };
     created_at?: string;
     updated_at?: string;
+    userRole?: string;
 }
 
 export interface AuthState {
@@ -168,6 +169,18 @@ export interface AdoptPetFormData {
     phoneNumber: string;
 }
 
+export interface IAdminPanelDetailsResponse {
+    totalUsers: number;
+    totalNewUsers: number;
+    totalProducts: number;
+    totalNewProducts: number;
+    totalPets: number;
+    totalNewPets: number;
+    totalNewPetsAdopted: number;
+    totalPurchasedProducts: number;
+    visitCount: number;
+  }
+
 export interface PaymentOrder {
     amount: number;
     currency: string;
@@ -179,3 +192,4 @@ export interface PaymentSuccess {
     order_id: string;
     payment_id: string;
 }
+
