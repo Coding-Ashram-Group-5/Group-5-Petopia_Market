@@ -4,10 +4,14 @@ import { useToast } from "@/components/Ui/use-toast";
 import { payment, paymentSuccess } from "@/lib/api";
 import usePersonStore from "@/lib/Utils/zustandStore";
 import { generateAlphanumericString } from "@/lib/Utils/util";
+import { useNavigate } from "react-router-dom";
+import { DrawerClose } from "@/components/Ui/drawer";
 export default function Cart() {
     const { cartItems, removeAllProducts } = useStore();
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const user = usePersonStore((state) => state);
+    const { toast } = useToast();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const amount = cartItems.reduce(
@@ -32,6 +36,10 @@ export default function Cart() {
     }
 
     async function displayRazorpay() {
+        if (user._id === "") {
+            navigate("/login");
+            return;
+        }
         const res = await loadScript(
             "https://checkout.razorpay.com/v1/checkout.js",
         );
@@ -79,10 +87,18 @@ export default function Cart() {
                     signature,
                 });
 
-                alert(result?.message);
-
                 if (result?.success) {
+                    toast({
+                        title: "Payment successful",
+                        description: result.message,
+                    });
                     removeAllProducts();
+                } else {
+                    toast({
+                        variant: "destructive",
+                        title: "Payment failed",
+                        description: result.message,
+                    });
                 }
             },
             prefill: {
@@ -118,14 +134,16 @@ export default function Cart() {
                     >
                         Clear Cart
                     </button>
-                    <button
-                        type="button"
-                        disabled={cartItems.length === 0}
-                        onClick={displayRazorpay}
-                        className="bg-red-500 text-white px-2 py-1 rounded-lg font-bold text-sm disabled:bg-opacity-80 disabled:cursor-not-allowed"
-                    >
-                        Buy Now
-                    </button>
+                    <DrawerClose>
+                        <button
+                            type="button"
+                            disabled={cartItems.length === 0}
+                            onClick={displayRazorpay}
+                            className="bg-red-500 text-white px-2 py-1 rounded-lg font-bold text-sm disabled:bg-opacity-80 disabled:cursor-not-allowed"
+                        >
+                            Buy Now
+                        </button>
+                    </DrawerClose>
                 </div>
             </div>
         </>
