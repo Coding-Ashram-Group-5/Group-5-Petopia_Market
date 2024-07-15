@@ -97,6 +97,10 @@ export const getAllBlogs = async (): Promise<Blog> => {
     const { data } = await authApi.get("api/v1/blogs/all");
     return data;
 };
+export const getAllBlogsforadmin = async (): Promise<Blog> => {
+    const { data } = await authApi.get("api/v1/blogs/all");
+    return data.data;
+};
 
 export const getBlogById = async (id: string): Promise<Blog> => {
     const { data } = await authApi.get(`api/v1/blogs/${id}`);
