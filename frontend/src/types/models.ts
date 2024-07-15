@@ -84,7 +84,7 @@ export interface Product {
     ratings: Rating[];
     averageRating: number;
     data?: any;
-    userData?:User;
+    userData?: User;
 }
 
 interface ProductImage {
@@ -115,7 +115,7 @@ export interface Blog {
     comments: Comment[];
     coverImage: { publicId: string; url: string };
     likes: string[];
-    created_at:string;
+    created_at: string;
     userDetails: BlogUser;
     userData?: BlogUser;
     data?: any;
@@ -148,15 +148,14 @@ export interface CartItem {
     quantity: number;
     purchasedPrice: number;
     user?: {
-      name: string;
-    user?: {
         name: string;
+        user?: {
+            name: string;
+        };
+        isPurchased?: boolean;
     };
     isPurchased?: boolean;
-  }
-    isPurchased?: boolean;
 }
-
 
 export interface AdoptPetFormData {
     firstName: string;
@@ -181,3 +180,16 @@ export interface IAdminPanelDetailsResponse {
     totalPurchasedProducts: number;
     visitCount: number;
   }
+
+export interface PaymentOrder {
+    amount: number;
+    currency: string;
+    receipt: string;
+    notes: any;
+}
+
+export interface PaymentSuccess {
+    order_id: string;
+    payment_id: string;
+}
+

@@ -6,6 +6,8 @@ import {
     Blog,
     PetForm,
     AdoptPetFormData,
+    PaymentOrder,
+    PaymentSuccess,
 } from "@/types/models"; // Import User and TokenResponse types
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
@@ -257,13 +259,23 @@ export const adoptPet = async (
     return response.data;
 };
 
-export const payment = async () => {
-    const response = await authApi.post(`/api/v1/payment/order`);
+export const payment = async (data: PaymentOrder) => {
+    const response = await authApi.post(`/api/v1/payment/order`, data);
     return response.data;
 };
 
-export const paymentSuccess = async (data: any) => {
-    const response = await authApi.post(`/api/v1/payment/success`, data);
+export const paymentSuccess = async ({
+    data,
+    signature,
+}: {
+    data: PaymentSuccess;
+    signature: string;
+}) => {
+    const response = await authApi.post(`/api/v1/payment/verifyOrder`, data, {
+        headers: {
+            "x-razorpay-signature": signature,
+        },
+    });
     return response.data;
 };
 
