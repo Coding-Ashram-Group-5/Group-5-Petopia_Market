@@ -80,6 +80,16 @@
     width: 2px;
 }
 
+.overlay-background {
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTQ5a3h3cnZsaG02cmVwcnBndGsxODd3ZzU5ZHNoNjVrNmYxOWU2ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KJPKo8zkvUOtatOSTq/giphy.gif');
+  background-size: cover;
+  background-position: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Track
 ::-webkit-scrollbar-track {
     background: #1f0100;

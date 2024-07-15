@@ -38,6 +38,9 @@ module.exports = {
         leag: ["League Spartan", "sans-serif"],
         mad: ["Madimi One", "sans-serif"],
       },
+      backdropContrast: {
+        40: '.4',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -3,8 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
-import Login from "./components/Auth/pages/Login";
-import Register from "./components/Auth/pages/Register";
+import SignInUp from "./components/Auth/pages/SignInUp.tsx";
 import Profile from "./components/Auth/userProfile/Profile.tsx";
 import Home from "./Pages/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
@@ -41,10 +40,9 @@ root.render(
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
             <BrowserRouter>
                 <Routes>
+                    <Route path="/auth" element={<SignInUp />} />
                     <Route path="/" element={<App />}>
                         <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/add" element={<AddProduct />} />
