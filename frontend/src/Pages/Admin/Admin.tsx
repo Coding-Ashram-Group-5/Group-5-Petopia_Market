@@ -13,29 +13,30 @@ import { Link } from "react-router-dom";
 const SidebarButton = [
   {
     name: 'Dashboard',
-    icon: <MdDashboard />,
+    icon: <MdDashboard size={25} />,
     path: '/admin'
   },
   {
+    name: 'Users',
+    icon: <FaUsers size={25} />,
+    path: 'users'
+  },
+  {
     name: 'Products',
-    icon: <FaLuggageCart />,
+    icon: <FaLuggageCart size={25} />,
     path: 'products'
   },
   {
     name: 'Pets',
-    icon: <MdOutlinePets />,
+    icon: <MdOutlinePets size={25} />,
     path: 'pets'
   },
   {
     name: 'Blogs',
-    icon: <TfiWrite />,
+    icon: <TfiWrite size={25} />,
     path: 'blogs'
   },
-  {
-    name: 'Users',
-    icon: <FaUsers />,
-    path: 'users'
-  }
+  
 ];
 
 export default function Admin() {
@@ -47,7 +48,7 @@ export default function Admin() {
             {SidebarButton.map((button, index) => (
               <Tooltip key={index}>
                 <TooltipTrigger>
-                  <Link to={button.path} className="flex items-center gap-x-3 my-4 justify-start px-4 h-10 w-fit hover:bg-slate-200">
+                  <Link to={button.path} className="flex items-center gap-x-3 my-4 justify-start text-lg px-4 h-10 w-fit ">
                     {button.icon}
                     <span className="font-leag font-bold items-center hidden md:block">
                       {button.name}

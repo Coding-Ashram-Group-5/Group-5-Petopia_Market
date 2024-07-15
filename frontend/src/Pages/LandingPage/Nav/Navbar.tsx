@@ -24,6 +24,10 @@ import {
   import  useStore  from "@/hooks/useStore";
   import Cart from "@/Pages/Cart/Cart"
 import LinkDropdownMenuItem from "@/Pages/LandingPage/Nav/redirectComponent/LinkDropdownMenuItem";
+import LogoLight from "@/assets/logolight.png";
+import LogoDark from "@/assets/logodark.png";
+import { useTheme } from "@/components/theme-provider";
+import { useEffect, useState } from "react";
 
 const Navbar: React.FC = () => {
     const controls = useAnimation();
@@ -34,6 +38,17 @@ const Navbar: React.FC = () => {
         { name: "Blogs", href: "/blogs" },
     ];
     const  { cartItems } = useStore();
+    const { theme } = useTheme()
+    const [logo, setLogo] = useState(LogoDark)
+    
+    useEffect(() => {
+        if(theme == 'dark'){
+            setLogo(LogoDark)
+        }
+        else{
+            setLogo(LogoLight)
+        }
+    }, [theme])
 
     const isUserLoggedIn = usePersonStore((state) => state._id);
 
@@ -49,7 +64,8 @@ const Navbar: React.FC = () => {
                     to={"/"}
                     className="text-2xl font-leag font-extrabold text-black flex items-center ml-4 dark:text-gray-100"
                 >
-                    PetoPia🐶
+                    <img src={logo}  alt="logo" className="h-20 md:mr-2" />
+                   
                 </Link>
             </div>
             <nav className="hidden gap-12 lg:flex items-center">

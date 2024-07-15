@@ -9,9 +9,9 @@ import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 
 // Cookies options
 const cookiesOptions = {
-  secure: process.env.NODE_ENV == 'production',
+  secure: true,
   httpOnly: true,
-  sameSite: "none" as "none"
+  sameSite: 'none' as 'none',
 };
 
 const generateToken = async (id: string): Promise<TokenResponse | APIError> => {
@@ -92,7 +92,7 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
   };
 
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, userRole } = req.body;
 
     if ([firstName, email, password].some((attr) => attr?.trim() === '')) {
       return res.status(402).json(new APIError('Required Fields are Missing', 402));
@@ -126,6 +126,7 @@ const registerUser = AsyncHandler(async (req: Request, res: Response) => {
       email,
       password,
       avatar: avatar,
+      userRole,
     });
 
     const isUserCreated = await UserModel.findById({ _id: createUser._id }).select(
@@ -263,7 +264,45 @@ const refreshAccessToken = AsyncHandler(async (req: Request, res: Response) => {
 
 const getProfileDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
-    const userDetails = await UserModel.findById(req.user?._id).select('-refreshToken');
+    const [userDetails] = await UserModel.aggregate([
+      {
+        $match: {
+          _id: req.user?._id,
+        },
+      },
+      {
+        $lookup: {
+          from: 'pets',
+          foreignField: 'owner',
+          localField: '_id',
+          as: 'pets_details',
+        },
+      },
+      {
+        $lookup: {
+          from: 'products',
+          foreignField: 'creator',
+          localField: '_id',
+          as: 'product_details',
+        },
+      },
+      {
+        $lookup: {
+          from: 'blogs',
+          foreignField: 'owner',
+          localField: '_id',
+          as: 'blog_details',
+        },
+      },
+      {
+        $lookup: {
+          from: 'carts',
+          foreignField: 'purchasedBy',
+          localField: '_id',
+          as: 'cart_details',
+        },
+      },
+    ]);
 
     if (!userDetails) {
       return res.status(302).json(new APIError('No User Found Sorry', 302));
@@ -326,7 +365,7 @@ const updateProfileDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, r
   }
 });
 
-const getAllUsers = AsyncHandler(async (req: Request, res: Response) => {
+const getAllUsers = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) => {
   try {
     let usersList = await UserModel.find({});
 
@@ -345,5 +384,4 @@ export {
   refreshAccessToken,
   getProfileDetails,
   updateProfileDetails,
-  getAllUsers,
 };
