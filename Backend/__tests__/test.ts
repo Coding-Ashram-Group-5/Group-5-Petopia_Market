@@ -27,9 +27,9 @@ describe('Petopia test suite ', () => {
     await server.close();
   });
 
-  const login = async (): Promise<void> => {
+  const login = async (agent: any, email: string, password: string): Promise<void> => {
     try {
-      const res = await agent.post('/api/v1/users/signin').send({ email: 'test_db@gmail.com', password: '12345678' });
+      const res = await agent.post('/api/v1/users/signin').send({ email, password });
       token = res.headers['set-cookie'][0].split(';')[0].split('=')[1];
     } catch (error) {
       console.log(error);
@@ -66,10 +66,12 @@ describe('Petopia test suite ', () => {
 
   // Pets API Endpoints Test Suit
   test('User can Add New Pet', async () => {
-    await login();
+    await login(agent, 'test_db@gmail.com', '12345678');
+
     const imageBuffer = fs.readFileSync(__dirname + '/TEST_Image.jpg');
     const res = await agent
       .post('/api/v1/pets/add')
+      .set('Authorization', `Bearer ${token}`) // Add the token to the header
       .field({
         petName: 'Test Pet Name',
         petDescription: 'This is Pet Test Description',
@@ -78,7 +80,6 @@ describe('Petopia test suite ', () => {
         petType: 'Test Type',
         petBread: 'Test Bread',
         diseases: 'Test Diseases',
-        token,
       })
       .attach('images', imageBuffer, 'TEST_Image.jpg');
 
