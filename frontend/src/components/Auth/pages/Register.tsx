@@ -3,6 +3,7 @@ import axios from "axios";
 import { register } from "../../../lib/api";
 import { useNavigate } from "react-router-dom";
 import { PiEye, PiEyeClosed } from "react-icons/pi";
+import loadingGif from "@/assets/loading2.gif"
 import usePersonStore from "@/lib/Utils/zustandStore";
 
 interface APIError {
@@ -120,7 +121,7 @@ const Register = () => {
         <div className="relative sm:h-full w-full select-none">
             {isLoading && (
                 <div className="absolute left-0 top-0 bg-white h-full w-fit inset-0 opacity-90 z-50 flex items-center justify-center">
-                    <img src="/src/assets/loading2.gif" alt="Loading..." className="object-cover" />
+                    <img src={loadingGif} alt="Loading..." className="object-cover" />
                 </div>
             )}
             <form

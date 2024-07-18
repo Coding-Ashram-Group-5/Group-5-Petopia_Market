@@ -31,7 +31,7 @@ export default function Landingpage() {
             <Banner/>
             <Sales/>
             <div>
-              <img className=" md:rounded-[1.3rem] py-2" src="https://res.cloudinary.com/dzxynskmo/image/upload/v1720602981/Petopia/sm1uqognjb6dd5veih3a.gif" alt="Banners" />
+              <img className="md:rounded-[1.3rem] py-2" src="https://res.cloudinary.com/dzxynskmo/image/upload/q_50/v1720602981/Petopia/sm1uqognjb6dd5veih3a.gif" alt="Banners" />
             </div>
             <FAQ/>
             <Footer/>
