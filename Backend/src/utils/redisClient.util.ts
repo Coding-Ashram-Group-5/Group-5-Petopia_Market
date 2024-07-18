@@ -14,7 +14,7 @@ async function initializeRedisClient(): Promise<void> {
     return;
   }
 
-  redisClient = redis.createClient({ url: redisConfig.url, password: redisConfig.pass });
+  redisClient = await redis.createClient({ url: redisConfig.url, password: redisConfig.pass });
 
   redisClient.on('error', (err: Error) => {
     logger.error(`Error While Connecting redis`, err);
