@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
                     </div>
                 ))}
             </nav>
-            <div className="lg:flex grid lg:grid-cols-3 sm:grid-cols-3 grid-cols-2 items-center justify-center lg:gap-2 sm:gap-1 gap-2">
+            <div className="flex flex-row items-center justify-center lg:gap-2 sm:gap-4 gap-5">
                 <div className="lg:flex relative">
                     <Drawer>
                         <div className="relative top-[1.7px] lg:left-[-0.5rem] left-4">
@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
                 <div className="hidden lg:flex relative">
                     <ModeToggle />
                 </div>
-                <div className="relative top-[-2.55px]">
+                <div className="relative top-[-2.55px] left-1">
                     <Sidebar />
                 </div>
                 {!isUserLoggedIn && (
