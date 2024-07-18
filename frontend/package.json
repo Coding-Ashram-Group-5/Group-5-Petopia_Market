@@ -3,11 +3,33 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "keywords": [
+        "JavidSumra",
+        "taraksh01",
+        "nkrider7",
+        "AriajSarkar",
+        "Petopia",
+        "Pet Market",
+        "Pet Adoption",
+        "Pet Marketplace",
+        "React",
+        "Vite",
+        "Tailwind CSS"
+    ],
+    "author": "JavidSumra",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Coding-Ashram-Group-5/Group-5-Petopia_Market.git"
+    },
+    "homepage": "https://github.com/Coding-Ashram-Group-5/Group-5-Petopia_Market#readme",
+    "bugs": {
+        "url": "https://github.com/Coding-Ashram-Group-5/Group-5-Petopia_Market/issues"
     },
     "dependencies": {
         "@radix-ui/react-accordion": "^1.1.2",
