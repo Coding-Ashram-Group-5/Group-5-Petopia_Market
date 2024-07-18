@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import icon2 from "./icon2.svg"
 import icon3 from "./icon3.svg"
-import img from "./Dog.png";
+import img from "./Dog.webp";
 import clickSound from "./bark.mp3";
 
 export default function Animated() {
@@ -18,7 +18,7 @@ export default function Animated() {
           <path className="group-hover:fill-[#22c55e] transition" d="M0 400.691C0 212.129 0 117.848 58.5786 59.2696C117.157 0.690918 211.438 0.690918 400 0.690918H500.945C557.513 0.690918 585.798 0.690918 603.371 18.2645C620.945 35.8381 620.945 64.1224 620.945 120.691V633.116C620.945 672.714 620.945 692.513 608.643 704.815C596.342 717.116 576.543 717.116 536.945 717.116H83.9999C44.402 717.116 24.603 717.116 12.3015 704.815C0 692.513 0 672.714 0 633.116V400.691Z" fill="#ef4444" />
         </svg>
       </div>
-      <img className="absolute top-0 left-36 z-20 h-[26rem]" src={img} alt="" />
+      <img className="absolute top-0 left-36 z-20 h-[26rem]" src={img} alt="Dog Image" />
       <motion.img
         src={icon2}
         className="absolute top-0 left-20 z-20 h-28"

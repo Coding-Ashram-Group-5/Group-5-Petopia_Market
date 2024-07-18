@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { authApi } from "./api";
 import { Product, ProductForm } from "@/types/models";
 
@@ -29,8 +30,11 @@ export const addProduct = async (data:ProductForm): Promise<Product> => {
             },
         });
         return res?.data;
-    } catch (error: any) {
-        return error?.response?.data;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 

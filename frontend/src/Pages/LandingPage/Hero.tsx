@@ -31,8 +31,8 @@ export default function Hero() {
           </motion.button>
         </div>
       </div>
-      <div className=" mb-2  flex justify-center">
-        <div className="h-[20rem] px-2  scale-75 md:scale-100 md:h-[30rem]">
+      <div className="relative lg:left-0 md:left-[-7rem] sm:left-1 left-0 mb-2 flex justify-center">
+        <div className="h-[20rem] px-2 sm:left-2 scale-75 md:scale-100 md:h-[30rem]">
           <Animated />
         </div>
       </div>

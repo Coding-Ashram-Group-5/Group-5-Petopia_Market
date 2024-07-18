@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/Ui/Menu/dropdown-menu";
 import Logout from "@/components/Auth/pages/Logout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import usePersonStore from "@/lib/Utils/zustandStore";
 import {
@@ -24,13 +24,14 @@ import {
   import  useStore  from "@/hooks/useStore";
   import Cart from "@/Pages/Cart/Cart"
 import LinkDropdownMenuItem from "@/Pages/LandingPage/Nav/redirectComponent/LinkDropdownMenuItem";
-import LogoLight from "@/assets/logolight.png";
-import LogoDark from "@/assets/logodark.png";
+import LogoLight from "@/assets/logolight.webp";
+import LogoDark from "@/assets/logodark.webp";
 import { useTheme } from "@/components/theme-provider";
 import { useEffect, useState } from "react";
 
 const Navbar: React.FC = () => {
     const controls = useAnimation();
+    const navigate = useNavigate();
     const navItems = [
         { name: "Home", href: "/" },
         { name: "Products", href: "/products" },
@@ -38,22 +39,30 @@ const Navbar: React.FC = () => {
         { name: "Blogs", href: "/blogs" },
     ];
     const  { cartItems } = useStore();
-    const { theme } = useTheme()
-    const [logo, setLogo] = useState(LogoDark)
-    
+    const { theme, setTheme } = useTheme()
+    const [logo, setLogo] = useState<string>(LogoDark);
+
     useEffect(() => {
-        if(theme == 'dark'){
-            setLogo(LogoDark)
+        if (theme === 'dark' || (theme === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme('dark');
+        } else {
+            setTheme('light');
         }
-        else{
-            setLogo(LogoLight)
+    }, [theme, setTheme]);
+
+    useEffect(() => {
+        if (theme === 'dark') {
+            setLogo(LogoDark);
+        } else {
+            setLogo(LogoLight);
         }
-    }, [theme])
+    }, [theme]);
 
     const isUserLoggedIn = usePersonStore((state) => state._id);
 
     const handleTap = async () => {
         controls.start({ opacity: 0 });
+        navigate("/auth");
         // Add any additional logic here, such as navigation or API calls
     };
 
@@ -65,7 +74,7 @@ const Navbar: React.FC = () => {
                     className="text-2xl font-leag font-extrabold text-black flex items-center ml-4 dark:text-gray-100"
                 >
                     <img src={logo}  alt="logo" className="h-20 md:mr-2" />
-                   
+
                 </Link>
             </div>
             <nav className="hidden gap-12 lg:flex items-center">
@@ -78,15 +87,24 @@ const Navbar: React.FC = () => {
                     </div>
                 ))}
             </nav>
-            <div className="flex items-center gap-5">
-                <div className=" lg:flex relative left-4 top-[3px]">
+            <div className="lg:flex grid lg:grid-cols-3 sm:grid-cols-3 grid-cols-2 items-center justify-center lg:gap-2 sm:gap-1 gap-2">
+                <div className="lg:flex relative">
                     <Drawer>
-                        <div className="">
-                            <DrawerTrigger> <div className=" p-2 border rounded-lg"><ShoppingBasket size={21.5} /> <div className=" absolute bottom-8 text-xs font-bold px-2 bg-red-500 text-white p-1 rounded-full left-6"><span>{cartItems.length}</span></div></div></DrawerTrigger>
+                        <div className="relative top-[1.7px] lg:left-[-0.5rem] left-4">
+                            <DrawerTrigger>
+                                <div className="p-2 border rounded-lg">
+                                <ShoppingBasket size={21} />
+                                    <div className="absolute bottom-8 text-xs font-bold px-2 bg-red-500 text-white p-1 rounded-full left-6">
+                                        <span>
+                                            {cartItems.length}
+                                        </span>
+                                    </div>
+                                </div>
+                            </DrawerTrigger>
                         </div>
                         <DrawerContent>
                             <div className="h-[70vh]">
-                                <div className="head flex justify-between px-4">
+                                <div className="flex justify-between px-4">
                                     <h1 className="text-2xl font-bold ">Cart </h1>
                                     <DrawerClose><div className="px-2 py-1 border rounded-lg text-sm text-red-500">Close</div></DrawerClose>
                                 </div>
@@ -95,7 +113,7 @@ const Navbar: React.FC = () => {
                         </DrawerContent>
                     </Drawer>
                 </div>
-                <div className="hidden lg:flex relative left-4">
+                <div className="hidden lg:flex relative">
                     <ModeToggle />
                 </div>
                 <div className="relative top-[-2.55px]">
@@ -111,12 +129,7 @@ const Navbar: React.FC = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onTap={handleTap}
                             >
-                                <Link
-                                    to="/auth"
-                                    className="text-gray-800 dark:text-gray-200"
-                                >
                                     Sign In
-                                </Link>
                             </motion.button>
                         </DropdownMenuTrigger>
                     </DropdownMenu>

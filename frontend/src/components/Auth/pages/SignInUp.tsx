@@ -12,11 +12,12 @@ const SignInUp: React.FC = () => {
 
     useEffect(() => {
         localStorage.setItem("signInSlug", signIn ? "sign-in-panel" : "sign-up-panel");
-    }, [signIn]);
+    }, []);
 
     const handleBack = () => {
         navigate(-1);
     };
+
 
     return (
         <div className="select-none">
@@ -61,8 +62,7 @@ const SignInUp: React.FC = () => {
                         </button>
                         <h1 className="inline-block text-transparent bg-gradient-to-br from-red-500 from-20% via-red-400 via-40% to-yellow-400 to-80% bg-clip-text font-bold m-0 contrast-200 backdrop-brightness-[.4] rounded-md p-2">Welcome Back!</h1>
                         <p className="bg-gradient-to-b from-white via-white to-yellow-500 inline-block text-transparent bg-clip-text text-sm font-light leading-5 tracking-wide my-5 contrast-200 backdrop-brightness-[.4] rounded-md p-2">
-                            To keep connected with us please login with your
-                            personal info
+                            To keep connected with us please login
                         </p>
                         <button
                             type="button"
@@ -90,8 +90,7 @@ const SignInUp: React.FC = () => {
                         </button>
                         <h1 className="inline-block text-transparent bg-gradient-to-br from-red-500 from-20% via-red-400 via-40% to-yellow-400 to-80% bg-clip-text font-bold m-0 contrast-200 backdrop-brightness-[.4] rounded-md p-2">Hello, Friend!</h1>
                         <p className="text-white text-sm font-light leading-5 tracking-wide my-5 contrast-200 backdrop-brightness-[.4] rounded-md p-2">
-                            Enter Your personal details and start journey with
-                            us
+                            Enter Your details and start journey with us
                         </p>
                         <button
                             type="button"

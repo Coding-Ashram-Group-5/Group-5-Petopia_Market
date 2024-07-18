@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Sales() {
    const navigate = useNavigate();
-  
+
   return (
     <>
     <div className="bg-background py-6 sm:py-8 lg:py-12">
@@ -16,7 +16,7 @@ export default function Sales() {
         <p className="mb-8 max-w-md  text-primary font-semibold hidden md:block">This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of a real written text.</p>
 
         <div className="mt-auto">
-            <Button onClick={() => navigate('/products')} className="bg-red-600 font-leag font-bold">Shop Now</Button>
+            <Button onClick={() => navigate('/products')} className="bg-red-600 dark:text-white font-leag font-bold">Shop Now</Button>
         </div>
       </div>
       <div className="order-first h-48 w-full bg-gray-700 sm:order-none sm:h-auto sm:w-1/2 lg:w-3/5">

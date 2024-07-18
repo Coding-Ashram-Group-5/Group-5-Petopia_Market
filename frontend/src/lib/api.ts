@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
     User,
     TokenResponse,
@@ -88,8 +88,11 @@ export const addPet = async (data: PetForm) => {
             },
         });
         return res?.data;
-    } catch (error: any) {
-        return error?.response?.data;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
@@ -206,8 +209,11 @@ export const likeBlog = async (id: string) => {
         const { data } = await authApi.patch(`api/v1/blogs/likes/${id}`);
 
         return data;
-    } catch (error: any) {
-        return error?.data?.response;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
@@ -216,8 +222,11 @@ export const dislikeBlog = async (id: string) => {
         const { data } = await authApi.patch(`api/v1/blogs/dislike/${id}`);
 
         return data;
-    } catch (error: any) {
-        return error?.data?.response;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
@@ -240,8 +249,11 @@ export const updatePet = async (id: string, data: PetForm): Promise<Pet> => {
             },
         });
         return res?.data;
-    } catch (error: any) {
-        return error?.response?.data;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 

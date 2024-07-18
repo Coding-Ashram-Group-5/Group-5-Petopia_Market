@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../lib/api";
 import { PiEye, PiEyeClosed } from "react-icons/pi";
+import loadingMP4 from "@/assets/loading.mp4"
 import usePersonStore from "@/lib/Utils/zustandStore";
 
 interface APIError {
@@ -82,7 +83,7 @@ const Login = () => {
             {isLoading && (
                 <div className="absolute left-0 bottom-0 bg-white h-full w-full inset-0 opacity-75 z-50 flex items-center justify-center">
                     <video autoPlay loop className="object-cover">
-                        <source src="/src/assets/loading.mp4" type="video/mp4" />
+                        <source src={loadingMP4} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
