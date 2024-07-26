@@ -9,7 +9,7 @@ import {
 } from "@/components/Ui/Menu/dropdown-menu"
 import { useTheme } from "@/components/theme-provider"
 
-export function ModeToggle() {
+export function ModeToggleSmallScreen() {
   const { setTheme } = useTheme() // ,theme
    // console.log(theme)
 
@@ -28,11 +28,11 @@ export function ModeToggle() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")} className=" cursor-pointer gap-x-2">
         <Moon /> <span> Dark</span>
-          
+
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")} className=" cursor-pointer gap-x-2">
 <Monitor /> <span>System</span>
-          
+
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

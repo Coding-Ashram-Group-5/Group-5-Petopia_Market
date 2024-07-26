@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  padding-top: 7rem;
+}
+
   @layer base {
     :root {
       --background: 0 0% 100%;

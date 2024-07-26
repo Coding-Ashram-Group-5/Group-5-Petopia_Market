@@ -57,7 +57,7 @@ const Login = () => {
 
             sessionStorage.removeItem("loginEmail");
 
-            navigate("/");
+            navigate(-1);
         } catch (error) {
             setLoading(false);
 

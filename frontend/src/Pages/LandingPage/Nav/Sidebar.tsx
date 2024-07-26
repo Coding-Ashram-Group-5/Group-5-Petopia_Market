@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ModeToggle } from "@/components/Ui/Buttons/mode-toggle";
+import { ModeToggle } from "@/components/Ui/Buttons/ModeToggle/mode-toggle";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoChevronDown, IoClose } from "react-icons/io5";
 import { IoIosWallet } from "react-icons/io";
