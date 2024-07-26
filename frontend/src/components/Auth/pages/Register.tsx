@@ -95,7 +95,7 @@ const Register = () => {
             sessionStorage.removeItem("registerFirstName");
             sessionStorage.removeItem("registerLastName");
             sessionStorage.removeItem("registerEmail");
-            navigate("/");
+            navigate(-1);
 
         } catch (error) {
             if (axios.isAxiosError(error)) {

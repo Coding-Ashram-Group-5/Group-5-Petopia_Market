@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "@/Pages/LandingPage/Nav/Navbar";
-import { Toaster } from "@/components/Ui/toaster"
+import { Toaster } from "@/components/Ui/toaster";
+import BackToTopButton from "./BackToTop";
 import useInitializeUser from "@/hooks/useInitializeUser";
 
 
@@ -12,6 +13,7 @@ const App: React.FC = () => {
             <Navbar />
             <Outlet />
             <Toaster />
+            <BackToTopButton />
         </div>
     );
 }

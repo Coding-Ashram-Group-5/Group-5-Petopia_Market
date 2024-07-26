@@ -9,6 +9,9 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    boxShadow: {
+      blog: '7px -9px 9px 15px #0000, 11px -13px 13px 5px #0000, -1px 7px 20px 2px rgb(0 0 0 / 33%)',
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -33,6 +36,9 @@ module.exports = {
       },
     },
     extend: {
+      zIndex: {
+        'top': '1000',
+    },
       fontFamily: {
         cab: ["Cabin", "sans-serif"],
         leag: ["League Spartan", "sans-serif"],
