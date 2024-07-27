@@ -69,9 +69,9 @@ export default function ProductDetails() {
                             </div>
                             <div className="mb-2">
                                 <div className="flex items-end gap-2">
-                                    <span className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl">
-                                        ₹{data?.productPrice}.00
-                                    </span>
+                                <span className="font-bold text-gray-700 text-2xl dark:text-white lg:text-4xl">
+          ₹{Math.ceil((data.productPrice)*(100 - data.discount)/100)} {data.productPrice && <span className="mb-0.5 text-red-500 line-through text-sm">₹{(data.productPrice)}</span>}
+          </span>
                                 </div>
                                 <span className="text-sm text-gray-500">
                                     incl. GST plus shipping
@@ -128,7 +128,7 @@ export default function ProductDetails() {
         <div className="mt-10 md:mt-12 lg:mt-16">
           <div className="mb-3 text-xl font-semibold font-leag text-red-500">Description</div>
           <p className="text-black dark:text-white font-leag">
-            Meet <span className="text-red-500 font-bold">{data?.petName}</span>, a charming <span className="text-red-500">{data?.petBread}</span> {data?.petType} with a heart of gold 💖. Despite battling flea infestation and ear infections, <span className="text-red-500">{data?.petName}</span>'s spirit remains resilient. This playful companion thrives on affection and loves adventures. With a glossy coat and soulful eyes, <span>{data?.petName}</span> captures hearts effortlessly. Although not yet adopted, <span>{data?.petName}</span> eagerly awaits a forever home where loyalty and companionship reign supreme. Don't let health challenges deter you; with proper care, <span>{data?.petName}</span> promises unwavering love and joy. Welcome <span>{data?.petName}</span> into your life, and witness the transformation of a pet into family.
+          The packaging also includes icons indicating the product's ability to block odours, provide extra hard clumping, be dust-free, and have an added fragrance. The bag shows an image of a {data?.category[0]} with healthy, which emphasizes the product's intended use for {data?.category[0]}. and the product's ability to block odours, provide extra hard clumping, be dust-free, and have an added fragrance. The bag shows an image of a {data?.category[0]} with food, which emphasizes the product's intended use for {data?.category[0]}.
           </p>
         </div>
       </div>

@@ -13,9 +13,9 @@ const useInitializeUser = () => {
             try {
                 const userData = await relogin();
                 if (userData?.data) {
-                    const { _id, firstName, lastName, email, avatar } = userData.data;
+                    const { _id, firstName, lastName, email, avatar, userRole } = userData.data;
                     if (_id && firstName && lastName && email && avatar) {
-                        updatePerson(_id, firstName, lastName, email, avatar);
+                        updatePerson(_id, firstName, lastName, email, avatar, userRole);
                     }
                 }
             } catch (error) {

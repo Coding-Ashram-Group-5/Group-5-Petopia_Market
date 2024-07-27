@@ -13,7 +13,6 @@ export default function BlogsManagement() {
   const dataFetch = async (): Promise<Blog[]> => {
     try {
       const data = await getAllBlogsforadmin() as unknown as Blog[];
-      console.log(data)
       return data ;
     } catch (error) {
       console.error("Error:", error);
@@ -39,7 +38,7 @@ export default function BlogsManagement() {
         <div className="header">
         <div className="header-title my-3">
             <h2 className="text-center font-bold text-3xl">Blog Management</h2>
-            <div className="flex justify-between px-8 my-4"><div className="flex  gap-x-2 items-center"><h2 className=" font-bold font-cab">Search</h2><Input type="text" value={searchQuery} onChange={handleSearchChange} /></div></div>
+            <div className="flex justify-between px-8 my-4"><div className="flex  gap-x-2 items-center"><h2 className=" font-bold font-cab">Search</h2><Input type="text" value={searchQuery} onChange={handleSearchChange} /></div><Link to={"/admin/blogs/add"} className="text-center  bg-red-500 p-2 text-white font-bold rounded-md  font-cab">Add Blogs</Link></div>
           </div>
         </div>
         <div className="flex justify-center">
@@ -67,7 +66,7 @@ export default function BlogsManagement() {
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{blog.userDetails?.firstName}</td>
                     <td className="whitespace-nowrap px-4 flex gap-3 py-2">
                     <Link 
-                        to={`/blogs/edit/${blog._id}`}
+                        to={`edit/${blog._id}`}
                         className="inline-block rounded bg-blue-100 text-blue-500 px-4 py-2 text-xs font-medium hover:text-white hover:bg-blue-700"
                       >
                         <FilePenLine  size={20} />

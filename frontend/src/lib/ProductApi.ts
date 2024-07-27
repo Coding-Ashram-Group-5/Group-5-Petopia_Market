@@ -2,13 +2,14 @@ import { AxiosError } from "axios";
 import { authApi } from "./api";
 import { Product, ProductForm } from "@/types/models";
 
-export const getAllProducts = async (): Promise<Product> => {
-    const { data } = await authApi.get<{data:Product;}>("api/v1/product/getDetails/all/20");
+export const getAllProducts = async (limit:string): Promise<Product> => {
+    const { data } = await authApi.get<{data:Product;}>("api/v1/product/getDetails/all/"+limit);
     return data.data;
 }
 
 export const getSingleProduct = async (id:string): Promise<Product> => {
     const { data } = await authApi.get(`api/v1/product/getDetails/${id}`)
+    console.log(data)
     return data;
 }
 export const addProduct = async (data:ProductForm): Promise<Product> => {
@@ -42,3 +43,27 @@ export const deleteProductbyId = async (id: string): Promise<Product> => {
     const { data } = await authApi.delete(`/api/v1/product/delete/${id}`);
     return data;
 };
+
+export const updateProduct = async (id: string, data: ProductForm): Promise<Product> => {
+    try {
+      const formData = new FormData();
+  
+      Object.keys(data).forEach((key) => {
+        if (key === "images") {
+          const files = data[key];
+          for (let i = 0; i < files.length; i++) {
+            formData.append(key, files[i]);
+          }
+        } else formData.append(key, data[key]);
+      });
+  
+      const res = await authApi.put(`/api/v1/product/update/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res?.data;
+    } catch (error: any) {
+      return error?.response?.data;
+    }
+  };

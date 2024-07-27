@@ -6,8 +6,14 @@ import { Label } from '@/components/Ui/label';
 import { ProductForm } from '@/types/models';
 import { Trash2 } from 'lucide-react';
 import { addProduct } from "@/lib/ProductApi";
+import { Dialog, DialogContent, DialogTrigger } from '@/components/Ui/dialog';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Lottie from 'react-lottie-player';
+import animation from './boxdoganimation.json';
 
 const AddProduct: React.FC = () => {
+  const [isSuccess, setIsSuccess] = useState(false);
   const {
     register,
     handleSubmit,
@@ -28,14 +34,19 @@ const AddProduct: React.FC = () => {
   const onSubmit: SubmitHandler<ProductForm> = async (data) => {
     const res = await addProduct(data);
     console.log(res);
+    if (res.success) {
+      setIsSuccess(true);
+    }
   };
+  
 
   return (
     <>
+      {isSuccess && <SuccessfullyAdded />}
       <div className="main">
         <div className="form flex justify-center p-4 ">
           <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex gap-4'>
+            <div className='flex gap-4'>
               <div className="form-group w-full">
                 <Label htmlFor="name">Product Name</Label>
                 <Input type="text" id="name" placeholder="Enter Product Name" {...register('productName', { required: 'Product Name is required' })} />
@@ -135,3 +146,23 @@ const AddProduct: React.FC = () => {
 
 export default AddProduct;
 
+
+const SuccessfullyAdded: React.FC = () => {
+  return (
+    <>
+      <Dialog open={true}>
+        <DialogTrigger ></DialogTrigger>
+        <DialogContent>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <h1 className="text-2xl font-bold">✅ Product Added Successfully</h1>
+            <Lottie animationData={animation} style={{ width: 350, height: 200 }} play loop />
+            <div className='flex gap-x-4'>
+              <Link to="/admin/products/add" reloadDocument={true} className='bg-red-500 px-3 py-1 text-sm font-bold hover:bg-red-700 rounded-md text-white font-cab'>Add New Product</Link>
+              <Link to="/products" className='bg-gray-400 px-3 py-1 rounded-md text-white text-sm font-bold hover:bg-gray-600 font-cab'>Go to Products</Link>
+              </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}

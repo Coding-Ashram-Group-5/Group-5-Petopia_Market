@@ -84,7 +84,8 @@ export interface Product {
     ratings: Rating[];
     averageRating: number;
     data?: any;
-    userData?: User;
+    userData?:User;
+    success?: boolean;
 }
 
 interface ProductImage {
@@ -100,6 +101,7 @@ export interface ProductForm {
     category: string;
     quantity: number;
     images: FileList;
+    productImages: ProductImage[];
     [key: string]: any;
 }
 interface Rating {

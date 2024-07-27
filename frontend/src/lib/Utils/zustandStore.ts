@@ -10,6 +10,7 @@ type State = {
         url: string;
     };
     loggedIn: boolean;
+    role: string;
 };
 
 type Action = {
@@ -19,6 +20,7 @@ type Action = {
         lastName: State["lastName"],
         email: State["email"],
         avatar: State["avatar"],
+        role?: State["role"]
     ) => void;
     setLoggedIn: (loggedIn: boolean) => void;
 };
@@ -30,11 +32,12 @@ const usePersonStore = create<State & Action>((set) => ({
     email: "",
     avatar: { publicId: "", url: "" },
     loggedIn: localStorage.getItem('loggedIn') === 'true',
+    role: "",
 
-    updatePerson: (_id, firstName, lastName, email, avatar) => {
+    updatePerson: (_id, firstName, lastName, email, avatar, role) => {
         const loggedIn = Boolean(_id);
         localStorage.setItem('loggedIn', loggedIn.toString());
-        set({ _id, firstName, lastName, email, avatar, loggedIn });
+        set({ _id, firstName, lastName, email, avatar, loggedIn, role });
     },
 
     setLoggedIn: (loggedIn) => {

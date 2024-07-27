@@ -1,13 +1,16 @@
 import { Checkbox } from "@/components/Ui/checkbox";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/Ui/dialog";
 import { addPet } from "@/lib/api";
 import { PetForm } from "@/types/models";
 import { Image, X } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import Lottie from "react-lottie-player";
+import { Link } from "react-router-dom";
+import animation from "./boxdoganimation.json";
 
 const AddPet: React.FC = () => {
-    const navigate = useNavigate();
+    const [isSuccess, setIsSuccess] = useState(false);
     const {
         register,
         handleSubmit,
@@ -26,12 +29,13 @@ const AddPet: React.FC = () => {
 
     const onSubmit: SubmitHandler<PetForm> = async (data) => {
         const res = await addPet(data);
-        if (res?.success) {
-            navigate("/pets");
-        }
+        if (res.success) {
+            setIsSuccess(true);
+          }
     };
 
     return (
+        <> {isSuccess && <SuccessfullyAdded />}
         <form
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-md m-4 md:mx-auto flex flex-col"
@@ -228,7 +232,28 @@ const AddPet: React.FC = () => {
                 Add Pet
             </button>
         </form>
+        </>
     );
 };
 
 export default AddPet;
+
+const SuccessfullyAdded: React.FC = () => {
+    return (
+      <>
+        <Dialog open={true}>
+          <DialogTrigger ></DialogTrigger>
+          <DialogContent>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <h1 className="text-2xl font-bold">✅ Pet Added Successfully</h1>
+              <Lottie animationData={animation} style={{ width: 350, height: 200 }} play loop />
+              <div className='flex gap-x-4'>
+                <Link to="/admin/pets/add" reloadDocument={true} className='bg-red-500 px-3 py-1 text-sm font-bold hover:bg-red-700 rounded-md text-white font-cab'>Add New Pet</Link>
+                <Link to="/pets" className='bg-gray-400 px-3 py-1 rounded-md text-white text-sm font-bold hover:bg-gray-600 font-cab'>Go to Pets</Link>
+                </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </>
+    )
+  }

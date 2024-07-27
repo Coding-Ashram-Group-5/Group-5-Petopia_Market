@@ -24,6 +24,9 @@ import ProductManagement from "./Pages/Admin/AdminPages/ProductManagement.tsx";
 import PetManagement from "./Pages/Admin/AdminPages/PetManagement.tsx";
 import BlogsManagement from "./Pages/Admin/AdminPages/BlogsManagement.tsx";
 import UserManagement from "./Pages/Admin/AdminPages/UserManagement.tsx";
+import EditProduct from "./Pages/ProductPage/EditProduct.tsx";
+import AddPet from "./Pages/Pets/AddPet.tsx";
+import EditPet from "./Pages/Pets/EditPet.tsx";
 
 const queryClient = new QueryClient();
 
@@ -45,11 +48,9 @@ root.render(
                         <Route path="/" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/products" element={<Products />} />
-                        <Route path="/products/add" element={<AddProduct />} />
                         <Route path="/blogs" element={<Blogs />} />
                         <Route path="/blogs/:id" element={<Blog />} />
-                        <Route path="/blogs/add" element={<NewBlog />} />
-                        <Route path="/blogs/edit/:id" element={<EditBlog />} />
+                        
                         <Route path="/pets" element={<Pets />} />
                         <Route
                             path="/pets/getDetails/:id"
@@ -69,8 +70,14 @@ root.render(
                                 path="products"
                                 element={<ProductManagement />}
                             />
+                            <Route path="products/add" element={<AddProduct />} />
+                            <Route path="products/edit/:id" element={<EditProduct />} />
                             <Route path="pets" element={<PetManagement />} />
+                            <Route path="pets/add" element={<AddPet />} />
+                            <Route path="pets/edit/:id" element={<EditPet />} />
                             <Route path="blogs" element={<BlogsManagement />} />
+                            <Route path="blogs/add" element={<NewBlog />} />
+                            <Route path="blogs/edit/:id" element={<EditBlog />} />
                             <Route path="users" element={<UserManagement />} />
                         </Route>
                         <Route path="*" element={<NotFound />} />

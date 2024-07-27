@@ -9,6 +9,8 @@ import {
 } from "@/components/Ui/tooltip";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Warnings from "./Warnings";
+import usePersonStore from "@/lib/Utils/zustandStore";
 
 const SidebarButton = [
   {
@@ -39,7 +41,17 @@ const SidebarButton = [
   
 ];
 
+
+
 export default function Admin() {
+  const { role } = usePersonStore()
+  if(!(role == 'Admin')){
+        return <>
+        <Warnings />
+        </>
+    }
+    else {
+  
   return (
     <div className="flex">
       <div className="sidebar h-screen border-r-2">
@@ -70,4 +82,5 @@ export default function Admin() {
       </div>
     </div>
   );
+}
 }

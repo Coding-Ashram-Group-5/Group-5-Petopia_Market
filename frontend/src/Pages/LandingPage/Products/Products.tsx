@@ -60,7 +60,7 @@ const Card: React.FC<ICardProps> = ({ product }) => (
 const Products: React.FC = () => {
     const dataFetch = async (): Promise<Product[]> => {
         try {
-            const data = await getAllProducts() as unknown as Product[];
+            const data = await getAllProducts("10") as unknown as Product[];
             return data;
         } catch (error) {
             console.error("Error:", error);

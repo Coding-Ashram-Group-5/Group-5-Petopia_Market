@@ -11,7 +11,7 @@ export default function ProductManagement() {
   const [searchQuery, setSearchQuery] = useState("");
   const dataFetch = async (): Promise<Product[]> => {
     try {
-      const data = await getAllProducts() as unknown as Product[];
+      const data = await getAllProducts("50") as unknown as Product[];
       return data;
     } catch (error) {
       console.error("Error:", error);
@@ -36,7 +36,7 @@ export default function ProductManagement() {
         <div className="header">
           <div className="header-title my-3">
             <h2 className="text-center font-bold text-3xl">Products Management</h2>
-            <div className="flex justify-between px-8 my-4"><div className="flex  gap-x-2 items-center"><h2 className=" font-bold font-cab">Search</h2><Input type="text" value={searchQuery} onChange={handleSearchChange} /></div><div className=""> <span className="px-6 font-bold">Total Product : {data?.length} </span><Link to={"/products/add"} className="text-center  bg-red-500 p-2 text-white font-bold rounded-md  font-cab">Add Products</Link></div></div>
+            <div className="flex justify-between px-8 my-4"><div className="flex  gap-x-2 items-center"><h2 className=" font-bold font-cab">Search</h2><Input type="text" value={searchQuery} onChange={handleSearchChange} /></div><div className=""> <span className="px-6 font-bold">Total Product : {data?.length} </span><Link to={"/admin/products/add"} className="text-center  bg-red-500 p-2 text-white font-bold rounded-md  font-cab">Add Products</Link></div></div>
           </div>
         </div>
         <div className="flex justify-center">
@@ -63,12 +63,12 @@ export default function ProductManagement() {
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">${data.productPrice}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">Floreda south America</td>
                   <td className="whitespace-nowrap px-4 flex gap-3 py-2">
-                  <a
-                        href="#"
+                  <Link
+                        to={`/admin/products/edit/${data._id}`}
                         className="inline-block rounded bg-blue-100 text-blue-500 px-4 py-2 text-xs font-medium hover:text-white hover:bg-blue-700"
                       >
                         <PencilRuler size={20} />
-                      </a>
+                      </Link>
                     <Dialog>
                         <DialogTrigger className="inline-block rounded hover:bg-red-500 hover:text-white bg-red-100 px-4 py-2 text-xs font-medium text-red-500"><Trash2Icon /></DialogTrigger>
                         <DialogContent >
