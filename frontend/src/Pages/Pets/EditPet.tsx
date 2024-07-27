@@ -55,7 +55,7 @@ const EditPet: React.FC = () => {
 
             for (const key in val) {
                 if (
-                    val.hasOwnProperty(key) &&
+                    Object.prototype.hasOwnProperty.call(val, key) &&
                     validKeys.includes(key as PetKey)
                 ) {
                     setValue(key as PetKey, val[key]);

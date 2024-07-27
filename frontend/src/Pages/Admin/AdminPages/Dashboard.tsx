@@ -12,7 +12,6 @@ export default function Dashboard() {
   const dataFetch = async (): Promise<IAdminPanelDetailsResponse> => {
     try {
       const data = await dashboardDetails();
-      console.log(data);
       return data;
     } catch (error) {
       console.error("Error:", error);
@@ -20,13 +19,11 @@ export default function Dashboard() {
     }
   };
 
-  const { isLoading, error, data } = useQuery<IAdminPanelDetailsResponse, Error>({
+  const { data } = useQuery<IAdminPanelDetailsResponse, Error>({
     queryKey: ["GetAllDetailsadmin"],
     queryFn: dataFetch,
   });
 
-  console.log(isLoading, error, data)
- 
   return (
     <>
       <section className="p-6 my-6 bg-background dark:text-gray-800">
