@@ -10,6 +10,8 @@ import { APIResponse } from '../utils/APIResponse.util.js';
 import { CloudinaryImage, IGetUserAuthInfoRequest } from '../types/model/user.type.js';
 import { uploadOnCloudinary } from '../utils/Cloudinary.util.js';
 import mongoose, { Types } from 'mongoose';
+import { redisClient } from '../utils/redisClient.util.js';
+import { redisFlush } from '../middlewares/redisCache.middleware.js';
 
 // Get Details of All Blogs
 const getAllBlogs = AsyncHandler(async (req: Request, res: Response) => {

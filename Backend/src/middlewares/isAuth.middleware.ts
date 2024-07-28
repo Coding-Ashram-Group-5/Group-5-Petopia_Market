@@ -24,6 +24,7 @@ export const isAuthenticate = (isAdminAuth: boolean = false) =>
       if (!token) {
         throw new APIError('Unauthorized Request', 402);
       }
+
       if (process.env.ACCESS_TOKEN_SECRET) {
         const decodeToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET) as JwtPayload;
 

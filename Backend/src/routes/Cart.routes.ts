@@ -14,7 +14,7 @@ import { redisCacheMiddleware } from '../middlewares/redisCache.middleware.js';
 const router: Router = Router();
 
 router.route('/:id').get(isAuthenticate(false), getPurchasedProduct);
-router.route('/product/:id').get(isAuthenticate(false), redisCacheMiddleware({ EX: 21600 }), getCartProduct);
+router.route('/product/:id').get(isAuthenticate(false), getCartProduct);
 router.route('/add/:id').post(isAuthenticate(false), addProduct);
 
 router.route('/purchase/all').patch(isAuthenticate(false), buyAllCartProducts);
