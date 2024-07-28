@@ -3,8 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
-import Login from "./components/Auth/pages/Login";
-import Register from "./components/Auth/pages/Register";
+import SignInUp from "./components/Auth/pages/SignInUp.tsx";
 import Profile from "./components/Auth/userProfile/Profile.tsx";
 import Home from "./Pages/Home.tsx";
 import NotFound from "./components/NotFound.tsx";
@@ -25,6 +24,9 @@ import ProductManagement from "./Pages/Admin/AdminPages/ProductManagement.tsx";
 import PetManagement from "./Pages/Admin/AdminPages/PetManagement.tsx";
 import BlogsManagement from "./Pages/Admin/AdminPages/BlogsManagement.tsx";
 import UserManagement from "./Pages/Admin/AdminPages/UserManagement.tsx";
+import EditProduct from "./Pages/ProductPage/EditProduct.tsx";
+import AddPet from "./Pages/Pets/AddPet.tsx";
+import EditPet from "./Pages/Pets/EditPet.tsx";
 
 const queryClient = new QueryClient();
 
@@ -41,17 +43,14 @@ root.render(
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
             <BrowserRouter>
                 <Routes>
+                    <Route path="/auth" element={<SignInUp />} />
                     <Route path="/" element={<App />}>
                         <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/products" element={<Products />} />
-                        <Route path="/products/add" element={<AddProduct />} />
                         <Route path="/blogs" element={<Blogs />} />
                         <Route path="/blogs/:id" element={<Blog />} />
-                        <Route path="/blogs/add" element={<NewBlog />} />
-                        <Route path="/blogs/edit/:id" element={<EditBlog />} />
+                        
                         <Route path="/pets" element={<Pets />} />
                         <Route
                             path="/pets/getDetails/:id"
@@ -71,8 +70,14 @@ root.render(
                                 path="products"
                                 element={<ProductManagement />}
                             />
+                            <Route path="products/add" element={<AddProduct />} />
+                            <Route path="products/edit/:id" element={<EditProduct />} />
                             <Route path="pets" element={<PetManagement />} />
+                            <Route path="pets/add" element={<AddPet />} />
+                            <Route path="pets/edit/:id" element={<EditPet />} />
                             <Route path="blogs" element={<BlogsManagement />} />
+                            <Route path="blogs/add" element={<NewBlog />} />
+                            <Route path="blogs/edit/:id" element={<EditBlog />} />
                             <Route path="users" element={<UserManagement />} />
                         </Route>
                         <Route path="*" element={<NotFound />} />

@@ -27,7 +27,7 @@ const Logout: React.FC<LogoutProps> = ({ buttonLabel }) => {
     };
 
     return (
-        <button type="button" onClick={handleLogout}>{buttonLabel}</button>
+        <button className='w-full h-full' type="button" onClick={handleLogout}>{buttonLabel}</button>
     );
 };
 

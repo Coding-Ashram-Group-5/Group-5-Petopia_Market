@@ -10,6 +10,8 @@ import { getAllProducts } from "@/lib/ProductApi";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/models";
 import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
+import CardSkeleton from "@/components/Ui/Skeleton/CardSkeleton";
 
 interface IProduct {
     _id: string;
@@ -29,7 +31,7 @@ const Card: React.FC<ICardProps> = ({ product }) => (
                 <img
                     src={product.productImages[0].url}
                     loading="lazy"
-                    className="h-full w-full rounded-lg object-fill object-center"
+                    className="h-full w-full rounded-t-lg object-fill object-center"
                     alt={product.productName}
                 />
                 <div className="absolute -top-1 h-fit p-2 w-fit rounded-full bg-red-500 font-mad text-white">
@@ -37,19 +39,28 @@ const Card: React.FC<ICardProps> = ({ product }) => (
                 </div>
             </div>
         </Link>
-        <div className="my-4">
-            <h1 className="font-bold text-xl">{product.productName}</h1>
-            <p className="font-leag font-bold text-red-500">
+        <div className="my-2">
+            <div className="flex-row justify-center items-center">
+            <h1 className="font-bold text-md text-balance">{product.productName}</h1>
+            <div className="flex">
+            {[...Array(5)].map((_, index) => ( 
+                <FaStar key={index} className="text-yellow-400" />
+            ))}
+        </div>
+            <p className="font-leag font-bold  text-red-500  rounded-xl py-2">
                 Price: ₹{product.productPrice}
             </p>
+            </div>
+          
         </div>
+       
     </div>
 );
 
 const Products: React.FC = () => {
     const dataFetch = async (): Promise<Product[]> => {
         try {
-            const data = await getAllProducts() as unknown as Product[];
+            const data = await getAllProducts("10") as unknown as Product[];
             return data;
         } catch (error) {
             console.error("Error:", error);
@@ -63,7 +74,10 @@ const Products: React.FC = () => {
     });
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div className="grid gap-x-4 gap-y-8 grid-cols-2 sm:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">  { [1, 2, 3, 4].map((item) => (
+            <CardSkeleton key={item} />
+        ))}</div>;
+      
     }
 
     if (error) {

@@ -17,38 +17,38 @@ interface IProduct {
 const products:IProduct[] = [
     {
         id:5,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/ildp4xcfpc9obs4p8ugi.webp"
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/ildp4xcfpc9obs4p8ugi.webp"
     },
     {
         id:6,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/hjjgjsulrcfw8pholxvx.webp"
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/hjjgjsulrcfw8pholxvx.webp"
     },
     {
         id:7,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/xwfm9pnyselehewnqmfm.webp"
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/xwfm9pnyselehewnqmfm.webp"
     },
     {
         id:8,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/s8c7onmljrk9teiwckwo.webp"
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/s8c7onmljrk9teiwckwo.webp"
     },
     {
         id:1,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/pfyadluioqtyhtlvz6zy.webp",
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/pfyadluioqtyhtlvz6zy.webp",
         route:""
     },
     {
         id:2,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/oodncngrnr9gzl0uqjvh.webp",
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/oodncngrnr9gzl0uqjvh.webp",
     },
     {
         id:3,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/zttjbcqstjfbuvmyrt0w.webp"
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/v1718977789/Petopia/zttjbcqstjfbuvmyrt0w.webp"
     },
     {
         id:4,
-        url:"https://res.cloudinary.com/dzxynskmo/image/upload/v1718977789/Petopia/jyelelffafyaa5f0uquv.png"
+        url:"https://res.cloudinary.com/dzxynskmo/image/upload/q_auto:best/e_sharpen:10/f_webp/v1718977789/Petopia/jyelelffafyaa5f0uquv.png"
     },
-    
+
 ]
 
 const Category: React.FC = () => {
@@ -76,7 +76,8 @@ const Category: React.FC = () => {
                                                 src={product.url}
                                                 loading="lazy"
                                                 className="h-full w-full rounded-lg object-fill object-center"
-                                                
+                                                alt="Product Image"
+                                                aria-description="Product Image"
                                             />
 
                                         </div>

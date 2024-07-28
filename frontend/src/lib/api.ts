@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
     User,
     TokenResponse,
@@ -6,6 +6,8 @@ import {
     Blog,
     PetForm,
     AdoptPetFormData,
+    PaymentOrder,
+    PaymentSuccess,
 } from "@/types/models"; // Import User and TokenResponse types
 
 const baseURL = import.meta.env.VITE_API_BASE_URL; // Your backend API URL
@@ -86,14 +88,21 @@ export const addPet = async (data: PetForm) => {
             },
         });
         return res?.data;
-    } catch (error: any) {
-        return error?.response?.data;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
 export const getAllBlogs = async (): Promise<Blog> => {
     const { data } = await authApi.get("api/v1/blogs/all");
     return data;
+};
+export const getAllBlogsforadmin = async (): Promise<Blog> => {
+    const { data } = await authApi.get("api/v1/blogs/all");
+    return data.data;
 };
 
 export const getBlogById = async (id: string): Promise<Blog> => {
@@ -200,8 +209,11 @@ export const likeBlog = async (id: string) => {
         const { data } = await authApi.patch(`api/v1/blogs/likes/${id}`);
 
         return data;
-    } catch (error: any) {
-        return error?.data?.response;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
@@ -210,8 +222,11 @@ export const dislikeBlog = async (id: string) => {
         const { data } = await authApi.patch(`api/v1/blogs/dislike/${id}`);
 
         return data;
-    } catch (error: any) {
-        return error?.data?.response;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
@@ -234,8 +249,11 @@ export const updatePet = async (id: string, data: PetForm): Promise<Pet> => {
             },
         });
         return res?.data;
-    } catch (error: any) {
-        return error?.response?.data;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return error.response.data;
+        }
+        throw error;
     }
 };
 
@@ -253,13 +271,23 @@ export const adoptPet = async (
     return response.data;
 };
 
-export const payment = async () => {
-    const response = await authApi.post(`/api/v1/payment/order`);
+export const payment = async (data: PaymentOrder) => {
+    const response = await authApi.post(`/api/v1/payment/order`, data);
     return response.data;
 };
 
-export const paymentSuccess = async (data: any) => {
-    const response = await authApi.post(`/api/v1/payment/success`, data);
+export const paymentSuccess = async ({
+    data,
+    signature,
+}: {
+    data: PaymentSuccess;
+    signature: string;
+}) => {
+    const response = await authApi.post(`/api/v1/payment/verifyOrder`, data, {
+        headers: {
+            "x-razorpay-signature": signature,
+        },
+    });
     return response.data;
 };
 

@@ -8,6 +8,7 @@ export interface User {
     avatar?: { publicId: string; url: string };
     created_at?: string;
     updated_at?: string;
+    userRole?: string;
 }
 
 export interface AuthState {
@@ -84,6 +85,7 @@ export interface Product {
     averageRating: number;
     data?: any;
     userData?:User;
+    success?: boolean;
 }
 
 interface ProductImage {
@@ -99,6 +101,7 @@ export interface ProductForm {
     category: string;
     quantity: number;
     images: FileList;
+    productImages: ProductImage[];
     [key: string]: any;
 }
 interface Rating {
@@ -114,7 +117,7 @@ export interface Blog {
     comments: Comment[];
     coverImage: { publicId: string; url: string };
     likes: string[];
-    created_at:string;
+    created_at: string;
     userDetails: BlogUser;
     userData?: BlogUser;
     data?: any;
@@ -147,15 +150,14 @@ export interface CartItem {
     quantity: number;
     purchasedPrice: number;
     user?: {
-      name: string;
-    user?: {
         name: string;
+        user?: {
+            name: string;
+        };
+        isPurchased?: boolean;
     };
     isPurchased?: boolean;
-  }
-    isPurchased?: boolean;
 }
-
 
 export interface AdoptPetFormData {
     firstName: string;
@@ -168,3 +170,28 @@ export interface AdoptPetFormData {
     zipCode: string;
     phoneNumber: string;
 }
+
+export interface IAdminPanelDetailsResponse {
+    totalUsers: number;
+    totalNewUsers: number;
+    totalProducts: number;
+    totalNewProducts: number;
+    totalPets: number;
+    totalNewPets: number;
+    totalNewPetsAdopted: number;
+    totalPurchasedProducts: number;
+    visitCount: number;
+  }
+
+export interface PaymentOrder {
+    amount: number;
+    currency: string;
+    receipt: string;
+    notes: any;
+}
+
+export interface PaymentSuccess {
+    order_id: string;
+    payment_id: string;
+}
+

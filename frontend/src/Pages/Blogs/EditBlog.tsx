@@ -1,41 +1,57 @@
 import { getBlogById, updateBlog } from "@/lib/api";
-import { ChangeEvent,FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { X, Image } from "lucide-react";
-// import { string } from "prop-types"; // 'string' is declared but its value is never read.ts(6133)
+import usePersonStore from "@/lib/Utils/zustandStore";
 
-
+// Define a streamlined toolbar configuration
+const toolbarOptions = [
+    [{ 'font': [] }],
+    [{ 'header': ['1', '2', '3', '4', '5', '6', false] }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block'],
+    ['link', 'image', 'video', 'formula'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+    [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+    [{ 'direction': 'rtl' }],                         // text direction
+    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+    [{ 'align': [] }],
+    ['clean']
+];
 
 function BlogPostForm() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const [blogOwner, setblogOwner] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [category, setCategory] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const [cover, setCover] = useState<{ publicId: string; url: string } | File | null>(null);
     const [error, setError] = useState<string>("");
+    const isUserLoggedIn = usePersonStore((state) => state._id);
 
     useEffect(() => {
-        const dataFetch = async (blogId: string) => {
+        const fetchBlogData = async (blogId: string) => {
             try {
-                const data = await getBlogById(blogId);
-                let spreadCategory = "";
-                data.data[0].category.forEach((element: string) => {
-                    spreadCategory += element + ",";
-                });
-
-                setTitle(data.data[0].title);
-                setCategory(spreadCategory);
-                setContent(data.data[0].content);
-                setCover(data.data[0].coverImage);
+                const { data } = await getBlogById(blogId);
+                const { title, content, coverImage, category } = data[0];
+                setTitle(title);
+                setCategory(category.join(", "));
+                setContent(content);
+                setCover(coverImage);
+                console.log(data[0].userData._id);
+                setblogOwner(data[0].userData._id);
             } catch (error) {
                 console.error("Error:", error);
             }
         };
+
         if (id) {
-            dataFetch(id);
+            fetchBlogData(id);
         }
     }, [id]);
 
@@ -49,13 +65,13 @@ function BlogPostForm() {
 
         const coverFile = cover instanceof File ? cover : await urlToFile(cover.url);
 
-        const data = await updateBlog(
+        const { success, data } = await updateBlog(
             { title, category, content, image: coverFile },
             id!,
         );
 
-        if (data.success) {
-            navigate(`/blogs/${data.data._id}`);
+        if (success) {
+            navigate(`/blogs/${data._id}`);
         }
     };
 
@@ -75,31 +91,54 @@ function BlogPostForm() {
         return new File([blob], "coverImage", { type: blob.type });
     };
 
+    if (blogOwner !== isUserLoggedIn)
+        {
+            return (
+            <div className="max-w-screen-md mx-auto md:text-6xl w-screen text-3xl p-4 text-center font-semibold flex items-center justify-center leading-relaxed">
+                You do not have permission to edit this blog.
+                You are not the owner of this blog.
+            </div>
+            )
+        }
+
     return (
         <form
             onSubmit={handleSubmit}
-            className="p-6 space-y-4 shadow-md rounded-md"
+            className="p-6 space-y-6 bg-gray-200 dark:bg-gray-800 shadow-lg rounded-lg"
         >
             {error && <p className="text-red-500">{error}</p>}
-            <div className="flex items-center">
+
+            <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">Blog Editor</h1>
+
+            <div>
                 <label
                     htmlFor="cover-input"
-                    className="text-lg text-gray-700 dark:text-gray-200 bg-transparent cursor-pointer"
+                    className="flex justify-center items-center text-gray-700 dark:text-gray-200 cursor-pointer"
                 >
                     {cover ? (
-                        <img
-                        src={
-                            cover instanceof File
-                                ? URL.createObjectURL(cover)
-                                : cover?.url || ""
-                        }
-                            alt="Image Preview"
-                            className="w-80 h-48 m-2 rounded flex items-center justify-evenly"
-                        />
+                        <div className="relative">
+                            <img
+                                src={
+                                    cover instanceof File
+                                        ? URL.createObjectURL(cover)
+                                        : cover?.url || ""
+                                }
+                                alt="Cover Preview"
+                                className="w-96 h-auto object-cover rounded-lg items-center justify-center"
+                            />
+                            <button
+                                type="button"
+                                onClick={removeCoverImage}
+                                className="absolute top-3 left-[21rem] p-1 bg-gray-400 rounded-full hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                                aria-label="Remove Cover Image"
+                            >
+                                <X size={24} className="text-red-600 dark:text-red-400" />
+                            </button>
+                        </div>
                     ) : (
-                        <div className="flex items-center gap-2">
-                            <Image />
-                            Add Cover
+                        <div className="flex items-center gap-2 justify-center">
+                            <Image className="text-gray-500 dark:text-gray-400" />
+                            <span>Edit/Change Cover</span>
                         </div>
                     )}
                 </label>
@@ -107,50 +146,47 @@ function BlogPostForm() {
                     id="cover-input"
                     type="file"
                     accept="image/*"
-                    value={cover ? undefined : ""}
                     onChange={handleCoverChange}
                     className="hidden"
                 />
-                {cover && (
-                    <button
-                        type="button"
-                        onClick={removeCoverImage}
-                        disabled={!cover}
-                        className={`font-bold text-gray-700 dark:text-gray-200 bg-transparent rounded hover:text-red-700`}
-                        aria-label="Remove Cover Image"
-                    >
-                        <X />
-                    </button>
-                )}
+
             </div>
+
             <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Blog Title...."
-                className="mt-1 block w-full text-3xl outline-none rounded-md text-gray-700 dark:text-gray-200 bg-transparent shadow-sm py-1"
+                placeholder="Edit Blog Title"
+                className="block w-full text-3xl border border-gray-300 rounded-md py-2 px-4 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
             />
+
             <input
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                placeholder="Category 1, Category 2,....."
-                className="mt-1 block w-full text-2xl outline-none rounded-md text-gray-700 dark:text-gray-200 bg-transparent shadow-sm py-1"
+                placeholder="Edit Blog Categories (comma separated)"
+                className="block w-full text-xl border border-gray-300 rounded-md py-2 px-4 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
             />
-            <div className="h-[500px]">
-                <ReactQuill
-                    theme="snow"
-                    value={content}
-                    onChange={setContent}
-                    className="h-5/6 bg-transparent w-full text-xl rounded-md my-2 lg:my-1"
-                />
-            </div>
-            <div className="flex justify-center items-center">
-                <input
-                    type="submit"
-                    value="Submit"
-                    className="px-4 py-2 font-bold text-xl cursor-pointer text-white bg-pink-500  hover:bg-pink-700 rounded-md -mt-810"
-                />
+
+            <div className="grid grid-cols-1 gap-4">
+                <div className="relative">
+                    <div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-md">
+                        <ReactQuill
+                            theme="snow"
+                            value={content}
+                            onChange={setContent}
+                            modules={{ toolbar: toolbarOptions }}
+                            className="xl:h-[84%] md:h-[82%] sm:h-[76%] h-[63%] text-gray-900 dark:text-white rounded-md"
+                        />
+                    </div>
+                </div>
+                <div className="flex justify-center">
+                    <input
+                        type="submit"
+                        value="Submit"
+                        className="px-6 py-2 font-semibold text-lg text-white bg-red-500 hover:bg-red-600 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                </div>
             </div>
         </form>
     );

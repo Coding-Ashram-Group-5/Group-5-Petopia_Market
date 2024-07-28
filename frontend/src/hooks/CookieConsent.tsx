@@ -6,7 +6,6 @@ const CookieConsent: React.FC = () => {
     useEffect(() => {
         const frame = document.createElement('iframe');
         frame.id = '3pc';
-        frame.src = 'https://pals-petopia.netlify.app/';
         frame.style.display = 'none';
         frame.style.position = 'fixed';
         document.body.appendChild(frame);

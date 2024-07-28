@@ -35,7 +35,7 @@ export default function Footer() {
 
             <p className="mb-6 text-gray-500 sm:pr-8">Filler text is dummy text which has no meaning however looks very similar to real text</p>
 
-            <div className="flex gap-4">
+            <div className="flex flex-row gap-4">
               <a aria-label="Instagram" href="https://www.instagram.com/hiteshchoudharyofficial" target="_blank" className="text-gray-400 transition duration-100 hover:text-gray-500 active:text-gray-600" rel="noopener">
               <FaInstagram size={20} />
               </a>
@@ -48,7 +48,7 @@ export default function Footer() {
               <FaLinkedin size={20} />
               </a>
 
-              <a aria-label="GitHub" href="https://github.com/hiteshchoudhary" target="_blank" className="text-gray-400 transition duration-100 hover:text-gray-500 active:text-gray-600" rel="noopener">
+              <a aria-label="GitHub" href="https://github.com/hiteshchoudhary" target="_blank" className="relative bottom-[1px] text-gray-400 transition duration-100 hover:text-gray-500 active:text-gray-600" rel="noopener">
               <IoLogoGithub size={21} />
               </a>
             </div>

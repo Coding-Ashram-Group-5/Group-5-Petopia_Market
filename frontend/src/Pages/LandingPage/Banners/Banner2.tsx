@@ -25,7 +25,7 @@ export default function Banner2() {
     <>
     <div onClick={() => navigate('/products')} className="flex justify-center cursor-pointer items-center h-fit">
       {isMobile ? (
-        <img src={mobile} alt="Mobile Image" loading="lazy" className="max-w-full max-h-full" />
+        <img src={mobile} alt="Mobile Image" loading="lazy" className="max-w-full max-h-fit" />
       ) : (
         <img src={desktop} alt="Desktop Image" loading="lazy" className="max-w-full max-h-full rounded-xl" />
       )}

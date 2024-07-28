@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Label } from "@/components/Ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/Ui/radio-group";
-import { Slider } from "@/components/Ui/slider";
 import { Checkbox } from "@/components/Ui/checkbox";
+import { Toggle } from "@/components/Ui/toggle";
+import * as Slider from '@radix-ui/react-slider';
 
 interface FilterProps {
   onFilterChange: (filters: FilterState) => void;
@@ -12,16 +13,18 @@ interface FilterState {
   animal: string;
   seasons: string[];
   price: number[];
+  tags?: string[];
 }
 
 export default function Filter({ onFilterChange }: FilterProps) {
   const [animal, setAnimal] = useState<string>("all");
   const [seasons, setSeasons] = useState<string[]>([]);
-  const [price, setPrice] = useState<number[]>([0, 10000]);
+  const [price, setPrice] = useState<number[]>([0, 5000]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleAnimalChange = (value: string) => {
     setAnimal(value);
-    onFilterChange({ animal: value, seasons, price });
+    onFilterChange({ animal: value, seasons, price, tags });
   };
 
   const handleSeasonChange = (season: string) => {
@@ -29,12 +32,20 @@ export default function Filter({ onFilterChange }: FilterProps) {
       ? seasons.filter((s) => s !== season)
       : [...seasons, season];
     setSeasons(updatedSeasons);
-    onFilterChange({ animal, seasons: updatedSeasons, price });
+    onFilterChange({ animal, seasons: updatedSeasons, price, tags });
   };
 
   const handlePriceChange = (newPrice: number[]) => {
     setPrice(newPrice);
-    onFilterChange({ animal, seasons, price: newPrice });
+    onFilterChange({ animal, seasons, price: newPrice, tags });
+  };
+
+  const handleTagToggle = (tag: string) => {
+    const updatedTags = tags.includes(tag)
+      ? tags.filter((t) => t !== tag)
+      : [...tags, tag];
+    setTags(updatedTags);
+    onFilterChange({ animal, seasons, price, tags: updatedTags });
   };
 
   return (
@@ -48,8 +59,8 @@ export default function Filter({ onFilterChange }: FilterProps) {
               <Label htmlFor="all">All</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="dogs" id="dogs" />
-              <Label htmlFor="dogs">Dogs</Label>
+              <RadioGroupItem value="Dog" id="Dog" />
+              <Label htmlFor="Dog">Dogs</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="cats" id="cats" />
@@ -82,8 +93,36 @@ export default function Filter({ onFilterChange }: FilterProps) {
         </div>
         <h1 className="text-lg">Price</h1>
         <div className="p-2 font-leag">
-          <div className="flex justify-between"><span>{price[0]}$</span><span>10000$</span></div>
-          <Slider value={price} onValueChange={handlePriceChange} max={10000} />
+          <div className="flex justify-between"><span>{price[0]}₹</span><span>{price[1]}₹</span></div>
+          <Slider.Root
+            className="relative flex items-center select-none touch-none w-full h-5"
+            value={price}
+            onValueChange={handlePriceChange}
+            min={0}
+            max={5000}
+            step={100}
+            aria-label="Price"
+          >
+            <Slider.Track className="bg-red-200 relative flex-grow rounded-full h-1">
+              <Slider.Range className="absolute bg-red-500 rounded-full h-full" />
+            </Slider.Track>
+            <Slider.Thumb className="block w-5 h-5 bg-red-500 rounded-full shadow" />
+            <Slider.Thumb className="block w-5 h-5 bg-red-500 rounded-full shadow" />
+          </Slider.Root>
+        </div>
+        <h1 className="text-lg">Tags</h1>
+        <div className="my-2 flex gap-2 w-full flex-wrap overflow-clip">
+          {["food", "toy", "accessories", "medicine", "grooming"].map((tag, index) => (
+            <Toggle
+              key={index}
+              variant="outline"
+              aria-label={`Toggle ${tag}`}
+              pressed={tags.includes(tag)}
+              onClick={() => handleTagToggle(tag)}
+            >
+              <h1>{tag}</h1>
+            </Toggle>
+          ))}
         </div>
       </div>
     </div>

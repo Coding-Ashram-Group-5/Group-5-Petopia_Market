@@ -1,14 +1,14 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ModeToggle } from "@/components/Ui/Buttons/mode-toggle";
-import * as RXIcons from "react-icons/rx";
-import * as IO5Icons from "react-icons/io5";
-import * as IOIcons from "react-icons/io";
-import * as LuIcons from "react-icons/lu";
-import * as HI2Icons from "react-icons/hi2";
-import * as FA6Icons from "react-icons/fa6";
-import * as LRIcons from 'lucide-react';
-import * as PIIcons from "react-icons/pi";
+import { ModeToggle } from "@/components/Ui/Buttons/ModeToggle/mode-toggle";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoChevronDown, IoClose } from "react-icons/io5";
+import { IoIosWallet } from "react-icons/io";
+import { LuShoppingBasket, LuChevronLeft } from "react-icons/lu";
+import { HiChartPie, HiShoppingBag } from "react-icons/hi2";
+import { FaArrowRightToBracket } from "react-icons/fa6";
+import { Info, FilePen } from 'lucide-react';
+import { PiReadCvLogoDuotone } from "react-icons/pi";
 import usePersonStore from '@/lib/Utils/zustandStore';
 
 function Sidebar() {
@@ -46,15 +46,15 @@ function Sidebar() {
             <motion.button
                 data-drawer-target="sidebar-multi-level-sidebar"
                 data-drawer-toggle="sidebar-multi-level-sidebar"
-                aria-controls="sidebar-multi-level-menu"
+                aria-label='Sidebar controls'
                 type="button"
-                className="inline-flex items-center p-2 mt-2 ms-3 text-lg text-black rounded-lg bg-border lg:hidden hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className="inline-flex items-center p-2 mt-1 ms-3 text-lg text-black rounded-lg bg-border lg:hidden hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 onClick={handleToggleClick}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
             >
                 <span className="sr-only">Open sidebar</span>
-                <RXIcons.RxHamburgerMenu size={20} title='Open Sidebar' />
+                <RxHamburgerMenu size={20} title='Open Sidebar' aria-label='Sidebar'/>
             </motion.button>
 
             <motion.aside
@@ -76,16 +76,16 @@ function Sidebar() {
                         <ul className="space-y-2 font-medium">
                             <li>
                                 <a href="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <HI2Icons.HiChartPie size={25} />
+                                    <HiChartPie size={25} />
                                     <span className="ms-3">Petboard</span>
                                 </a>
                             </li>
                             <li>
                                 <div>
-                                    <button type="button" className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="sidebar-multi-level-menu" data-collapse-toggle="sidebar-multi-level-menu" onClick={handleDropdownToggle}>
-                                        <LuIcons.LuShoppingBasket size={25} />
+                                    <button type="button" className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-collapse-toggle="sidebar-multi-level-menu" onClick={handleDropdownToggle}>
+                                        <LuShoppingBasket size={25} />
                                         <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">PET-Eommerce</span>
-                                        {isDropdownOpen ? <IO5Icons.IoChevronDown size={20} /> : <LuIcons.LuChevronLeft size={20} />}
+                                        {isDropdownOpen ? <IoChevronDown size={20} /> : <LuChevronLeft size={20} />}
                                     </button>
                                     {isDropdownOpen && (
                                         <ul id="sidebar-multi-level-menu" className="py-2 space-y-2">
@@ -108,25 +108,25 @@ function Sidebar() {
                                     )}
                                     <li>
                                         <a href="/products" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                            <HI2Icons.HiShoppingBag size={21.5} />
+                                            <HiShoppingBag size={21.5} />
                                             <span className="ms-3">Products</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/blogs" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                        <PIIcons.PiReadCvLogoDuotone size={21.5}/>
+                                        <PiReadCvLogoDuotone size={21.5}/>
                                             <span className="ms-3">Blogs</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                            <IOIcons.IoIosWallet size={21.5} />
+                                            <IoIosWallet size={21.5} />
                                             <span className="ms-3">Pricing</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/about" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                            <LRIcons.Info size={21.5} />
+                                            <Info size={21.5} />
                                             <span className="ms-3">About</span>
                                         </a>
                                     </li>
@@ -135,14 +135,14 @@ function Sidebar() {
                             {!isUserLoggedIn && (
                                 <>
                                     <li>
-                                        <a href="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                            <FA6Icons.FaArrowRightToBracket size={21.5} />
+                                        <a href="/auth" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                            <FaArrowRightToBracket size={21.5} />
                                             <span className="ms-3">Sign In</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/register" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                            <LRIcons.FilePen size={25} />
+                                        <a href="/auth" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                            <FilePen size={25} />
                                             <span className="ms-3">Sign Up</span>
                                         </a>
                                     </li>
@@ -172,7 +172,7 @@ function Sidebar() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3, ease: "easeInOut", delay: 0.5 }}
                     >
-                        <IO5Icons.IoClose size={25} />
+                        <IoClose size={25} />
                     </motion.button>
                 )}
             </motion.aside>
