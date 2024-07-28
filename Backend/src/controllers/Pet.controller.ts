@@ -183,7 +183,7 @@ const updatePetDetails = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: 
     }
 
     // Checking for condition of Only Owner Can Edit Details of Pet
-    if (petDetails && req.user && String(petDetails.owner) != req.user._id) {
+    if (req.user && req.user?.userRole != 'Admin') {
       return res.status(402).json(new APIError('only Owner can Edit Pet Details', 402));
     }
 
