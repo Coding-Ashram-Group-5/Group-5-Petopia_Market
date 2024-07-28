@@ -26,18 +26,23 @@ app.use(express.json({ limit: '18kb' }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+// CORS Configuration
 const CORS_ORIGIN: string | undefined = process.env.CORS_ORIGIN || '*';
 
 app.use(
   cors({
     origin: CORS_ORIGIN,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
   }),
 );
 
+// Handle preflight requests
+app.options('*', cors());
+
 app.use(morganMiddleware);
 
+// Define Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/pets', petRoutes);
 app.use('/api/v1/product', productRoutes);
@@ -49,7 +54,7 @@ app.use('/api/v1/admin', adminRoutes);
 // Health Verifying Route
 app.get('/api/v1/health', (_, res) => {
   logger.info('Server is Running');
-  res.send('Server is Runnning');
+  res.send('Server is Running');
 });
 
 // Cron Job for Zero Down Time in free Render Instance
