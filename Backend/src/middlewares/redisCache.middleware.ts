@@ -98,4 +98,17 @@ function redisCacheMiddleware(options: RedisCacheMiddlewareOptions = { EX: 21600
   };
 }
 
-export { redisCacheMiddleware, writeData, readData, requestToKey, isRedisWorking };
+async function redisFlush(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (isRedisWorking() && redisClient) {
+      const result = await redisClient.flushDb();
+      console.log(result); // Will log 'OK' if successful
+    }
+  } catch (err) {
+    console.error('Error flushing Redis DB:', err);
+  } finally {
+    next();
+  }
+}
+
+export { redisCacheMiddleware, writeData, readData, requestToKey, isRedisWorking, redisFlush };
