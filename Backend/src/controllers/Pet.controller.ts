@@ -145,8 +145,8 @@ const deletePetById = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Res
     }
 
     // Checking for condition of Only Owner Can Delete Product
-    if (req.user && (String(petDetails.owner) != req.user._id || req.user.userRole === 'Admin')) {
-      return res.status(402).json(new APIError('Only Owner can Delete Product', 402));
+    if (req.user && req.user?.userRole != 'Admin') {
+      return res.status(402).json(new APIError('Only Admin can Delete Product', 402));
     }
 
     await petDetails.deleteImages();
