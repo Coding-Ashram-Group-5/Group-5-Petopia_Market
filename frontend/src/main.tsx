@@ -49,8 +49,9 @@ root.render(
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/blogs/add" element={<NewBlog />} />
                         <Route path="/blogs/:id" element={<Blog />} />
-                        
+                        <Route path="/blogs/edit/:id" element={<EditBlog />} />
                         <Route path="/pets" element={<Pets />} />
                         <Route
                             path="/pets/getDetails/:id"
