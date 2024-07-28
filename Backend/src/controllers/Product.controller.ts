@@ -118,7 +118,7 @@ const deleteProductById = AsyncHandler(async (req: IGetUserAuthInfoRequest, res:
     }
 
     // Checking for condition of Only Owner Can Delete Product
-    if (req.user && (String(productDetail.creator) != req.user._id || req.user.userRole === 'Admin')) {
+    if (req.user && req.user?.userRole != 'Admin') {
       return res.status(402).json(new APIError('Only Owner can Delete Product', 402));
     }
 
@@ -158,8 +158,8 @@ const editProduct = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Respo
     }
 
     // Checking for condition of Only Owner Can Delete Product
-    if (req.user && String(productDetail.creator) != req.user._id) {
-      return res.status(402).json(new APIError('Only Owner can Update Product Details', 402));
+    if (req.user && req.user?.userRole != 'Admin') {
+      return res.status(402).json(new APIError('Only Admin can Update Product Details', 402));
     }
 
     // if checking for Required for Fields
