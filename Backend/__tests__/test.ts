@@ -43,6 +43,7 @@ describe('Petopia test suite ', () => {
       lastName: 'Sumara',
       email: 'test_db@gmail.com',
       password: '12345678',
+      userRole:'Admin'
     });
 
     // Extract the token from the set-cookie header
