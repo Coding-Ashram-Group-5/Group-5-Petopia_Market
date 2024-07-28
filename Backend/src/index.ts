@@ -42,6 +42,21 @@ app.options('*', cors());
 
 app.use(morganMiddleware);
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH,OPTIONS"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Origin", "https://pals-petopia.netlify.app");
+  next();
+});
+
+
 // Define Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/pets', petRoutes);
