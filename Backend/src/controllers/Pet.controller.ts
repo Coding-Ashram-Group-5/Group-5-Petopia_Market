@@ -243,12 +243,12 @@ const buyPet = AsyncHandler(async (req: IGetUserAuthInfoRequest, res: Response) 
     const { zipcode, street, city, phoneNumber } = req.body;
 
     // Validate Zip Code
-    if (!zipcode.trim().match(/^[1-9][0-9]{5}$/)) {
+    if (!zipcode?.trim().match(/^[1-9][0-9]{5}$/)) {
       return res.status(402).json(new APIError('Please Provide Valid Zip Code Value', 402));
     }
 
     // Validate Mobile Number
-    if (!phoneNumber.trim().match(/^\d{10}$/)) {
+    if (!phoneNumber?.trim().match(/^\d{10}$/)) {
       return res.status(402).json(new APIError('Please Provide Valid Mobile Number', 402));
     }
 
