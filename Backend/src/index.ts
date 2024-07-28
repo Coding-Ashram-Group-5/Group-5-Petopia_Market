@@ -22,40 +22,43 @@ const app: Express = express();
 
 // Incoming Request Body Limit
 app.use(express.json({ limit: '18kb' }));
-
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Configuration
-const CORS_ORIGIN: string | undefined = process.env.CORS_ORIGIN || '*';
+const CORS_ORIGIN: string | undefined = process.env.CORS_ORIGIN || 'https://pals-petopia.netlify.app';
 
 app.use(
   cors({
     origin: CORS_ORIGIN,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Ensure DELETE and OPTIONS are included
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   }),
 );
 
-// Handle preflight requests
-app.options('*', cors());
+// Handle preflight requests (Redundant but added for explicit clarity)
+app.options('*', cors({
+  origin: CORS_ORIGIN,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+}));
 
 app.use(morganMiddleware);
 
+// Set additional headers (if needed)
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH,OPTIONS"
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.setHeader("Access-Control-Allow-Origin", "https://pals-petopia.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", CORS_ORIGIN); // Use the same origin from the env variable or fallback
   next();
 });
-
 
 // Define Routes
 app.use('/api/v1/users', userRoutes);
