@@ -14,10 +14,13 @@ interface RedisCacheMiddlewareOptions {
   KEEPTTL?: boolean; // retain the TTL associated with the key
   GET?: boolean; // return the old string stored at key, or "undefined" if key did not exist
 }
+
 function requestToKey(req: Request): string {
   const reqDataToHash = {
     params: req.params,
     body: req.body,
+    // Consider including query params if necessary
+    query: req.query,
   };
 
   return `${req.path}@${hash.sha1(reqDataToHash)}`;
@@ -34,12 +37,20 @@ async function writeData(
   compress: boolean = true,
 ): Promise<void> {
   if (isRedisWorking() && redisClient) {
-    let dataToCache = data;
-    if (compress) {
-      dataToCache = zlib.deflateSync(data).toString('base64');
-    }
-
     try {
+      let dataToCache = data;
+
+      // Ensure data is serialized if it's an object
+      if (typeof dataToCache === 'object') {
+        dataToCache = JSON.stringify(dataToCache);
+      }
+
+      // Compress data if the compress option is true
+      if (compress) {
+        dataToCache = zlib.deflateSync(dataToCache).toString('base64');
+      }
+
+      // Use Redis to set the data with options
       await redisClient.set(key, dataToCache, options as any);
     } catch (e) {
       logger.error(`Failed to cache data for key=${key}`, e);
@@ -75,11 +86,13 @@ function redisCacheMiddleware(options: RedisCacheMiddlewareOptions = { EX: 21600
 
       if (cachedValue) {
         try {
+          // Attempt to parse JSON; fallback to plain text
           res.json(JSON.parse(cachedValue));
         } catch {
           res.send(cachedValue);
         }
       } else {
+        // Override res.send to capture the response body
         const oldSend = res.send.bind(res);
         res.send = (data: any) => {
           (async () => {
