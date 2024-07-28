@@ -57,7 +57,7 @@ export const updateProduct = async (id: string, data: ProductForm): Promise<Prod
         } else formData.append(key, data[key]);
       });
   
-      const res = await authApi.put(`/api/v1/product/update/${id}`, formData, {
+      const res = await authApi.put(`/api/v1/product/edit/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
