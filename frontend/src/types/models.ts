@@ -167,7 +167,7 @@ export interface AdoptPetFormData {
     street: string;
     city: string;
     state: string;
-    zipCode: string;
+    zipcode: string;
     phoneNumber: string;
 }
 
