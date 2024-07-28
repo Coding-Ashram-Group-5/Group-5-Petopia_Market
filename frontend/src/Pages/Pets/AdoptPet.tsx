@@ -30,7 +30,7 @@ const PetAdoptionForm = () => {
         street: "",
         city: "",
         state: "",
-        zipCode: "",
+        zipcode: "",
         pet_id: "",
         phoneNumber: "",
     });

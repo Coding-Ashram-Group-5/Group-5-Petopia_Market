@@ -60,7 +60,7 @@ export default function ProductManagement() {
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">24/05/1995</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{data.quantity}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{data.userData?.firstName}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">${data.productPrice}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">₹{data.productPrice}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">Floreda south America</td>
                   <td className="whitespace-nowrap px-4 flex gap-3 py-2">
                   <Link

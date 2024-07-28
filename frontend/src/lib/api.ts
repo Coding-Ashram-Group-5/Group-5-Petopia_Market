@@ -111,7 +111,7 @@ export const getBlogById = async (id: string): Promise<Blog> => {
 };
 
 export const deleteBlogById = async (id: string): Promise<Blog> => {
-    const { data } = await authApi.delete(`api/v1/blogs/${id}`);
+    const { data } = await authApi.delete(`api/v1/blogs/delete/${id}`);
     return data;
 };
 

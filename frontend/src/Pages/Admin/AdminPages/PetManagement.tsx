@@ -63,7 +63,7 @@ const filteredData = data?.filter((pet) =>
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">{data.petName}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{(data.created_at).slice(0, 10)}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{data.userData.firstName} {data.userData.lastName}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{(data.isFree)? "Free":data.price}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">{(data.isFree)? "Free":`₹${data.price}`}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-white">Floreda south America</td>
                   <td className="whitespace-nowrap px-4 flex gap-3 py-2">
                   <Link
